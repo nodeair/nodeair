@@ -1,0 +1,8 @@
+{
+  "name": "nodeair-plugin-core-app",
+  "version": "1.0.0",
+  "private": true,
+  "enable": true,
+  "description": "核心插件/基础app应用",
+  "main": "index.js"
+}

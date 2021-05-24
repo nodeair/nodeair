@@ -1,0 +1,35 @@
+const path = require('path');
+const Koa = require('koa');
+const koaStatic = require('koa-static');
+const koaStaticCache = require('koa-static-cache');
+const KoaRouter = require('koa-router');
+
+const config = require('../config');
+const NodeAir = require('../core');
+const koaApp = new Koa();
+const koaRouter = new KoaRouter();
+
+// koaApp.use(koaStaticCache(__dirname), {});
+koaApp.use(koaRouter.routes());
+
+const app = new NodeAir({
+  __ROOT: path.join(__dirname, '../../'),
+  koaApp,
+  koaRouter,
+  koaStatic,
+  koaStaticCache,
+  config
+});
+
+async function boot() {
+  // 加载用户插件
+  await app.loadPlugin(path.join(__dirname, '../../plugin'));
+  // 加载系统插件
+  await app.loadPlugin(path.join(__dirname, '../plugin'), [
+    'template',
+    'run',
+    'app'
+  ]);
+}
+
+boot();

@@ -1,0 +1,13 @@
+{
+  "name": "nodeair-theme-default",
+  "dname": "默认主题",
+  "version": "0.0.1",
+  "private": true,
+  "description": "默认主题",
+  "main": "index.js",
+  "template": {
+    "head": "template/head.ejs",
+    "index": "template/index.ejs",
+    "search": "template/search.ejs"
+  }
+}

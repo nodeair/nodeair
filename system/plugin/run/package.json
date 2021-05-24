@@ -1,0 +1,8 @@
+{
+  "name": "nodeair-plugin-core-run",
+  "version": "1.0.0",
+  "private": true,
+  "enable": true,
+  "description": "核心插件/启动KOA服务",
+  "main": "index.js"
+}

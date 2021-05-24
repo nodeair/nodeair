@@ -1,0 +1,7 @@
+{
+  "name": "jack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "测试插件",
+  "main": "index.js"
+}
