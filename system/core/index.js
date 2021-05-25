@@ -6,6 +6,7 @@ const Util = require('./util');
 const Hook = require('./lib/hook');
 const Theme = require('./lib/theme');
 const Router = require('./lib/router');
+const Db = require('./lib/db');
 
 class NodeAir {
   constructor(options = {}) {
@@ -19,6 +20,7 @@ class NodeAir {
     this.hook = new Hook(this);
     this.router = new Router(this);
     this.theme = new Theme(this);
+    this.db = new Db(this);
   }
   /**
    * 初始化

@@ -9,6 +9,13 @@ class Router {
   }
 
   /**
+   * 
+   */
+  replaceAll() {
+    
+  }
+
+  /**
    * 判断某个路由是否已经被注册
    */
   has(method, url) {

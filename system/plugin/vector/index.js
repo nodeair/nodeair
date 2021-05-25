@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 async function loaded() {
-  const { hook, theme, router, config } = this;
+  const { hook, theme, router, config, koaApp, koaStaticCache } = this;
   const state = {
     vue: {
       type: 'script',
@@ -47,6 +47,11 @@ async function loaded() {
       ctx.set('Content-Type', contentType);
       ctx.body = item.content;
     });
+  });
+
+  // 监听静态文件
+  koaApp.use(koaStaticCache(__dirname), {
+    filter: ['vector']
   });
 }
 
