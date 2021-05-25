@@ -2,9 +2,7 @@ const homeController = require('./controller/home');
 const searchController = require('./controller/search');
 
 async function router(app) {
-  const {
-    hook
-  } = app;
+  const { hook } = app;
   const state = {
     routers: [
       ['GET', '/', homeController],

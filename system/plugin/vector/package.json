@@ -1,0 +1,8 @@
+{
+  "name": "nodeair-plugin-core-vector",
+  "version": "1.0.0",
+  "private": true,
+  "enable": true,
+  "description": "核心插件/为模板文件插入公共库",
+  "main": "index.js"
+}

@@ -24,7 +24,7 @@ async function loadPlugin(dir, order) {
     const plugins = fs.readdirSync(dir);
     order = Array.isArray(order) ? order : plugins;
     for (const plugin of order) {
-        if (!plugins.includes(plugin)) return;
+        if (!plugins.includes(plugin)) continue;
         const packagePath = path.join(dir, plugin, 'package.json');
         if (fs.existsSync(packagePath)) {
             const packageJson = require(packagePath);

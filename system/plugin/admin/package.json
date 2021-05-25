@@ -1,0 +1,8 @@
+{
+  "name": "nodeair-plugin-core-admin",
+  "version": "1.0.0",
+  "private": true,
+  "enable": true,
+  "description": "核心插件/后台管理系统",
+  "main": "index.js"
+}

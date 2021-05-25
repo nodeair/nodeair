@@ -1,3 +1,14 @@
 {
-  "theme": "default"
+  "theme": "default",
+  "host": "127.0.0.1",
+  "protocol": "http",
+  "port": 6688,
+  "isMinimize": true,
+  "debug": true,
+  "systemPluginOrder": [
+    "template",
+    "run",
+    "app",
+    "vector"
+  ]
 }

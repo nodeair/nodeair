@@ -5,9 +5,8 @@
   "private": true,
   "description": "默认主题",
   "main": "index.js",
-  "template": {
-    "head": "template/head.ejs",
-    "index": "template/index.ejs",
-    "search": "template/search.ejs"
+  "pages": {
+    "index": "template/pages/index.ejs",
+    "search": "template/pages/search.ejs"
   }
 }
