@@ -24,11 +24,11 @@ class Lang {
   /**
    * 获取文案内容
    */
-  text(key) {
+  text(key, langCode) {
     const unknownText = 'unknown text';
     if (!key) return unknownText;
     const { config } = this.app;
-    const langCode = config.lang;
+    langCode = langCode ? langCode : config.lang;
     const langSet = this._langText[langCode];
     if (langSet) {
       const _text = langSet[key];

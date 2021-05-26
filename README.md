@@ -6,6 +6,12 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
 
 # 一、使用者文档
 
+## 下载安装
+
+**不推荐**使用 NPM 或者其他包管理器安装本软件，这样的方式并不方便修改源代码或者安装和管理插件/主题。
+
+**推荐**直接克隆本仓库到本地：``git clone https://github.com/lisniuse/nodeair``;
+
 ## 配置文件
 
 在 NodeAir 程序根目录下面有一个叫 ``nodeair.config.json`` 的文件，这个文件里包含了整个程序的配置信息。系统默认配置如下：
@@ -16,6 +22,7 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
   "host": "127.0.0.1",
   "protocol": "http",
   "port": 6688,
+  "lang": "zh-cn",
   "isMinimize": true,
   "isInstalled": true,
   "debug": true,
@@ -43,6 +50,7 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
 程序会自动的将根目录下的 ``nodeair.config.json`` 里的配置项与系统默认的配置文件里的配置项进行合并，并且会优先使用用户所定义的配置项。
 
 如果用户没有提供配置文件，或者该文件里的配置项为空，则全部采用系统默认的配置项，如上所示。
+
 ### 各项配置简介
 
 配置项 | 简介
@@ -51,6 +59,7 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
 ``host`` | 程序启动时监听的IP
 ``protocol`` | 程序所使用的http协议
 ``port`` | 程序启动监听的端口号
+``lang`` | 程序所支持的语言，选择 ``zh-cn``、``zh-tw``，``en-us`` 其一
 ``isMinimize`` | 输出的html是否最小化
 ``isInstalled`` | 程序是否安装过（初始化过数据库）
 ``debug`` | 是否启用调试模式（开发模式）
@@ -59,13 +68,16 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
 ``site.description`` | 站点配置 - 站点描述
 ``site.keywords`` | 站点配置 - 站点关键词
 ``database`` | 数据库配置（详细配置见下表）
-``database.type`` | 表示数据库类型，选择 ``sqlite`` 或 ``mysql`` 或 ``mariadb`` 或 ``postgres`` 或 ``mssql`` 其一
+``database.type`` | 表示数据库类型，选择 ``sqlite``、``mysql``、``mariadb``、``postgres``、``mssql`` 其一
+
 ### 各类型的数据库配置
+
 #### SQLite
 
 配置项 | 简介
 ---|---
 ``database.options.storage`` | 数据库存储的位置，是一个相对程序的路径。
+
 #### 其他类型的数据库
 
 配置项 | 简介
@@ -74,12 +86,6 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
 ``database.options.username`` | 数据库账号
 ``database.options.password`` | 数据库密码
 ``database.options.host`` | 数据库的host（有端口需要带上端口）
-
-## 下载安装
-
-**不推荐**使用 NPM 或者其他包管理器安装本软件，这样的方式并不方便修改源代码或者安装和管理插件/主题。
-
-**推荐**直接克隆本仓库到本地：``git clone https://github.com/lisniuse/nodeair``;
 
 ## 安装依赖
 
