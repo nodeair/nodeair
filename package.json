@@ -1,5 +1,5 @@
 {
-  "name": "nodeair",
+  "name": "@nodeair/core",
   "version": "0.0.1",
   "description": "NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件和主题机制，可用于定制任何可能的WEB应用程序。",
   "main": "system/scripts/boot.js",
