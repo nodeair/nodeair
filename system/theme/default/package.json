@@ -7,6 +7,8 @@
   "main": "index.js",
   "pages": {
     "index": "template/pages/index.ejs",
-    "search": "template/pages/search.ejs"
+    "search": "template/pages/search.ejs",
+    "install": "template/pages/install.ejs",
+    "not-installed": "template/pages/not-installed.ejs"
   }
 }

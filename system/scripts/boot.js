@@ -9,6 +9,7 @@ const defaultConfig = require('../config');
 const userConfPath = '../../nodeair.config.json';
 const userConfig = fs.existsSync(userConfPath) ? require(userConfPath) : {};
 const config = Object.assign(defaultConfig, userConfig);
+
 const NodeAir = require('../core');
 const koaApp = new Koa();
 const koaRouter = new KoaRouter();
@@ -31,6 +32,8 @@ async function boot() {
   await app.loadPlugin(path.join(__dirname, '../plugin'), config.systemPluginOrder);
   // 初始化
   await app.init();
+  // 日志打印
+  app.log.system('系统初始化完毕');
 }
 
 boot();

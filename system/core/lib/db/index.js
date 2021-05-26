@@ -10,7 +10,7 @@ class Db {
     if (config.database.type === 'sqlite') {
       const { options } = config.database;
       const dbPath = path.join(__ROOT, options.storage);
-      if (!fs.existsSync(dbPath)) fs.writeFileSync(dbPath, '', 'utf8');
+      if (!fs.existsSync(dbPath)) fs.ensureFileSync(dbPath);
       this.sequelize = new Sequelize({
         dialect: options.dialect,
         storage: path.join(__ROOT, options.storage)
@@ -23,7 +23,7 @@ class Db {
   async existsModel(Model) {
     const model = Model(this.sequelize);
     try {
-      const res = await model.count();
+      await model.count();
       return true;
     } catch (err) {
       return false;

@@ -1,36 +1,69 @@
 const path = require('path');
-const jsonfile = require('jsonfile');
 
-async function loaded() {
-  const { koaRouter, config, hook, db, __ROOT } = this;
-  const configPath = path.join(__ROOT, 'system/config.json');
+const installViewController = require('./controller/view/install');
+const notInstalledController = require('./controller/view/not-installed');
+const installApiController = require('./controller/api/install');
+
+const langConf = require('./lang');
+
+/**
+ * 检查NodeAir是否安装
+ */
+async function checkInstall() {
+  const { config, db } = this
   const confiIsInstalled = config.isInstalled;
   const pluginBaseDir = path.join(__dirname, '../');
   const PostModel = require(path.join(pluginBaseDir, 'app', 'model/post'));
   const isModelExist = await db.existsModel(PostModel);
-  const isInstalled = confiIsInstalled && isModelExist;
+  return confiIsInstalled && isModelExist;
+}
+
+async function loaded() {
+  const { koaApp, lang, koaRouter, hook } = this;
+  // 注册插件所使用的多语言文案
+  lang.register(langConf.call(this));
+
+  const app = this;
+  const isInstalled = await checkInstall.call(this);
+
   if (!isInstalled) {
-    koaRouter.get('/install', function(ctx, next) {
-      ctx.set('Content-Type', 'text/html; charset=utf-8');
-      ctx.body = `安装界面 <a href="/api/install">点击安装</a>`;
-    });
-    koaRouter.get('/api/install', function(ctx, next) {
-      const post = PostModel(db.sequelize);
-      // 建表
-      post.sync();
-      // 修改配置信息
-      const oldConfig = jsonfile.readFileSync(configPath);
-      oldConfig.isInstalled = true;
-      jsonfile.writeFileSync(configPath, oldConfig, { spaces: 2 });
-      // 返回结果
-      ctx.body = {
-        code: 0,
-        msg: '安装完毕'
-      };
-    });
-    koaRouter.get('(/|.*)', function(ctx, next) {
-      ctx.body = '你还未安装 NodeAir';
-    });
+    const state = {
+      router: [
+        {
+          url: '/install',
+          controller: installViewController.bind(app)
+        },
+        {
+          url: '/api/install',
+          controller: installApiController.bind(app)
+        },
+        {
+          url: '/',
+          controller: notInstalledController.bind(app)
+        }
+      ],
+      async handler404(ctx, next) {
+        try {
+          await next();
+          if (!ctx.body) {
+            await notInstalledController.apply(app, [ ctx, next ]);
+          }
+        } catch (e) {
+          ctx.body = '500'
+        }
+      }
+    }
+
+    // 调用钩子
+    hook.emit('core.install.01', state);
+
+    // 处理404情况
+    koaApp.use(state.handler404)
+
+    // 循环注册路由
+    for (const item of state.router) {
+      koaRouter.get(item.url, item.controller);
+    }
   }
 }
 

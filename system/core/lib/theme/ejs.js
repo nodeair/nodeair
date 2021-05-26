@@ -3,8 +3,6 @@ const ejs = require('ejs');
 /**
  * EJS 模板引擎预处理
  */
-
-
 module.exports = {
   /**
    * 渲染文件
@@ -16,7 +14,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       ejs.renderFile(filePath, data, {
         async: false
-      }, function(err, str) {
+      }, function (err, str) {
         if (err) {
           reject(err);
         } else {

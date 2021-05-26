@@ -7,17 +7,23 @@ const Hook = require('./lib/hook');
 const Theme = require('./lib/theme');
 const Router = require('./lib/router');
 const Db = require('./lib/db');
+const Lang = require('./lib/lang');
+const Log = require('./lib/log');
+const APP_NAME = 'NodeAir';
 
 class NodeAir {
   constructor(options = {}) {
     this.__ROOT = options.__ROOT;
+    this.APP_NAME = APP_NAME;
     this.koaApp = options.koaApp;
     this.koaRouter = options.koaRouter;
     this.koaStatic = options.koaStatic;
     this.koaStaticCache = options.koaStaticCache;
     this.config = options.config;
+    this.log = new Log(this);
     this.util = new Util(this);
     this.hook = new Hook(this);
+    this.lang = new Lang(this);
     this.router = new Router(this);
     this.theme = new Theme(this);
     this.db = new Db(this);
