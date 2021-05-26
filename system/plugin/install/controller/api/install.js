@@ -2,9 +2,9 @@ const path = require('path');
 const jsonfile = require('jsonfile');
 
 async function installController(ctx, next) {
-  const { __ROOT } = this;
+  const { __ROOT, db } = this;
   const configPath = path.join(__ROOT, 'system/config.json');
-  const pluginBaseDir = path.join(__dirname, '../');
+  const pluginBaseDir = path.join(__ROOT, 'system/plugin');
   const PostModel = require(path.join(pluginBaseDir, 'app', 'model/post'));
   const post = PostModel(db.sequelize);
 

@@ -1,13 +1,34 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%- include('../components/head') -%>
-  <title><%= pageData.title %></title>
-</head>
-<body>
-  <h2><%= pageData.text %></h2>
-</body>
+<html lang="<%= common.lang %>">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../components/head') -%>
+    <title><%= pageData.title %></title>
+  </head>
+  <body class="is-3-column pace-done">
+    <%- include('../components/nav') -%>
+    <div class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen">
+            <% [1, 2, 3, 4, 5].forEach(function(item) { %>
+              <%- include('../components/article-card', { item: item }); %>
+            <% }); %>
+          </div>
+          <div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1">
+            <%- include('../widgets/profile') -%>
+            <%- include('../widgets/links') -%>
+            <%- include('../widgets/categories') -%>
+          </div>
+          <div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3">
+            <%- include('../widgets/recent-post') -%>
+            <%- include('../widgets/archives') -%>
+            <%- include('../widgets/tags') -%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

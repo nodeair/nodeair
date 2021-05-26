@@ -6,7 +6,6 @@ class Hook {
     this.app = app;
     this.events = [];
   }
-
   /**
    * 监听事件
    */
@@ -18,7 +17,6 @@ class Hook {
       this.events[eventName] = [handler];
     }
   }
-
   /**
    * 触发事件
    */

@@ -1,9 +1,5 @@
 async function loaded() {
-  const {
-    koaApp,
-    hook,
-    config
-  } = this;
+  const { koaApp, hook, config } = this;
 
   const state = {
     port: config.port,

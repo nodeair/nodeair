@@ -1,5 +1,4 @@
 const parseDomain = require('./parse-domain');
-
 class Util {
   constructor(app) {
     this.app = app;

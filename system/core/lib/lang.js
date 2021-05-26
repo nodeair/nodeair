@@ -6,7 +6,7 @@ class Lang {
     this.app = app;
     this._langText = {
       'zh-cn': {},
-      'zh-TW': {},
+      'zh-tw': {},
       'en-us': {}
     };
   }
