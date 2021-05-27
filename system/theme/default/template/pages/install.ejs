@@ -16,7 +16,7 @@
 
       .form {
         width: 30vw;
-        min-width: 500px;
+        min-width: 650px;
         padding: 24px;
       }
 
@@ -41,36 +41,59 @@
         font-size: 12px;
         color: #F56C6C;
       }
+
+      .block {
+        padding: 16px;
+      }
     </style>
 </head>
 
 <body>
   <div class="container" id="install">
     <div class="form card">
-      <el-form ref="form" :model="form" label-width="120px" size="medium">
+      <el-form ref="form" :model="form" label-width="120px" size="medium" label-position="left" >
         <div class="form-head">
           <h1>NodeAir 安装向导</h1>
         </div>
+        <h3 class="menu-label">填写管理员信息</h3>
+        <div class="block">
+          <el-form-item label="昵称">
+            <el-input v-model="form.managerNickname"></el-input>
+          </el-form-item>
+          <el-form-item label="用户名">
+            <el-input v-model="form.managerUsername"></el-input>
+          </el-form-item>
+          <el-form-item label="密码">
+            <el-input type="password" v-model="form.managerPassword"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码">
+            <el-input type="password" v-model="form.managerPassword2"></el-input>
+          </el-form-item>
+        </div>
         <h3 class="menu-label">填写站点信息</h3>
-        <el-form-item label="站点名称">
-          <el-input v-model="form.siteTitle"></el-input>
-        </el-form-item>
-        <el-form-item label="站点描述">
-          <el-input v-model="form.siteDescription"></el-input>
-        </el-form-item>
-        <el-form-item label="站点关键词">
-          <el-input type="textarea" v-model="form.siteKeywords"></el-input>
-        </el-form-item>
+        <div class="block">
+          <el-form-item label="站点名称">
+            <el-input v-model="form.siteTitle"></el-input>
+          </el-form-item>
+          <el-form-item label="站点描述">
+            <el-input v-model="form.siteDescription"></el-input>
+          </el-form-item>
+          <el-form-item label="站点关键词">
+            <el-input type="textarea" v-model="form.siteKeywords"></el-input>
+          </el-form-item>
+        </div>
         <h3 class="menu-label">填写数据库信息</h3>
-        <el-form-item label="数据库类型">
-          <el-select v-model="form.databaseType" placeholder="请选择数据库类型">
-            <el-option label="SQLite" value="sqlite"></el-option>
-            <el-option label="MySQL" value="mysql"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="SQLite 存放位置">
-          <el-input v-model="form.databaseOptionsStorage"></el-input>
-        </el-form-item>
+        <div class="block">
+          <el-form-item label="数据库类型">
+            <el-select v-model="form.databaseType" placeholder="请选择数据库类型">
+              <el-option label="SQLite" value="sqlite"></el-option>
+              <el-option label="MySQL" value="mysql"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="SQLite 存放位置">
+            <el-input v-model="form.databaseOptionsStorage"></el-input>
+          </el-form-item>
+        </div>
         <div class="tips">
           需要注意的是：SQLite 免费版不支持设置账号密码，若需要加强数据安全，请选择其他的数据库类型。
         </div>
@@ -87,6 +110,10 @@
         data: function () {
           return {
             form: {
+              managerNickname: '',
+              managerUsername: '',
+              managerPassword: '',
+              managerPassword2: '',
               siteTitle: '又一个 NodeAir 站点',
               siteDescription: '又一个 NodeAir 站点',
               siteKeywords: 'nodeair,nodejs',
