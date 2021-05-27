@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 
 /**
  * 加载插件通过 index.js
- * @param {*} pluginEntry 入口
+ * @param {Function|Object} pluginEntry 入口
  */
 async function loadPluginEntry(pluginEntry) {
     if (typeof pluginEntry === 'function') {
@@ -17,11 +17,13 @@ async function loadPluginEntry(pluginEntry) {
 
 /**
  * 加载插件
- * @param {*} dir 指定目录
- * @param {*} order 加载熟悉怒 
+ * @param {String} dir 指定目录
+ * @param {String} type 加载类型 user | system 
  */
-async function loadPlugin(dir, order) {
+async function loadPlugin(dir, type) {
+    const { conf } = this;
     const plugins = fs.readdirSync(dir);
+    let order = conf.get(type).systemPluginOrder;
     order = Array.isArray(order) ? order : plugins;
     for (const plugin of order) {
         if (!plugins.includes(plugin)) continue;

@@ -17,7 +17,7 @@
   "site": {
     "title": "又一个 NodeAir 站点",
     "description": "又一个 NodeAir 站点",
-    "keywords": "nodeair站点"
+    "keywords": "nodeair,nodejs"
   },
   "database": {
     "type": "sqlite",

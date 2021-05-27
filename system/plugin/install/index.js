@@ -1,9 +1,6 @@
 const path = require('path');
 
-const installViewController = require('./controller/view/install');
-const notInstalledController = require('./controller/view/not-installed');
-const installApiController = require('./controller/api/install');
-
+const routerConfig = require('./router-config');
 const langConf = require('./lang');
 
 /**
@@ -19,7 +16,7 @@ async function checkInstall() {
 }
 
 async function loaded() {
-  const { koaApp, lang, koaRouter, hook } = this;
+  const { koaApp, koaRouter, lang, router, hook } = this;
   // 注册插件所使用的多语言文案
   lang.register(langConf.call(this));
 
@@ -28,23 +25,7 @@ async function loaded() {
 
   if (!isInstalled) {
     const state = {
-      router: [
-        {
-          type: 'get',
-          url: '/install',
-          controller: installViewController.bind(app)
-        },
-        {
-          type: 'post',
-          url: '/api/install',
-          controller: installApiController.bind(app)
-        },
-        {
-          type: 'get',
-          url: '/',
-          controller: notInstalledController.bind(app)
-        }
-      ],
+      router: routerConfig.call(app),
       async handler404(ctx, next) {
         try {
           await next();
@@ -58,14 +39,14 @@ async function loaded() {
     }
 
     // 调用钩子
-    hook.emit('core.install.01', state);
+    await hook.emit('core.install.01', state);
 
     // 处理404情况
     koaApp.use(state.handler404)
 
     // 循环注册路由
     for (const item of state.router) {
-      koaRouter[item.type](item.url, item.controller);
+      router.push(item.type, item.url, item.controller);
     }
   }
 }

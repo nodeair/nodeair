@@ -32,13 +32,18 @@ class Router {
    * 删除一个路由和它的控制器
    */
   remove(method, url) {
+    const { koaRouter } = this.app;
     method = method.toLowerCase();
     const routerFn = this.app.koaRouter[method];
     if (typeof routerFn !== 'function') return;
-
     const key = this._key(method, url);
     delete this.routers[key];
-    this.app.koaRouter[method](url, this.get404Controller());
+    for (let i = 0; i < koaRouter.stack.length; i++) {
+      const layer = koaRouter.stack[i];
+      if (layer.methods.includes(method.toUpperCase()) && layer.path === url) {
+        koaRouter.stack.splice(i, 1);
+      }
+    }
   }
   /**
    * 获取404控制器

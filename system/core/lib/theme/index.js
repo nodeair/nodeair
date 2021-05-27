@@ -54,46 +54,46 @@ class Theme {
     };
 
     // 调用钩子
-    hook.emit('core.nodeair.theme.render.01', state);
+    await hook.emit('core.nodeair.theme.render.01', state);
 
     state.html = await ejs.render(state.filePath, state.renderOptions); // 渲染返回 HTML 代码
 
     // 调用钩子
-    hook.emit('core.nodeair.theme.render.02', state);
+    await hook.emit('core.nodeair.theme.render.02', state);
 
     const $ = cheerio.load(state.html);
     state.html = this.head.insertToHtml($);
 
     // 调用钩子
-    hook.emit('core.nodeair.theme.render.03', state);
+    await hook.emit('core.nodeair.theme.render.03', state);
 
     state.html = ejs.renderStr(state.html, state.renderOptions); // 再次渲染
 
     // 调用钩子
-    hook.emit('core.nodeair.theme.render.04', state);
+    await hook.emit('core.nodeair.theme.render.04', state);
 
     // 判断是否需要美化
     if (config.debug) {
       state.html = htmlUtil.prettify(state.html);
       // 调用钩子
-      hook.emit('core.nodeair.theme.render.05', state);
+      await hook.emit('core.nodeair.theme.render.05', state);
     } else {
       // 判断是否需要最小化
       if (config.isMinimize) {
         state.html = htmlUtil.minify(state.html);
         // 调用钩子
-        hook.emit('core.nodeair.theme.render.06', state);
+        await hook.emit('core.nodeair.theme.render.06', state);
       }
     }
 
     // 调用钩子
-    hook.emit('core.nodeair.theme.render.07', state);
+    await hook.emit('core.nodeair.theme.render.07', state);
 
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.body = state.html;
 
     // 调用钩子
-    hook.emit('core.nodeair.theme.render.08', state);
+    await hook.emit('core.nodeair.theme.render.08', state);
 
     return state.html;
   }
