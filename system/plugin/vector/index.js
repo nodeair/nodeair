@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 async function loaded() {
-  const { hook, theme, router, config, koaApp, koaStaticCache } = this;
+  const { hook, theme, router, koaApp, koaStaticCache } = this;
   const state = {
     vue: {
       type: 'script',
@@ -16,6 +16,12 @@ async function loaded() {
       url: '<%= common.domain %>/vector/jquery/3.6.0/jquery.min.js',
       content: fs.readFileSync(path.join(__dirname, 'vector/jquery/3.6.0/jquery.min.js'))
     },
+    axios: {
+      type: 'script',
+      router: '/vector/axios/0.21.1/axios.min.js',
+      url: '<%= common.domain %>/vector/axios/0.21.1/axios.min.js',
+      content: fs.readFileSync(path.join(__dirname, 'vector/axios/0.21.1/axios.min.js'))
+    },
     elementUiJs: {
       type: 'script',
       router: '/vector/element-ui/2.15.1/index.js',
@@ -27,7 +33,7 @@ async function loaded() {
       router: '/vector/element-ui/2.15.1/index.css',
       url: '<%= common.domain %>/vector/element-ui/2.15.1/index.css',
       content: fs.readFileSync(path.join(__dirname, 'vector/element-ui/2.15.1/index.css'))
-    },
+    }
   }
 
   // 调用钩子
@@ -37,7 +43,7 @@ async function loaded() {
   Object.keys(state).forEach(key => {
     const item = state[key];
     theme.head.push(item.url, item.type);
-    router.push('GET', item.router, function(ctx, next) {
+    router.push('GET', item.router, function (ctx, next) {
       let contentType = '';
       if (item.type === 'css') {
         contentType = 'text/css; charset=utf-8';

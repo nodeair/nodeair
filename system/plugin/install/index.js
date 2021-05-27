@@ -10,7 +10,7 @@ const langConf = require('./lang');
  * 检查NodeAir是否安装
  */
 async function checkInstall() {
-  const { config, db } = this
+  const { config, db } = this;
   const confiIsInstalled = config.isInstalled;
   const pluginBaseDir = path.join(__dirname, '../');
   const PostModel = require(path.join(pluginBaseDir, 'app', 'model/post'));
@@ -30,14 +30,17 @@ async function loaded() {
     const state = {
       router: [
         {
+          type: 'get',
           url: '/install',
           controller: installViewController.bind(app)
         },
         {
+          type: 'post',
           url: '/api/install',
           controller: installApiController.bind(app)
         },
         {
+          type: 'get',
           url: '/',
           controller: notInstalledController.bind(app)
         }
@@ -46,7 +49,7 @@ async function loaded() {
         try {
           await next();
           if (!ctx.body) {
-            await notInstalledController.apply(app, [ ctx, next ]);
+            await notInstalledController.apply(app, [ctx, next]);
           }
         } catch (e) {
           ctx.body = '500'
@@ -62,7 +65,7 @@ async function loaded() {
 
     // 循环注册路由
     for (const item of state.router) {
-      koaRouter.get(item.url, item.controller);
+      koaRouter[item.type](item.url, item.controller);
     }
   }
 }

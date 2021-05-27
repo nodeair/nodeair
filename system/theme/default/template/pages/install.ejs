@@ -1,14 +1,116 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%- include('../components/head') -%>
-  <title><%= pageData.title %></title>
+    <title>
+      <%= pageData.title %>
+    </title>
+    <style>
+      .container {
+        padding-top: 20px;
+      }
+
+      .form {
+        width: 30vw;
+        min-width: 500px;
+        padding: 24px;
+      }
+
+      .form-head {
+        border-bottom: 1px solid #eaeaea;
+        padding-bottom: 20px;
+        font-size: 16px;
+      }
+
+      .form-head h1 {
+        font-weight: bold;
+      }
+
+      .form-foot {
+        border-top: 1px solid #eaeaea;
+        margin-top: 20px;
+        padding-top: 20px;
+        text-align: right;
+      }
+
+      .tips {
+        font-size: 12px;
+        color: #F56C6C;
+      }
+    </style>
 </head>
+
 <body>
-  <div class="container">
+  <div class="container" id="install">
+    <div class="form card">
+      <el-form ref="form" :model="form" label-width="120px" size="medium">
+        <div class="form-head">
+          <h1>NodeAir 安装向导</h1>
+        </div>
+        <h3 class="menu-label">填写站点信息</h3>
+        <el-form-item label="站点名称">
+          <el-input v-model="form.siteTitle"></el-input>
+        </el-form-item>
+        <el-form-item label="站点描述">
+          <el-input v-model="form.siteDescription"></el-input>
+        </el-form-item>
+        <el-form-item label="站点关键词">
+          <el-input type="textarea" v-model="form.siteKeywords"></el-input>
+        </el-form-item>
+        <h3 class="menu-label">填写数据库信息</h3>
+        <el-form-item label="数据库类型">
+          <el-select v-model="form.databaseType" placeholder="请选择数据库类型">
+            <el-option label="SQLite" value="sqlite"></el-option>
+            <el-option label="MySQL" value="mysql"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="SQLite 存放位置">
+          <el-input v-model="form.databaseOptionsStorage"></el-input>
+        </el-form-item>
+        <div class="tips">
+          需要注意的是：SQLite 免费版不支持设置账号密码，若需要加强数据安全，请选择其他的数据库类型。
+        </div>
+        <div class="form-foot">
+          <el-button type="primary" @click="onSubmit"><i class="fab fa-instalod"></i>&nbsp;立即安装</el-button>
+        </div>
+      </el-form>
+    </div>
   </div>
+  <script type="text/javascript">
+    (function () {
+      new Vue({
+        el: '#install',
+        data: function () {
+          return {
+            form: {
+              siteTitle: '又一个 NodeAir 站点',
+              siteDescription: '又一个 NodeAir 站点',
+              siteKeywords: 'nodeair,nodejs',
+              databaseType: 'sqlite',
+              databaseOptionsStorage: 'data/database.sqlite'
+            }
+          }
+        },
+        methods: {
+          onSubmit: function () {
+            // Make a request for a user with a given ID
+            axios.post('/api/install', this.form)
+              .then(function (response) {
+                if (response.data.code === 0) {
+                  setTimeout(function () {
+                    window.location.href = '/';
+                  }, 100);
+                }
+              });
+          }
+        }
+      })
+    })();
+  </script>
 </body>
+
 </html>

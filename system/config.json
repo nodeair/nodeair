@@ -5,7 +5,7 @@
   "port": 6688,
   "lang": "zh-cn",
   "isMinimize": true,
-  "isInstalled": true,
+  "isInstalled": false,
   "debug": true,
   "systemPluginOrder": [
     "install",
