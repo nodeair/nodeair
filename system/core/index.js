@@ -11,12 +11,11 @@ const Router = require('./lib/router');
 const Db = require('./lib/db');
 const Lang = require('./lib/lang');
 const Log = require('./lib/log');
-const APP_NAME = 'NodeAir';
+const constant = require('./constant');
 
 class NodeAir {
   constructor(options = {}) {
-    this.__ROOT = options.__ROOT;
-    this.APP_NAME = APP_NAME;
+    this.constant = constant.call(this);
     this.koa = new Koa(this);
     this.conf = new Config(this);
     this.config = this.conf.get();

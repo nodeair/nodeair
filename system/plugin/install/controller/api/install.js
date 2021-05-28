@@ -36,31 +36,33 @@ function userConfigGenerator(userConfigPath, params = {}) {
       userConfig.database.options.port = database.optionPort;
       userConfig.database.options.database = database.optionDatabase;
       userConfig.database.options.username = database.optionUsername;
-      userConfig.database.options.password = database.password
+      userConfig.database.options.password = database.optionPassword;
       break;
   }
   jsonfile.writeFileSync(userConfigPath, userConfig, { spaces: 2 });
 }
 
 async function installController(ctx) {
-  const { __ROOT, db, router } = this;
-  const pluginBaseDir = path.join(__ROOT, 'system/plugin');
-  const PostModel = require(path.join(pluginBaseDir, 'app', 'model/post'));
-  const post = PostModel(db.sequelize);
-
+  const { constant, conf, config, db, router } = this;
+  const { ROOT, SYSTEM_PLUGIN_DIR, USER_CONFIG_PATH  } = constant;
   // 获取POST请求数据
   const params = ctx.request.body;
-
+  // 生成用户配置文件
+  userConfigGenerator(USER_CONFIG_PATH, params);
+  // 重新加载用户配置文件
+  conf.load();
+  // 重新初始化数据库
+  db.init();
+  const isConnected = await db.isConnected();
+  if (!isConnected) {
+    ctx.body = { code: 1, msg: '数据库连接失败' };
+    return;
+  }
+  // 获取模型
+  const PostModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/post'));
+  const post = PostModel(db.sequelize);
   // 建表
   await post.sync();
-
-  // 生成用户配置文件
-  const userConfigPath = path.join(__ROOT, 'nodeair.config.json');
-  userConfigGenerator(userConfigPath, params);
-
-  // 重新加载配置文件
-  this.conf.load();
-
   // 移除所有和安装有关的路由
   const installRouterPath = path.resolve(__dirname, '../../router-config');
   const installRouter = require(installRouterPath);
@@ -68,7 +70,6 @@ async function installController(ctx) {
   routers.forEach(item => {
     router.remove(item.type, item.url);
   });
-
   // 返回结果
   ctx.body = {
     code: 0,

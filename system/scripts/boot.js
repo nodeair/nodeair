@@ -1,11 +1,9 @@
 const path = require('path');
 const NodeAir = require('../core');
 
-const app = new NodeAir({
-  __ROOT: path.join(__dirname, '../../')
-});
-
 async function boot() {
+  // 实例化
+  const app = new NodeAir();
   // 初始化
   await app.init();
   // 日志打印

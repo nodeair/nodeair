@@ -1,7 +1,6 @@
 /**
  * 路由类
  */
-
 class Router {
   constructor(app) {
     this.app = app;
@@ -45,14 +44,6 @@ class Router {
         koa.router.stack.splice(i, 1);
       }
     }
-  }
-  /**
-   * 获取404控制器
-   */
-  get404Controller() {
-    return async((ctx) => {
-      ctx.body = '404';
-    });
   }
   /**
    * 获取存储在内存中的路由Key

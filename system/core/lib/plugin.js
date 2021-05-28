@@ -8,9 +8,7 @@ const fs = require('fs');
 class Plugin {
   constructor(app) {
     this.app = app;
-    const { __ROOT } = app;
-    this._USER_PLUGIN_DIR = path.join(__ROOT, 'plugin');
-    this._SYSTEM_PLUGIN_DIR = path.join(__ROOT, 'system/plugin');
+    const { constant } = app;
     this._systemPlugins = [];
     this._userPlugins = [];
     this._plugins = [];
@@ -35,19 +33,19 @@ class Plugin {
    * 加载插件
    */
   async _load(type) {
-    const { conf } = this.app;
-    const { _USER_PLUGIN_DIR, _SYSTEM_PLUGIN_DIR } = this;
+    const { conf, constant } = this.app;
+    const { USER_PLUGIN_DIR, SYSTEM_PLUGIN_DIR } = constant;
     let plugins = [];
     let order = [];
     let dir = '';
     switch (type) {
       case 'user':
-        dir = _USER_PLUGIN_DIR;
+        dir = USER_PLUGIN_DIR;
         plugins = fs.readdirSync(dir);
         order = conf.get(type).userPluginOrder;
         break;
       case 'system':
-        dir = _SYSTEM_PLUGIN_DIR;
+        dir = SYSTEM_PLUGIN_DIR;
         plugins = fs.readdirSync(dir);
         order = conf.get(type).systemPluginOrder;
         break;

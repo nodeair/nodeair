@@ -11,30 +11,31 @@ class Log {
    * 打印日志
    */
   print() {
-    const args = Array.prototype.slice.call(arguments, 0);
+    const args = Array.from(arguments);
     return this._log.apply(this, ['green', ...args ]);
   }
   /**
    * 系统日志
    */
   system() {
-    const args = Array.prototype.slice.call(arguments, 0);
+    const args = Array.from(arguments);
     return this._log.apply(this, ['yellow', ...args ]);
   }
   /**
    * 打印
    */
   _log(type) {
-    const { APP_NAME, config } = this.app;
+    const { constant, config } = this.app;
     const { debug } = config;
     if (!debug) return;
     const time = new Date();
-    const args = Array.prototype.slice.call(arguments, 1);
+    const args = Array.from(arguments);
+    args.shift();
     args.forEach((item, index) => {
-      args[index] = typeof item === 'object' ? JSON.stringify(item, null, 2) : item;
+      args[index] = typeof item === 'object' ? item.toString() : item;
     });
     const text = args.join(' ');
-    console.log(chalk[type](`[${APP_NAME}] ${time}: ${text}`));
+    console.log(chalk[type](`[${constant.APP_NAME}] ${time}: ${text}`));
   }
 }
 

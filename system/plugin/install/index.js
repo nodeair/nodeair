@@ -7,10 +7,13 @@ const langConf = require('./lang');
  * 检查NodeAir是否安装
  */
 async function checkInstall() {
-  const { config, db } = this;
+  const { constant, config, db } = this;
+  const { SYSTEM_PLUGIN_DIR } = constant;
   const confiIsInstalled = config.isInstalled;
-  const pluginBaseDir = path.join(__dirname, '../');
-  const PostModel = require(path.join(pluginBaseDir, 'app', 'model/post'));
+  // 首先检测数据库是否连接成功
+  const isConnected = await db.isConnected();
+  if (!isConnected) return false;
+  const PostModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/post'));
   const isModelExist = await db.existsModel(PostModel);
   return confiIsInstalled && isModelExist;
 }

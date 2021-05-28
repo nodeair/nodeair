@@ -14,7 +14,6 @@ class Theme {
     app.log.system('实例化Theme类');
     this.app = app;
     this.THEME_NAME = this.app.config.theme;
-    this.PACKAGE_NAME = 'package.json';
     this.PAGES_NAME = [
       'index',
       'search',
@@ -101,17 +100,14 @@ class Theme {
    * 获取当前主题信息
    */
   _getCurrentTheme() {
-    const { __ROOT } = this.app;
-    const { PACKAGE_NAME, THEME_NAME } = this;
-    const userThemeDir = path.join(__ROOT, '/theme', THEME_NAME);
+    const { THEME_NAME } = this;
+    const { constant } = this.app;
+    const { PACKAGE_NAME, USER_THEME_DIR, SYSTEM_THEME_DIR } = constant;
+    const userThemeDir = path.join(USER_THEME_DIR, THEME_NAME);
+    const sysThemeDir = path.join(SYSTEM_THEME_DIR, THEME_NAME);
     const userThemePackagePath = path.join(userThemeDir, PACKAGE_NAME);
-    const sysThemeDir = path.join(this.app.__ROOT, '/system/theme', THEME_NAME);
     const sysThemePackagePath = path.join(sysThemeDir, PACKAGE_NAME);
-
-    this.currentTheme = {
-      basedir: '',
-      package: ''
-    };
+    this.currentTheme = { basedir: '', package: '' };
     if (fs.existsSync(userThemePackagePath)) {
       this.currentTheme.basedir = userThemeDir;
       this.currentTheme.package = require(userThemePackagePath);

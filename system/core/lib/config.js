@@ -14,13 +14,12 @@ const fs = require('fs');
    * 加载配置文件
    */
   load() {
-    const { __ROOT } = this.app
-    const defaultConfigPath = path.join(__ROOT, 'system/config.json');
-    const userConfigPath = path.join(__ROOT, 'nodeair.config.json');
-    delete require.cache[defaultConfigPath];
-    delete require.cache[userConfigPath];
-    this._defaultConfig = require(defaultConfigPath);
-    this._userConfig = fs.existsSync(userConfigPath) ? require(userConfigPath) : {};
+    const { constant } = this.app;
+    const { ROOT, USER_CONFIG_PATH, SYSTEM_CONFIG_PATH } = constant;
+    delete require.cache[USER_CONFIG_PATH];
+    delete require.cache[SYSTEM_CONFIG_PATH];
+    this._defaultConfig = this.isSystemExists() ? require(SYSTEM_CONFIG_PATH) : {};
+    this._userConfig = this.isUserExists() ? require(USER_CONFIG_PATH) : {};
     this._config = this._mergeConfig();
   }
   /**
@@ -32,6 +31,22 @@ const fs = require('fs');
       case 'system': return this._defaultConfig;
       default: return this._config; 
     }
+  }
+  /**
+   * 检测用户配置文件是否存在
+   */
+  isUserExists() {
+    const { constant } = this.app;
+    const { USER_CONFIG_PATH } = constant;
+    return fs.existsSync(USER_CONFIG_PATH);
+  }
+  /**
+   * 检测系统配置文件是否存在
+   */
+  isSystemExists() {
+    const { constant } = this.app;
+    const { SYSTEM_CONFIG_PATH } = constant;
+    return fs.existsSync(SYSTEM_CONFIG_PATH);
   }
   /**
    * 合并配置文件
