@@ -16,7 +16,7 @@ async function checkInstall() {
 }
 
 async function loaded() {
-  const { koaApp, koaRouter, lang, router, hook } = this;
+  const { koa, lang, router, hook } = this;
   const app = this;
   const isInstalled = await checkInstall.call(this);
 
@@ -40,7 +40,7 @@ async function loaded() {
   await hook.emit('core.install.01', state);
 
   // 处理404情况
-  koaApp.use(state.handler404)
+  koa.app.use(state.handler404)
 
   // 循环注册路由
   for (const item of state.router) {

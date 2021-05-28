@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NodeAir Test Page</title>
+  <script src="../dist/nodeair.js"></script>
+</head>
+<body>
+  <script>
+    var useCase = [
+      [false, "NodeAir.validator.isPassword('aaa')"],
+      [true, "NodeAir.validator.isPassword('aBcdefg@123')"],
+      [false, "NodeAir.validator.isUsername('aa')"],
+      [true, "NodeAir.validator.isUsername('nodeair')"],
+      [false, "NodeAir.validator.isIP('nodeair')"],
+      [true, "NodeAir.validator.isIP('127.0.0.1')"],
+      [false, "NodeAir.validator.isPort('1234567')"],
+      [true, "NodeAir.validator.isPort('1234')"],
+      [false, "NodeAir.validator.isChinaPhone('sdfsdf')"],
+      [true, "NodeAir.validator.isChinaPhone('13838384381')"],
+      [false, "NodeAir.validator.isEmail('xxxxx')"],
+      [true, "NodeAir.validator.isEmail('nodeair@nodeair.com')"],
+    ];
+    for (var i = 0; i < useCase.length; i++) {
+      const item = useCase[i];
+      const [ expect, expression ] = item;
+      const res = eval('(' + expression + ')');
+      console.log(expression, expect, res);
+    }
+  </script>
+</body>
+</html>

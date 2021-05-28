@@ -18,30 +18,31 @@ class Router {
    * 注册一个路由和一个控制器
    */
   push(method, url, controller) {
+    const { koa } = this.app;
     method = method.toLowerCase();
     if (typeof controller !== 'function') return;
-    const routerFn = this.app.koaRouter[method];
+    const routerFn = koa.router[method];
     if (typeof routerFn !== 'function') return;
 
     const key = this._key(method, url);
     controller = controller.bind(this.app);
     this.routers[key] = controller;
-    this.app.koaRouter[method](url, controller);
+    koa.router[method](url, controller);
   }
   /**
    * 删除一个路由和它的控制器
    */
   remove(method, url) {
-    const { koaRouter } = this.app;
+    const { koa } = this.app;
     method = method.toLowerCase();
-    const routerFn = this.app.koaRouter[method];
+    const routerFn = this.app.koa.router[method];
     if (typeof routerFn !== 'function') return;
     const key = this._key(method, url);
     delete this.routers[key];
-    for (let i = 0; i < koaRouter.stack.length; i++) {
-      const layer = koaRouter.stack[i];
+    for (let i = 0; i < koa.router.stack.length; i++) {
+      const layer = koa.router.stack[i];
       if (layer.methods.includes(method.toUpperCase()) && layer.path === url) {
-        koaRouter.stack.splice(i, 1);
+        koa.router.stack.splice(i, 1);
       }
     }
   }

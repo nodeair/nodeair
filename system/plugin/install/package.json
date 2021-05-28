@@ -1,5 +1,5 @@
 {
-  "name": "nodeair-plugin-core-install",
+  "name": "@nodeair/plugin-core-install",
   "version": "1.0.0",
   "private": true,
   "enable": true,

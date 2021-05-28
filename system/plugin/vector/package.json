@@ -1,5 +1,5 @@
 {
-  "name": "nodeair-plugin-core-vector",
+  "name": "@nodeair/plugin-core-vector",
   "version": "1.0.0",
   "private": true,
   "enable": true,

@@ -140,8 +140,9 @@ class Theme {
    * 初始化主题的静态资源
    */
   _initThemeStaticRes() {
+    const { koa } = this.app;
     const staticPath = path.join(this.currentTheme.basedir);
-    this.app.koaApp.use(this.app.koaStaticCache(staticPath), {
+    koa.app.use(koa.staticCache(staticPath), {
       filter: ['static']
     });
   }

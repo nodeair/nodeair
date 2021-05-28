@@ -12,6 +12,7 @@
     <style>
       .container {
         padding-top: 20px;
+        padding-bottom: 20px;
       }
 
       .form {
@@ -22,7 +23,6 @@
 
       .form-head {
         border-bottom: 1px solid #eaeaea;
-        padding-bottom: 20px;
         font-size: 16px;
       }
 
@@ -32,18 +32,22 @@
 
       .form-foot {
         border-top: 1px solid #eaeaea;
-        margin-top: 20px;
         padding-top: 20px;
         text-align: right;
       }
 
       .tips {
+        padding-bottom: 20px;
         font-size: 12px;
         color: #F56C6C;
       }
 
-      .block {
-        padding: 16px;
+      .form-block {
+        padding: 30px 0 10px 0;
+      }
+
+      .steps {
+        padding: 40px 0 40px 0;
       }
     </style>
 </head>
@@ -51,93 +55,91 @@
 <body>
   <div class="container" id="install">
     <div class="form card">
-      <el-form ref="form" :model="form" label-width="120px" size="medium" label-position="left" >
-        <div class="form-head">
-          <h1>NodeAir 安装向导</h1>
+      <div class="form-head">
+        <h1>NodeAir 安装向导</h1>
+        <div class="steps">
+          <el-steps :active="step" align-center>
+            <el-step title="填写管理员信息"></el-step>
+            <el-step title="填写站点信息"></el-step>
+            <el-step title="填写数据库信息"></el-step>
+          </el-steps>
         </div>
-        <h3 class="menu-label">填写管理员信息</h3>
-        <div class="block">
-          <el-form-item label="昵称">
-            <el-input v-model="form.managerNickname"></el-input>
-          </el-form-item>
-          <el-form-item label="用户名">
-            <el-input v-model="form.managerUsername"></el-input>
-          </el-form-item>
-          <el-form-item label="密码">
-            <el-input type="password" v-model="form.managerPassword"></el-input>
-          </el-form-item>
-          <el-form-item label="确认密码">
-            <el-input type="password" v-model="form.managerPassword2"></el-input>
-          </el-form-item>
+      </div>
+      <div class="step-wrap" v-show="step === 1">
+        <div class="form-block">
+          <el-form ref="manager" :model="manager" :rules="rule.manager" label-width="120px" size="medium" label-position="left" >
+            <el-form-item label="昵称" prop="nickname">
+              <el-input v-model="manager.nickname" placeholder="输入网站管理员的昵称" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="用户名" prop="username">
+              <el-input v-model="manager.username" placeholder="输入网站管理员的用户名" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input style="width: calc(100% - 103px)" v-model="manager.password" placeholder="输入网站管理员的密码" autocomplete="off"></el-input>
+              <el-button type="primary" @click="handleGeneratePassword">随机生成</el-button>
+            </el-form-item>
+          </el-form>
         </div>
-        <h3 class="menu-label">填写站点信息</h3>
-        <div class="block">
-          <el-form-item label="站点名称">
-            <el-input v-model="form.siteTitle"></el-input>
-          </el-form-item>
-          <el-form-item label="站点描述">
-            <el-input v-model="form.siteDescription"></el-input>
-          </el-form-item>
-          <el-form-item label="站点关键词">
-            <el-input type="textarea" v-model="form.siteKeywords"></el-input>
-          </el-form-item>
+      </div>
+      <div class="step-wrap" v-show="step === 2">
+        <div class="form-block">
+          <el-form ref="site" :model="site" :rules="rule.site" label-width="120px" size="medium" label-position="left" >
+            <el-form-item label="站点名称" prop="title">
+              <el-input v-model="site.title" placeholder="输入网站的名称"></el-input>
+            </el-form-item>
+            <el-form-item label="站点描述" prop="description">
+              <el-input v-model="site.description" placeholder="输入网站的描述"></el-input>
+            </el-form-item>
+            <el-form-item label="站点关键词" prop="keywords">
+              <el-input type="textarea" v-model="site.keywords" placeholder="输入网站的关键词，英文逗号分隔"></el-input>
+            </el-form-item>
+          </el-form>
         </div>
-        <h3 class="menu-label">填写数据库信息</h3>
-        <div class="block">
-          <el-form-item label="数据库类型">
-            <el-select v-model="form.databaseType" placeholder="请选择数据库类型">
-              <el-option label="SQLite" value="sqlite"></el-option>
-              <el-option label="MySQL" value="mysql"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="SQLite 存放位置">
-            <el-input v-model="form.databaseOptionsStorage"></el-input>
-          </el-form-item>
+      </div>
+      <div class="step-wrap" v-show="step === 3">
+        <div class="form-block">
+          <el-form ref="database" :model="database" :rules="rule.database" label-width="140px" size="medium" label-position="left" >
+            <el-form-item label="数据库类型" prop="type">
+              <el-select v-model="database.type" placeholder="请选择数据库类型">
+                <el-option label="MySQL" value="mysql"></el-option>
+                <el-option label="SQLite" value="sqlite"></el-option>
+                <el-option label="MariaDB" value="mariadb"></el-option>
+                <el-option label="PostgreSQL" value="postgres"></el-option>
+                <el-option label="msSQL" value="mssql"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="SQLite 存放路径" prop="optionStorage" v-if="database.type === 'sqlite'">
+              <el-input v-model="database.optionStorage" placeholder="输入相对 NodeAir 程序的路径"></el-input>
+            </el-form-item>
+            <el-form-item label="主机（HOST）" prop="optionHost" v-if="database.type !== 'sqlite'">
+              <el-input v-model="database.optionHost" placeholder="如：127.0.0.1"></el-input>
+            </el-form-item>
+            <el-form-item label="端口（PORT）" prop="optionPort" v-if="database.type !== 'sqlite'">
+              <el-input v-model="database.optionPort" placeholder="如：3306"></el-input>
+            </el-form-item>
+            <el-form-item label="数据名称" prop="optionDatabase" v-if="database.type !== 'sqlite'">
+              <el-input v-model="database.optionDatabase" placeholder="如：127.0.0.1:3306"></el-input>
+            </el-form-item>
+            <el-form-item label="用户名" prop="optionUsername" v-if="database.type !== 'sqlite'">
+              <el-input v-model="database.optionUsername" placeholder="输入数据库用户名"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="optionPassword" v-if="database.type !== 'sqlite'">
+              <el-input v-model="database.optionPassword" placeholder="输入数据库密码"></el-input>
+            </el-form-item>
+          </el-form>
         </div>
-        <div class="tips">
-          需要注意的是：SQLite 免费版不支持设置账号密码，若需要加强数据安全，请选择其他的数据库类型。
-        </div>
-        <div class="form-foot">
-          <el-button type="primary" @click="onSubmit"><i class="fab fa-instalod"></i>&nbsp;立即安装</el-button>
-        </div>
-      </el-form>
+      </div>
+      <div class="tips" v-if="database.type === 'sqlite'">
+        需要注意的是：SQLite 免费版不支持设置账号密码，若需要加强数据安全，请选择其他的数据库类型。
+      </div>
+      <div class="form-foot">
+        <el-button type="primary" @click="onPrev" v-if="step > 1" ><i class="fab fa-instalod"></i>&nbsp;上一步</el-button>
+        <el-button type="primary" @click="onNext" v-if="step < 3" ><i class="fab fa-instalod"></i>&nbsp;下一步</el-button>
+        <el-button type="primary" @click="onSubmit" v-if="step === 3" ><i class="fab fa-instalod"></i>&nbsp;立即安装</el-button>
+      </div>
     </div>
   </div>
-  <script type="text/javascript">
-    (function () {
-      new Vue({
-        el: '#install',
-        data: function () {
-          return {
-            form: {
-              managerNickname: '',
-              managerUsername: '',
-              managerPassword: '',
-              managerPassword2: '',
-              siteTitle: '又一个 NodeAir 站点',
-              siteDescription: '又一个 NodeAir 站点',
-              siteKeywords: 'nodeair,nodejs',
-              databaseType: 'sqlite',
-              databaseOptionsStorage: 'data/database.sqlite'
-            }
-          }
-        },
-        methods: {
-          onSubmit: function () {
-            // Make a request for a user with a given ID
-            axios.post('/api/install', this.form)
-              .then(function (response) {
-                if (response.data.code === 0) {
-                  setTimeout(function () {
-                    window.location.href = '/';
-                  }, 100);
-                }
-              });
-          }
-        }
-      })
-    })();
-  </script>
+  <script src="<%= common.domain %>/static/install.js"></script>
 </body>
 
 </html>
