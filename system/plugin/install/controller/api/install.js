@@ -60,9 +60,12 @@ async function installController(ctx) {
   }
   // 获取模型
   const PostModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/post'));
+  const UserModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/user'));
   const post = PostModel(db.sequelize);
+  const user = PostUser(db.sequelize);
   // 建表
   await post.sync();
+  await post.user();
   // 移除所有和安装有关的路由
   const installRouterPath = path.resolve(__dirname, '../../router-config');
   const installRouter = require(installRouterPath);

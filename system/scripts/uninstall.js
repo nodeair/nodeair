@@ -1,45 +1,47 @@
 const path = require('path');
 const fs = require('fs-extra');
-const { Sequelize } = require('sequelize');
-
-/**
- * 连接数据库
- */
-function connet() {
-  const { config, constant } = this.app;
-  const { ROOT } = constant;
-  const { type, options } = config.database;
-  switch(type) {
-    case 'sqlite':
-      const dbPath = path.join(ROOT, options.storage);
-      return new Sequelize({
-        dialect: options.dialect,
-        storage: path.join(ROOT, options.storage);
-      });
-    case 'mysql':
-      const { database, username, password, host, port } = options;
-      return new Sequelize(database, username, password, {
-        host,
-        port,
-        dialect: 'mysql'
-      });
-  }
-  return '';
-}
+const NodeAir = require('../core');
 
 /**
  * 卸载程序
+ * 谨慎操作，会清空所有数据
  */
 async function uninstall() {
-  const constant = require(path.join(__dirname, '../core/constant'));
-  const { USER_CONFIG_FILENAME, USER_CONFIG_PATH } = constant;
-  const dataPath = path.resolve('data');
-  const userConfig = require(USER_CONFIG_PATH);
+  // 实例化
+  const app = new NodeAir();
 
-  // 删除数据库内容
-  // fs.removeSync(dataPath);
-  // fs.writeFileSync(USER_CONFIG_PATH, '{}', 'utf8');
-  console.log('卸载完成');
+  // 去掉 app run 插件
+  app.conf._defaultConfig.systemPluginOrder = app
+    .conf
+    ._defaultConfig
+    .systemPluginOrder
+    .filter(pluginName => pluginName !== 'run');
+  app.config.systemPluginOrder = app
+    .config
+    .systemPluginOrder
+    .filter(pluginName => pluginName !== 'run');
+
+  // 初始化
+  await app.init();
+  
+  const { db } = app;
+  const isConnected = await db.isConnected();
+  const modelNames = await db.getAllModelName();
+  // 移除所有表
+  for (const key in modelNames) {
+    if (modelNames.hasOwnProperty.call(modelNames, key)) {
+      const model = modelNames[key];
+      await model.drop();
+    }
+  }
+
+  // 删除用户配置文件
+  const { constant } = app
+  const { USER_CONFIG_PATH  } = constant;
+  fs.removeSync(USER_CONFIG_PATH);
+
+  // 退出程序
+  process.exit(0);
 }
 
 uninstall();

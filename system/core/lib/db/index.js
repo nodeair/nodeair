@@ -32,9 +32,31 @@ class Db {
     }
   }
   /**
+   * 获取所有表名
+   * @param {*} Model 
+   * @returns 
+   */
+  async getAllModelName() {
+    if (!this.sequelize) return {};
+    return this.sequelize.models;
+  }
+  /**
+   * 判断某个模型是否存在
+   */
+  async existsModel(Model) {
+    if (!this.sequelize || !Model) return false; 
+    const model = Model(this.sequelize);
+    try {
+      let count = await model.count();
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+  /**
    * 连接数据库
    */
-  _connect() {
+   _connect() {
     const { config, constant } = this.app;
     const { ROOT } = constant;
     const { type, options } = config.database;
@@ -55,19 +77,6 @@ class Db {
         });
     }
     return '';
-  }
-  /**
-   * 判断某个模型是否存在
-   */
-  async existsModel(Model) {
-    if (!this.sequelize || !Model) return false; 
-    const model = Model(this.sequelize);
-    try {
-      let count = await model.count();
-      return true;
-    } catch (err) {
-      return false;
-    }
   }
 }
 
