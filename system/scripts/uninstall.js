@@ -9,7 +9,6 @@ const NodeAir = require('../core');
 async function uninstall() {
   // 实例化
   const app = new NodeAir();
-
   // 去掉 app run 插件
   app.conf._defaultConfig.systemPluginOrder = app
     .conf
@@ -20,26 +19,17 @@ async function uninstall() {
     .config
     .systemPluginOrder
     .filter(pluginName => pluginName !== 'run');
-
   // 初始化
   await app.init();
-  
   const { db } = app;
   const isConnected = await db.isConnected();
   const modelNames = await db.getAllModelName();
   // 移除所有表
-  for (const key in modelNames) {
-    if (modelNames.hasOwnProperty.call(modelNames, key)) {
-      const model = modelNames[key];
-      await model.drop();
-    }
-  }
-
+  await db.model.removeAll();
   // 删除用户配置文件
   const { constant } = app
   const { USER_CONFIG_PATH  } = constant;
   fs.removeSync(USER_CONFIG_PATH);
-
   // 退出程序
   process.exit(0);
 }

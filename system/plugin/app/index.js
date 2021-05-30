@@ -1,7 +1,11 @@
 const router = require('./router');
+const model = require('./model');
 
 async function loaded() {
-  // 加载模型
+  const { db } = this;
+  // 注册模型
+  db.model.push(model);
+  // 挂载路由
   await router(this);
 }
 

@@ -53,19 +53,14 @@ async function installController(ctx) {
   conf.load();
   // 重新初始化数据库
   db.init();
+  // 判断数据库是否连接成功
   const isConnected = await db.isConnected();
   if (!isConnected) {
     ctx.body = { code: 1, msg: '数据库连接失败' };
     return;
   }
-  // 获取模型
-  const PostModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/post'));
-  const UserModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/user'));
-  const post = PostModel(db.sequelize);
-  const user = PostUser(db.sequelize);
   // 建表
-  await post.sync();
-  await post.user();
+  const result = await db.model.createAll();
   // 移除所有和安装有关的路由
   const installRouterPath = path.resolve(__dirname, '../../router-config');
   const installRouter = require(installRouterPath);

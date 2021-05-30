@@ -2,9 +2,12 @@ const path = require('path');
 const fs = require('fs-extra');
 const { Sequelize } = require('sequelize');
 
+const Model = require('./model');
+
 class Db {
   constructor(app) {
     this.app = app;
+    this.model = new Model(this);
     this.init();
   }
   /**
