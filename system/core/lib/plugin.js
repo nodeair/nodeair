@@ -1,6 +1,7 @@
 const path = require('path');
 const _ = require('lodash');
 const fs = require('fs');
+const jsonfile = require('jsonfile');
 
 /**
  * 插件类
@@ -8,7 +9,6 @@ const fs = require('fs');
 class Plugin {
   constructor(app) {
     this.app = app;
-    const { constant } = app;
     this._systemPlugins = [];
     this._userPlugins = [];
     this._plugins = [];
@@ -22,6 +22,21 @@ class Plugin {
     this._userPlugins = await this._load('user');
     this._systemPlugins = await this._load('system');
     this._plugins = [...this._userPlugins, ...this._systemPlugins ];
+  }
+  /**
+   * 通过插件名称修改插件配置
+   */
+  modifyConfig(name, config = {}, isWriteToFile = true) {
+    const { constant } = this.app;
+    const { PACKAGE_NAME } = constant;
+    const plugin = this._plugins.find(obj => obj.packageJson.name === name);
+    Object.keys(config).forEach(key => {
+      plugin.packageJson[key] = config[key];
+    });
+    if (isWriteToFile) {
+      const packageJsonPath = path.join(plugin.dir, PACKAGE_NAME);
+      jsonfile.writeFileSync(packageJsonPath, plugin.packageJson, { spaces: 2 });
+    }
   }
   /**
    * 获取插件加载后的列表
@@ -59,17 +74,20 @@ class Plugin {
    * @param {string} type 插件类型
    */
   async _loadPlugin(plugins, order, dir, type) {
+    const { PACKAGE_NAME } = this.app.constant;
     order = Array.isArray(order) ? order : plugins;
     const loadedArray = [];
     for (const plugin of order) {
       if (!plugins.includes(plugin)) continue;
       const pluginDir = path.join(dir, plugin);
-      const packagePath = path.join(pluginDir, 'package.json');
+      const packagePath = path.join(pluginDir, PACKAGE_NAME);
       let packageJson = {};
       if (fs.existsSync(packagePath)) {
         packageJson = require(packagePath);
-        const pluginEntry = require(path.join(dir, plugin, packageJson.main));
-        await this._loadPluginEntry(pluginEntry);
+        if (packageJson.enable === true) {
+          const pluginEntry = require(path.join(dir, plugin, packageJson.main));
+          await this._loadPluginEntry(pluginEntry);
+        }
       } else {
         const indexPath = path.join(dir, plugin, 'index.js');
         if (fs.existsSync(indexPath)) {

@@ -158,6 +158,7 @@
     data: function () {
       const rule = Rule.call(this);
       return {
+        isSubmitted: false,
         step: 1,
         manager: Manager(),
         site: Site(),
@@ -215,6 +216,8 @@
        * 请求
        */
       request() {
+        this.isSubmitted = true;
+        const vm = this;
         const params = {
           manager: this.manager,
           site: this.site,
@@ -224,6 +227,9 @@
           .then(function (response) {
             if (response.data.code === 0) {
               window.location.href = '/';
+            } else {
+              vm.$message.error(response.data.msg);
+              vm.isSubmitted = false;
             }
           });
       },

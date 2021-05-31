@@ -9,6 +9,8 @@ const NodeAir = require('../core');
 async function uninstall() {
   // 实例化
   const app = new NodeAir();
+  const { constant } = app
+  const { ROOT, USER_CONFIG_PATH } = constant;
   // 去掉 app run 插件
   app.conf._defaultConfig.systemPluginOrder = app
     .conf
@@ -21,15 +23,21 @@ async function uninstall() {
     .filter(pluginName => pluginName !== 'run');
   // 初始化
   await app.init();
-  const { db } = app;
-  const isConnected = await db.isConnected();
-  const modelNames = await db.getAllModelName();
+  const { db, config } = app;
   // 移除所有表
   await db.model.removeAll();
+  // 如果数据库类型是 sqlite 则删除对应的文件
+  if (config.database.type === 'sqlite') {
+    const dbPath = path.join(ROOT, config.database.options.storage);
+    fs.removeSync(dbPath);
+  }
   // 删除用户配置文件
-  const { constant } = app
-  const { USER_CONFIG_PATH  } = constant;
   fs.removeSync(USER_CONFIG_PATH);
+  // 修改 install 插件的启用状态
+  const { plugin } = app;
+  plugin.modifyConfig('@nodeair/plugin-core-install', {
+    enable: true
+  });
   // 退出程序
   process.exit(0);
 }

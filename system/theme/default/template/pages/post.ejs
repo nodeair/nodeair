@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="<%= common.lang %>">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('../components/head') -%>
+  <title>
+    <%= pageData.title %>
+  </title>
+</head>
+
+<body class="is-2-column pace-done">
+  <%- include('../components/nav') -%>
+  <div class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen">
+          <div class="card"
+            style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform-origin: center top;">
+            <div class="card-image"><span class="image is-7by3"><img class="fill"
+                  src="https://ppoffice.github.io/hexo-theme-icarus/gallery/covers/vector_landscape_1.svg" alt="Icarus快速上手"></span></div>
+            <article class="card-content article" role="article">
+              <div class="article-meta is-size-7 is-uppercase level is-mobile">
+                <div class="level-left"><span class="level-item"><time datetime="2016-01-05T00:00:00.000Z"
+                      title="1/5/2016, 12:00:00 AM">5 年前</time>发表</span><span class="level-item">5 分钟读完
+                    (大约767个字)</span></div>
+              </div>
+              <h1 class="title is-3 is-size-4-mobile">Icarus快速上手</h1>
+              <div class="content">
+                <p>欢迎使用Icarus！
+                  Icarus是静态网站生成器Hexo的一款简单，精致，而现代的主题。
+                  它力求设计上的优雅，但也不抛弃使用上的简单明了。
+                  它灵活且多功能的配置系统让资深用户也能极尽细节地装饰他们的站点。
+                  Icarus同时也提供了超多插件与挂件来满足你的多元的站点个性化和优化需求。
+                  除此以外，它的崭新实现使得更好的IDE支持和第三方接入成为可能，并提供了更多未来的优化空间。</p>
+                <article class="message message-immersive is-primary">
+                  <div class="message-body">
+                    <i class="fas fa-globe-americas mr-2"></i>本文同时提供以下语言的翻译：
+                    <a href="/hexo-theme-icarus/uncategorized/getting-started-with-icarus/"
+                      class="cursorsHover">English</a>.
+                  </div>
+                </article>
+
+                <span id="more"></span>
+
+                <p>在你继续安装Icarus之前，请先花些时间阅览<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo文档</a>。
+                  如要安装Icarus，你可以选择如下两种方式中的任意一种：</p>
+                <div class="tabs is-boxed my-3">
+                  <ul class="mx-0 my-0">
+                    <li class="is-active">
+                      <a href="#install-source">
+                        <span class="icon is-small"><i class="fas fa-file-code" aria-hidden="true"></i></span>
+                        <span>从源码安装</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#install-npm" class="cursorsHover">
+                        <span class="icon is-small"><i class="fas fa-cubes cursorsHover"
+                            aria-hidden="true"></i></span>
+                        <span>使用NPM安装</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div id="install-source" class="tab-content">
+                  从GitHub的仓库中下载源码的压缩包并解压到你Hexo站点的主题目录中。
+                  或者，你可以使用Git来克隆Icarus的代码仓库到`themes`目录下：
+
+                  <figure class="highlight plaintext hljs" id="code-1622445125030955">
+                    <figcaption class="level is-mobile">
+                      <div class="level-left"><span class="fold"><i class="fas fa-angle-down"></i></span><span>Git
+                          Bash/命令行</span></div>
+                      <div class="level-right"><a href="javascript:;" class="copy" title="Copy"
+                          data-clipboard-target="#code-1622445125030955 .code"><i class="fas fa-copy"></i></a></div>
+                    </figcaption>
+                    <div class="highlight-body">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td class="gutter">
+                              <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                              <pre><span class="line">git clone https://github.com/ppoffice/hexo-theme-icarus.git themes/icarus -b &lt;version number&gt; --depth 1</span><br></pre>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </figure>
+
+                  <p> 你可以省略<code>-b &lt;version number&gt;</code>来获取Icarus的最新开发版本。
+                    如果你想同时下载Git仓库的完整提交历史，请同时省略<code>--depth 1</code>。
+                    另外，你也可以使用下面的命令将Icarus安装为Git子模块(submodule)：</p>
+                  <figure class="highlight plaintext hljs" id="code-1622445125030920">
+                    <figcaption class="level is-mobile">
+                      <div class="level-left"><span class="fold"><i class="fas fa-angle-down"></i></span><span>Git
+                          Bash/命令行</span></div>
+                      <div class="level-right"><a href="javascript:;" class="copy" title="Copy"
+                          data-clipboard-target="#code-1622445125030920 .code"><i class="fas fa-copy"></i></a></div>
+                    </figcaption>
+                    <div class="highlight-body">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td class="gutter">
+                              <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                              <pre><span class="line">git submodule add https://github.com/ppoffice/hexo-theme-icarus.git themes/icarus</span><br></pre>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </figure>
+                </div>
+
+                <div id="install-npm" class="tab-content is-hidden">
+                  若要使用NPM将Icarus安装为Node包，在你的Hexo站点根目录运行如下命令：
+
+                  <figure class="highlight plaintext hljs" id="code-1622445125030643">
+                    <figcaption class="level is-mobile">
+                      <div class="level-left"><span class="fold"><i
+                            class="fas fa-angle-down"></i></span><span>命令行</span></div>
+                      <div class="level-right"><a href="javascript:;" class="copy" title="Copy"
+                          data-clipboard-target="#code-1622445125030643 .code"><i class="fas fa-copy"></i></a></div>
+                    </figcaption>
+                    <div class="highlight-body">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td class="gutter">
+                              <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                              <pre><span class="line">npm install -S hexo-theme-icarus</span><br></pre>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </figure>
+                </div>
+
+                <hr>
+
+                <p>接下来，在你的站点的<code>_config.yml</code>文件中的开启Icarus：</p>
+                <figure class="highlight yaml hljs" id="code-1622445125030913">
+                  <figcaption class="level is-mobile">
+                    <div class="level-left"><span class="fold"><i
+                          class="fas fa-angle-down"></i></span><span>_config.yml</span></div>
+                    <div class="level-right"><a href="javascript:;" class="copy" title="Copy"
+                        data-clipboard-target="#code-1622445125030913 .code"><i class="fas fa-copy"></i></a></div>
+                  </figcaption>
+                  <div class="highlight-body">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><span class="line"><span class="hljs-attr">theme:</span> <span class="hljs-string">icarus</span></span><br></pre>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </figure>
+
+                <p>或使用<code>hexo</code>命令修改主题为Icarus:</p>
+                <figure class="highlight plaintext hljs" id="code-1622445125030258">
+                  <figcaption class="level is-mobile">
+                    <div class="level-left"><span class="fold"><i
+                          class="fas fa-angle-down"></i></span><span>命令行</span></div>
+                    <div class="level-right"><a href="javascript:;" class="copy" title="Copy"
+                        data-clipboard-target="#code-1622445125030258 .code"><i class="fas fa-copy"></i></a></div>
+                  </figcaption>
+                  <div class="highlight-body">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><span class="line">hexo config theme icarus</span><br></pre>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </figure>
+
+
+                <p>最后，使用如下命令来启动Hexo本地测试服务器并开始创作。</p>
+                <figure class="highlight plaintext hljs" id="code-162244512503082">
+                  <figcaption class="level is-mobile">
+                    <div class="level-left"><span class="fold"><i
+                          class="fas fa-angle-down"></i></span><span>命令行</span></div>
+                    <div class="level-right"><a href="javascript:;" class="copy" title="Copy"
+                        data-clipboard-target="#code-162244512503082 .code"><i class="fas fa-copy"></i></a></div>
+                  </figcaption>
+                  <div class="highlight-body">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><span class="line">hexo server</span><br></pre>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </figure>
+
+                <p>如需了解更多主题、挂件、和插件相关的信息，请查看
+                  <a href="/hexo-theme-icarus/tags/Icarus%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/">Icarus用户指南</a>。
+                  你也可以参考本站的源代码来获取更多的使用示例。
+                  本站源代码位于GitHub上Icarus代码仓库的<a target="_blank" rel="noopener"
+                    href="https://github.com/ppoffice/hexo-theme-icarus/tree/site"><code>site</code>分支</a>。
+                  此外，你也可能在<a target="_blank" rel="noopener"
+                    href="https://gitter.im/hexo-theme-icarus/">Gitter</a>上获得其他Icarus用户的帮助。
+                </p>
+                <p><strong>额外资源</strong></p>
+                <p>下面是一些帮助你进一步个性化你的站点的其他资源。
+                  你也可以<a target="_blank" rel="noopener"
+                    href="https://github.com/ppoffice/hexo-theme-icarus/edit/site/source/_posts/zh-CN/Getting-Started.md">点击此处</a>来提交你的Icarus教程。
+                </p>
+                <div class="menu-list is-size-6">
+                  <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/index.html"><i
+                      class="fas fa-bookmark mr-2"></i> Hexo中文文档</a>
+                  <a target="_blank" rel="noopener"
+                    href="https://removeif.github.io/theme/%E5%8D%9A%E5%AE%A2%E6%BA%90%E7%A0%81%E5%88%86%E4%BA%AB.html"><i
+                      class="fas fa-bookmark mr-2"></i> 博客源码分享 by 辣椒の酱</a>
+                  <a target="_blank" rel="noopener" href="https://www.imaegoo.com/2020/icarus-3-guide/"><i
+                      class="fas fa-bookmark mr-2"></i> hexo-theme-icarus 3 食用经验分享 by iMaeGoo</a>
+                  <a target="_blank" rel="noopener" href="https://www.imaegoo.com/2020/icarus-with-bulma/"><i
+                      class="fas fa-bookmark mr-2"></i> 活用 Bulma 美化 Icarus 文章 by iMaeGoo</a>
+                </div>
+
+                <br>
+
+                <article class="message message-immersive is-warning">
+                  <div class="message-body">
+                    <i class="fas fa-question-circle mr-2"></i>文章内容有误？点击<a target="_blank" rel="noopener"
+                      href="https://github.com/ppoffice/hexo-theme-icarus/edit/site/source/_posts/zh-CN/Getting-Started.md">此处</a>提交修改。
+                  </div>
+                </article>
+
+                <p><a
+                    style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-size:12px;line-height:1.2;display:inline-block;border-radius:3px"
+                    href="https://www.dpm.org.cn/collection/paint/228354.html" target="_blank"
+                    rel="noopener noreferrer"><span style="display:inline-block;padding:2px 3px"><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white"
+                        viewBox="0 0 32 32">
+                        <title>unsplash-logo</title>
+                        <path
+                          d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z">
+                        </path>
+                      </svg></span><span style="display:inline-block;padding:2px 3px">王希孟 千里江山图卷</span></a></p>
+                <script>
+                  document.querySelectorAll('.not-gallery-item')
+                    .forEach(el => {
+                      if (!el.dataset.src) { return; }
+                      const img = document.createElement('img');
+                      img.style = 'display:none !important;';
+                      img.src = el.dataset.src;
+                      img.addEventListener('error', () => {
+                        img.remove();
+                        el.style.color = 'inherit';
+                        el.style.backgroundImage = 'none';
+                        el.style.background = 'none';
+                      });
+                      img.addEventListener('load', () => {
+                        img.remove();
+                      });
+                      document.body.appendChild(img);
+                    });
+                </script>
+              </div>
+              <div class="article-licensing box">
+                <div class="licensing-title">
+                  <p>Icarus快速上手</p>
+                  <p><a href="http://blog.zhangruipeng.me/hexo-theme-icarus/uncategorized/icarus快速上手/"
+                      class="cursorsHover">http://blog.zhangruipeng.me/hexo-theme-icarus/uncategorized/icarus快速上手/</a>
+                  </p>
+                </div>
+                <div class="licensing-meta level is-mobile">
+                  <div class="level-left">
+                    <div class="level-item is-narrow">
+                      <div>
+                        <h6>作者</h6>
+                        <p>PPOffice</p>
+                      </div>
+                    </div>
+                    <div class="level-item is-narrow">
+                      <div>
+                        <h6>发布于</h6>
+                        <p>2016-01-05</p>
+                      </div>
+                    </div>
+                    <div class="level-item is-narrow">
+                      <div>
+                        <h6>许可协议</h6>
+                        <p><a class="icons" rel="noopener" target="_blank" title="Creative Commons"
+                            href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a
+                            class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0"
+                            href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag"
+                  href="/hexo-theme-icarus/tags/Getting-Started/">Getting Started</a><a class="link-muted mr-2"
+                  rel="tag" href="/hexo-theme-icarus/tags/Icarus%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/">Icarus用户指南</a>
+              </div>
+              <div class="sharethis-inline-share-buttons st-center  st-inline-share-buttons st-animated" id="st-1">
+                <div class="st-total ">
+                  <span class="st-label">171</span>
+                  <span class="st-shares">
+                    Shares
+                  </span>
+                </div>
+                <div class="st-btn st-first" data-network="facebook" style="display: inline-block;">
+                  <img alt="facebook sharing button" src="https://platform-cdn.sharethis.com/img/facebook.svg">
+
+                </div>
+                <div class="st-btn" data-network="twitter" style="display: inline-block;">
+                  <img alt="twitter sharing button" src="https://platform-cdn.sharethis.com/img/twitter.svg">
+
+                </div>
+                <div class="st-btn" data-network="pinterest" style="display: inline-block;">
+                  <img alt="pinterest sharing button" src="https://platform-cdn.sharethis.com/img/pinterest.svg">
+
+                </div>
+                <div class="st-btn" data-network="email" style="display: inline-block;">
+                  <img alt="email sharing button" src="https://platform-cdn.sharethis.com/img/email.svg">
+
+                </div>
+                <div class="st-btn st-last" data-network="sharethis" style="display: inline-block;">
+                  <img alt="sharethis sharing button" src="https://platform-cdn.sharethis.com/img/sharethis.svg">
+
+                </div>
+              </div>
+              <script
+                src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons"
+                defer=""></script>
+            </article>
+          </div>
+          <!--!-->
+          <nav class="post-navigation mt-4 level is-mobile"
+            style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform-origin: center top;">
+            <div class="level-start"><a class="article-nav-prev level level-item link-muted"
+                href="/hexo-theme-icarus/Plugins/Comment/icarus-user-guide-comment-plugins/"><i
+                  class="level-item fas fa-chevron-left"></i><span class="level-item">Icarus User Guide - Comment
+                  Plugins</span></a></div>
+            <div class="level-end"><a class="article-nav-next level level-item link-muted"
+                href="/hexo-theme-icarus/Configuration/icarus%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97-%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"><span
+                  class="level-item">Icarus用户指南 - 主题配置</span><i class="level-item fas fa-chevron-right"></i></a></div>
+          </nav>
+          <!--!-->
+        </div>
+        <div class="column column-left is-4-tablet is-4-desktop is-4-widescreen order-1 is-sticky">
+          <%- include('../widgets/profile') -%>
+          <%- include('../widgets/links') -%>
+          <%- include('../widgets/categories') -%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('../components/footer') -%>
+</body>
+
+</html>

@@ -9,6 +9,7 @@
     "index": "template/pages/index.ejs",
     "search": "template/pages/search.ejs",
     "install": "template/pages/install.ejs",
+    "post": "template/pages/post.ejs",
     "not-installed": "template/pages/not-installed.ejs"
   }
 }

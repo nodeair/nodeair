@@ -14,15 +14,15 @@ class Db {
    * 初始化
    */
   init() {
-    const { conf, config, constant } = this.app;
-    const { ROOT } = constant;
+    const { conf } = this.app;
     if (!conf.isUserExists()) return;
-    this.sequelize = this._connect();
+    const config = conf.get();
+    this.sequelize = this.connect(config.database);
   }
   /** 
    * 检测数据库是否连接成功
    */
-  async isConnected() {
+  async checkConnected() {
     const { log } = this.app;
     if (!this.sequelize) return false;
     try {
@@ -59,10 +59,10 @@ class Db {
   /**
    * 连接数据库
    */
-   _connect() {
-    const { config, constant } = this.app;
+   connect(databaseConfig) {
+    const { constant } = this.app;
     const { ROOT } = constant;
-    const { type, options } = config.database;
+    const { type, options } = databaseConfig;
     switch(type) {
       case 'sqlite':
         const dbPath = path.join(ROOT, options.storage);

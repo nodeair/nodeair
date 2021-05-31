@@ -1,4 +1,3 @@
-const path = require('path');
 const fs = require('fs');
 
 /**
@@ -15,7 +14,7 @@ const fs = require('fs');
    */
   load() {
     const { constant } = this.app;
-    const { ROOT, USER_CONFIG_PATH, SYSTEM_CONFIG_PATH } = constant;
+    const { USER_CONFIG_PATH, SYSTEM_CONFIG_PATH } = constant;
     delete require.cache[USER_CONFIG_PATH];
     delete require.cache[SYSTEM_CONFIG_PATH];
     this._defaultConfig = this.isSystemExists() ? require(SYSTEM_CONFIG_PATH) : {};
@@ -53,7 +52,6 @@ const fs = require('fs');
   */
   _mergeConfig() {
     const { _userConfig: userConfig, _defaultConfig: defaultConfig } = this;
-    const userKeys = Object.keys(userConfig);
     const defaultKeys = Object.keys(defaultConfig);
     const config = {};
     defaultKeys.forEach(key => {

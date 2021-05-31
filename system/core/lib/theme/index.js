@@ -18,6 +18,7 @@ class Theme {
       'index',
       'search',
       'install',
+      'post',
       'not-installed'
     ];
     this.head = new Head(this);
