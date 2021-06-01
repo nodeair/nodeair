@@ -1,11 +1,56 @@
-module.exports = {
-  installed() {
+const path = require('path');
 
-  },
-  loaded() {
-
-  },
-  uninstalled() {
-
-  }
+/**
+ * 主题加载完成
+ */
+async function loaded() {
+  const ejsDir = path.join(__dirname, 'template/widgets');
+  this.widget.register({
+    'index-left': {
+      ejsDir,
+      widgets: ['profile', 'links', 'categories']
+    },
+    'index-right': {
+      ejsDir,
+      widgets: ['recent-post', 'archives', 'tags']
+    }
+  });
 }
+
+/**
+ * 主题每次进行渲染之前
+ */
+async function beforeMount() {
+  const nickname = function() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('陈治兵');
+      }, 1000);
+    })
+  }
+  this.widget.addData('index-left', 'profile', {
+    nickname: await nickname()
+  });
+  this.widget.addData('index-left', 'links', {
+    name: '链接'
+  });
+  this.widget.addData('index-left', 'categories', {
+    name: '文章分类'
+  });
+  this.widget.addData('index-right', 'recent-post', {
+    name: '最新文章'
+  });
+  this.widget.addData('index-right', 'archives', {
+    name: '文章归档'
+  });
+  this.widget.addData('index-right', 'tags', {
+    name: '文章标签'
+  });
+}
+
+module.exports = {
+  installed() {},
+  loaded,
+  beforeMount,
+  uninstalled() {}
+};

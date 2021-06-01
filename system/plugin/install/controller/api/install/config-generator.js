@@ -7,6 +7,10 @@
     debug: false,
     createTime: new Date().getTime(),
     isInstalled: true,
+    cache: {
+      enable: true,
+      interval: 60000
+    },
     site: {
       title: site.title,
       description: site.description,

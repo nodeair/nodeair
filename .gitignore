@@ -1,3 +1,5 @@
 /node_modules
 /data
+/upload
+/cache
 nodeair.config.json

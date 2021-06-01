@@ -2,6 +2,7 @@
  * NodeAir 核心服务
  */
 const Util = require('./util');
+const Cache = require('./lib/cache');
 const Koa = require('./lib/koa');
 const Plugin = require('./lib/plugin');
 const Config = require('./lib/config');
@@ -18,6 +19,7 @@ class NodeAir {
     this.env = options.env || 'dev';
     this.constant = constant.call(this);
     this.log = new Log(this);
+    this.cache = new Cache(this);
     this.koa = new Koa(this);
     this.conf = new Config(this);
     this.config = this.conf.get();

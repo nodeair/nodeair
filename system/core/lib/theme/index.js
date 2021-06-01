@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const cheerio = require('cheerio');
+const { v4: uuidv4 } = require('uuid');
 
 const ejs = require('./ejs');
 const htmlUtil = require('./html-util');
@@ -13,6 +14,7 @@ class Theme {
   constructor(app) {
     app.log.system('实例化Theme类');
     this.app = app;
+    this.ejs = ejs;
     this.THEME_NAME = this.app.config.theme;
     this.PAGES_NAME = [
       'index',
@@ -28,6 +30,7 @@ class Theme {
    */
   async init() {
     this._getCurrentTheme();
+    await this._emitThemeHook('loaded');
     this._getTplPath();
     this._initThemeStaticRes();
   }
@@ -36,10 +39,27 @@ class Theme {
    * @param {Object} options 参数
    */
   async render(options = {}) {
-    const { pageName, data, ctx } = options
-    const { config, util, hook, lang } = this.app;
+    const { pageName, data, ctx } = options;
+    const { ejs, app, tplPath } = this;
+    const { constant, cache, config, util, hook, lang } = app;
+    if (config.cache.enable === true) {
+      const { isExpired, value: cachePath } = cache.get({ pageName, data });
+      if (cachePath && fs.existsSync(cachePath)) {
+        await fs.readFile(cachePath, 'utf8');
+        if (isExpired && cachePath) {
+          fs.unlinkSync(cachePath);
+        } else if (!isExpired && cachePath) {
+          const html = await fs.readFile(cachePath);
+          ctx.set('Content-Type', 'text/html; charset=utf-8');
+          ctx.body = html;
+          return html;
+        }
+      }
+    }
+
+    await this._emitThemeHook('beforeMount');
     const state = {
-      filePath: this.tplPath[pageName],
+      filePath: tplPath[pageName],
       renderOptions: {
         text: function (key) {
           return lang.text(key);
@@ -95,7 +115,27 @@ class Theme {
     // 调用钩子
     await hook.emit('core.nodeair.theme.render.08', state);
 
+    // 判断是否启用了缓存
+    if (config.cache.enable === true) {
+      const { CACHE_DIR } = constant;
+      const fileName = uuidv4();
+      const filePath = path.join(CACHE_DIR, fileName);
+      fs.writeFileSync(filePath, state.html)
+      cache.set({ pageName, data }, filePath);
+    }
+
+    // 返回html
     return state.html;
+  }
+  /**
+   * 触发当前主题的生命周期
+   */
+  async _emitThemeHook(name) {
+    const { basedir, package: packageJson } = this.currentTheme;
+    const indexPath = path.join(basedir, packageJson.main);
+    const object = require(indexPath);
+    const hookFn = object[name];
+    return await hookFn.call(this.app);
   }
   /**
    * 获取当前主题信息

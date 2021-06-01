@@ -12,7 +12,7 @@ async function installController(ctx) {
   // 获取POST请求数据
   log.system('获取POST请求数据');
   const params = ctx.request.body;
-  // 生成用户配置
+  // 生成用户配置 
   log.system('生成用户配置');
   const userConfig = userConfigGenerator(params);
   // 检测数据库是否可以连接
@@ -24,7 +24,8 @@ async function installController(ctx) {
   }
   // 将配置信息写入文件
   log.system('将配置信息写入文件');
-  jsonfile.writeFileSync(USER_CONFIG_PATH, userConfig, { spaces: 2 });
+  conf.modifyUserConfig(userConfig);
+  // jsonfile.writeFileSync(USER_CONFIG_PATH, userConfig, { spaces: 2 });
   // 重新加载用户配置文件
   log.system('重新加载用户配置文件');
   conf.load();

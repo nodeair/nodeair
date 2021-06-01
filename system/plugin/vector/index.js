@@ -2,7 +2,8 @@ const fs = require('fs-extra');
 const path = require('path');
 
 async function loaded() {
-  const { hook, theme, router, koa } = this;
+  const { log, hook, theme, router, koa } = this;
+  log.system('加载vector插件');
   const state = {
     vue: {
       type: 'script',

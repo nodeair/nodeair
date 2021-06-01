@@ -18,14 +18,10 @@
             <% }); %>
           </div>
           <div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1">
-            <%- include('../widgets/profile') -%>
-            <%- include('../widgets/links') -%>
-            <%- include('../widgets/categories') -%>
+            <%- getWidgets('index-left') -%>
           </div>
           <div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3">
-            <%- include('../widgets/recent-post') -%>
-            <%- include('../widgets/archives') -%>
-            <%- include('../widgets/tags') -%>
+            <%- getWidgets('index-right') -%>
           </div>
         </div>
       </div>

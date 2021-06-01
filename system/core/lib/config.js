@@ -20,7 +20,7 @@ const fs = require('fs');
     delete require.cache[SYSTEM_CONFIG_PATH];
     this._defaultConfig = this.isSystemExists() ? require(SYSTEM_CONFIG_PATH) : {};
     this._userConfig = this.isUserExists() ? require(USER_CONFIG_PATH) : {};
-    this._config = this._mergeConfig();
+    this._config = this._mergeConfig(this._defaultConfig, this._userConfig);
   }
   /**
    * 获取配置信息
@@ -31,6 +31,17 @@ const fs = require('fs');
       case 'system': return this._defaultConfig;
       default: return this._config; 
     }
+  }
+  /**
+   * 修改用户配置信息
+   */
+  modifyUserConfig(configObject) {
+    const { constant } = this.app;
+    const { USER_CONFIG_PATH } = constant;
+    if (!this.isUserExists()) return;
+    this._userConfig = this._mergeConfig(this._userConfig, configObject);
+    jsonfile.writeFileSync(USER_CONFIG_PATH, this._userConfig, { spaces: 2 });
+    this._config = this._mergeConfig(this._defaultConfig, this._userConfig);
   }
   /**
    * 检测用户配置文件是否存在
@@ -51,16 +62,15 @@ const fs = require('fs');
   /**
    * 合并配置文件
   */
-  _mergeConfig() {
-    const { _userConfig: userConfig, _defaultConfig: defaultConfig } = this;
-    const defaultKeys = Object.keys(defaultConfig);
-    const config = {};
-    defaultKeys.forEach(key => {
-      const userValue = userConfig[key];
-      const defaultValue = defaultConfig[key];
-      config[key] = typeof userValue !== 'undefined' ? userValue : defaultValue;
+  _mergeConfig(sourceConfig, mergeConfig) {
+    const sourceKeys = Object.keys(sourceConfig);
+    const newConfig = {};
+    sourceKeys.forEach(key => {
+      const mergeValue = mergeConfig[key];
+      const sourceValue = sourceConfig[key];
+      newConfig[key] = typeof mergeValue !== 'undefined' ? mergeValue : sourceValue;
     });
-    return config;
+    return newConfig;
   }
 }
 

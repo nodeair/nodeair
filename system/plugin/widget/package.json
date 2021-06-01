@@ -1,0 +1,8 @@
+{
+  "name": "@nodeair/plugin-core-widget",
+  "version": "1.0.0",
+  "private": true,
+  "enable": true,
+  "description": "核心插件/提供侧栏小卡片的能力",
+  "main": "index.js"
+}
