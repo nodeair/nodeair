@@ -3,6 +3,7 @@
  */
 class Lang {
   constructor(app) {
+    app.log.system('实例化Lang类');
     this.app = app;
     this._langText = {
       'zh-cn': {},

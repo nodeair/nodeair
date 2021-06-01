@@ -5,6 +5,7 @@ const fs = require('fs');
  */
  class Config {
   constructor(app) {
+    app.log.system('实例化Config类');
     this.app = app;
     this._config = {};
     this.load();

@@ -1,40 +1,25 @@
-const path = require('path');
-
-const routerConfig = require('./router-config');
+const routerConfig = require('./controller');
 const langConf = require('./lang');
-
-/**
- * 检查 NodeAir 是否安装
- */
-async function checkInstall() {
-  const { constant, config, db } = this;
-  const { SYSTEM_PLUGIN_DIR } = constant;
-  const confiIsInstalled = config.isInstalled;
-  // 首先检测数据库是否连接成功
-  const isConnected = await db.checkConnected();
-  if (!isConnected) return false;
-  const PostModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/post'));
-  const isModelExist = await db.existsModel(PostModel);
-  return confiIsInstalled && isModelExist;
-}
+const checkInstalled = require('./util/check-installed');
+const notInstalledViewController = require('./controller/view/not-installed');
 
 async function loaded() {
-  const { koa, lang, router, hook } = this;
+  const { lang, router, hook } = this;
   const app = this;
-  const isInstalled = await checkInstall.call(this);
 
+  // 判断程序是否已安装
+  const isInstalled = await checkInstalled(this);
   if (isInstalled) return;
+
   // 注册插件所使用的多语言文案
   lang.register(langConf.call(this));
 
+  // 定义状态
   const state = {
-    router: routerConfig.call(app),
-    async handler404(ctx, next) {
-      try {
-        await next();
-        if (!ctx.body) await notInstalledController.apply(app, [ctx, next]);
-      } catch (e) {
-        ctx.body = '500';
+    routers: await routerConfig(app),
+    installHandler404: async function(ctx, next) {
+      if (ctx.status == '404') {
+        await notInstalledViewController.apply(app, [ctx, next]);
       }
     }
   }
@@ -43,12 +28,10 @@ async function loaded() {
   await hook.emit('core.install.01', state);
 
   // 处理404情况
-  koa.app.use(state.handler404)
+  router.pushErrorHandler('installHandler404', state.installHandler404);
 
-  // 循环注册路由
-  for (const item of state.router) {
-    router.push(item.type, item.url, item.controller);
-  }
+  // 注册路由
+  await router.push(state.routers);
 }
 
 module.exports = loaded;

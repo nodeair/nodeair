@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "node system/scripts/boot.dev.js",
     "dev:watch": "nodemon node system/scripts/boot.dev.js",
+    "start": "node system/scripts/boot.prod.js",
+    "mock": "system/scripts/mock/bin.js",
     "uninstall": "node system/scripts/uninstall.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +24,7 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.9",
+    "crypto": "^1.0.1",
     "ejs": "^3.1.6",
     "fs-extra": "^10.0.0",
     "html-minifier": "^4.0.0",

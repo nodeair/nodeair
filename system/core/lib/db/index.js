@@ -6,6 +6,7 @@ const Model = require('./model');
 
 class Db {
   constructor(app) {
+    app.log.system('实例化Db类');
     this.app = app;
     this.model = new Model(this);
     this.init();
@@ -27,10 +28,10 @@ class Db {
     if (!this.sequelize) return false;
     try {
       await this.sequelize.authenticate();
-      log.system('Connection has been established successfully.');
+      log.success('Connection has been established successfully.');
       return true;
     } catch (error) {
-      log.system('Unable to connect to the database:', error);
+      log.error('Unable to connect to the database:', error);
       return false;
     }
   }
@@ -46,11 +47,13 @@ class Db {
   /**
    * 判断某个模型是否存在
    */
-  async existsModel(Model) {
-    if (!this.sequelize || !Model) return false; 
-    const model = Model(this.sequelize);
+  async existsModel(modelFactory) {
+    if (!this.sequelize || !modelFactory) return false;
+    const params = modelFactory(this.app);
+    const { name, structure } = params;
+    const model = this.sequelize.define(name, structure);
     try {
-      let count = await model.count();
+      await model.count();
       return true;
     } catch (err) {
       return false;
@@ -76,6 +79,12 @@ class Db {
         return new Sequelize(database, username, password, {
           host,
           port,
+          dialectOptions: {
+            charset: "utf8mb4",
+            collate: "utf8mb4_unicode_ci",
+            supportBigNumbers: true,
+            bigNumberStrings: true
+          },
           dialect: 'mysql'
         });
     }

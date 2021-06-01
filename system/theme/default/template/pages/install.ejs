@@ -75,8 +75,14 @@
               <el-input v-model="manager.username" placeholder="输入网站管理员的用户名" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
-              <el-input style="width: calc(100% - 110px)" v-model="manager.password" placeholder="输入网站管理员的密码" autocomplete="off"></el-input>
-              <el-button type="primary" style="margin-left: 10px" @click="handleGeneratePassword">随机生成</el-button>
+              <el-row>
+                <el-col :span="19" style="padding-right: 10px;">
+                  <el-input v-model="manager.password" placeholder="输入网站管理员的密码" autocomplete="off"></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <el-button type="primary" @click="handleGeneratePassword">随机生成</el-button>
+                </el-col>
+              </el-row>
             </el-form-item>
           </el-form>
         </div>

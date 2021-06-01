@@ -15,12 +15,13 @@ const constant = require('./constant');
 
 class NodeAir {
   constructor(options = {}) {
+    this.env = options.env || 'dev';
     this.constant = constant.call(this);
+    this.log = new Log(this);
     this.koa = new Koa(this);
     this.conf = new Config(this);
     this.config = this.conf.get();
     this.plugin = new Plugin(this);
-    this.log = new Log(this);
     this.util = new Util(this);
     this.hook = new Hook(this);
     this.lang = new Lang(this);

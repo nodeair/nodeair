@@ -8,6 +8,7 @@ const jsonfile = require('jsonfile');
  */
 class Plugin {
   constructor(app) {
+    app.log.system('实例化Plugin类');
     this.app = app;
     this._systemPlugins = [];
     this._userPlugins = [];

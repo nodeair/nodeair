@@ -1,4 +1,4 @@
-async function notInstalledController(ctx, next) {
+async function notInstalledController(ctx) {
   const { theme, hook } = this;
   const state = {
     data: {

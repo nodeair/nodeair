@@ -3,8 +3,38 @@
  */
 class Router {
   constructor(app) {
+    app.log.system('实例化Router类');
     this.app = app;
     this.routers = {};
+    this.errorHandlers = [];
+    this.init();
+  }
+  /**
+   * 初始化
+   */
+  init() {
+    const { app } = this;
+    const { koa } = app;
+    const { errorHandlers } = this;
+    koa.app.use(async (ctx, next) => {
+      try {
+        await next();
+        if (!ctx.body) {
+          for (let i = 0; i < errorHandlers.length; i++) {
+            const item = errorHandlers[i];
+            const { controller } = item;
+            await controller.apply(app, [ctx, next]);
+          }
+        }
+      } catch (e) {
+        app.log.error(e);
+        for (let i = 0; i < errorHandlers.length; i++) {
+          const item = errorHandlers[i];
+          const { controller } = item;
+          await controller.apply(app, [ctx, next]);
+        }
+      }
+    });
   }
   /**
    * 判断某个路由是否已经被注册
@@ -14,33 +44,88 @@ class Router {
     return Boolean(this.routers[key]);
   }
   /**
-   * 注册一个路由和一个控制器
+   * 注册错误处理器
+   * @param {String} name 处理器名称
    */
-  push(method, url, controller) {
+  pushErrorHandler(name, controller) {
+    this.errorHandlers.push({
+      name,
+      controller
+    });
+  }
+  /**
+   * 移除错误错误器
+   * @param {String} name 处理器名称
+   */
+  removeErrorHandler(name) {
+    for (let i = 0; i < this.errorHandlers.length; i++) {
+      const handler = this.errorHandlers[i];
+      if (handler.name === name) {
+        this.errorHandlers.splice(i, 1);
+      }
+    }
+  }
+  /**
+   * 注册多个路由和控制器
+   * @param {Array} array 路由配置
+   */
+  async push(array) {
+    const { hook } = this.app;
+    await hook.emit('core.nodeair.router.push.01', array);
+    for (let i = 0; i < array.length; i++) {
+      const item = array[i];
+      await hook.emit('core.nodeair.router.push.02', item);
+      const { method, path, controller } = item;
+      this.pushOne(method, path, controller);
+    }
+  }
+  /**
+   * 注册一个路由和一个控制器
+   * @param {String} method 请求方法
+   * @param {String} path 请求路径
+   * @param {Function} controller 控制器
+   */
+  pushOne(method, path, controller) {
     const { koa } = this.app;
     method = method.toLowerCase();
     if (typeof controller !== 'function') return;
     const routerFn = koa.router[method];
     if (typeof routerFn !== 'function') return;
 
-    const key = this._key(method, url);
+    const key = this._key(method, path);
     controller = controller.bind(this.app);
     this.routers[key] = controller;
-    koa.router[method](url, controller);
+    koa.router[method](path, controller);
+  }
+  /**
+   * 删除多个路由和控制器
+   * @param {Array} array 路由配置
+   */
+  async remove(array) {
+    const { hook } = this.app;
+    await hook.emit('core.nodeair.router.remove.01', array);
+    for (let i = 0; i < array.length; i++) {
+      const item = array[i];
+      await hook.emit('core.nodeair.router.remove.02', item);
+      const { method, path } = item;
+      this.removeOne(method, path);
+    }
   }
   /**
    * 删除一个路由和它的控制器
+   * @param {String} method 请求方法
+   * @param {String} path 请求路径
    */
-  remove(method, url) {
+  removeOne(method, path) {
     const { koa } = this.app;
     method = method.toLowerCase();
     const routerFn = this.app.koa.router[method];
     if (typeof routerFn !== 'function') return;
-    const key = this._key(method, url);
+    const key = this._key(method, path);
     delete this.routers[key];
     for (let i = 0; i < koa.router.stack.length; i++) {
       const layer = koa.router.stack[i];
-      if (layer.methods.includes(method.toUpperCase()) && layer.path === url) {
+      if (layer.methods.includes(method.toUpperCase()) && layer.path === path) {
         koa.router.stack.splice(i, 1);
       }
     }

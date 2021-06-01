@@ -3,6 +3,7 @@
  */
 class Hook {
   constructor(app) {
+    app.log.system('实例化Hook类');
     this.app = app;
     this.events = [];
   }

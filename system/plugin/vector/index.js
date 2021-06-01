@@ -43,7 +43,7 @@ async function loaded() {
   Object.keys(state).forEach(key => {
     const item = state[key];
     theme.head.push(item.url, item.type);
-    router.push('GET', item.router, function (ctx, next) {
+    router.pushOne('GET', item.router, function (ctx, next) {
       let contentType = '';
       if (item.type === 'css') {
         contentType = 'text/css; charset=utf-8';

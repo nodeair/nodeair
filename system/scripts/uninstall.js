@@ -9,6 +9,12 @@ const NodeAir = require('../core');
 async function uninstall() {
   // 实例化
   const app = new NodeAir();
+  // 检测数据库是否连接
+  const isConnected = await app.db.checkConnected();
+  if (!isConnected) {
+    app.log.error('数据库连接失败');
+    process.exit(0);
+  }
   const { constant } = app
   const { ROOT, USER_CONFIG_PATH } = constant;
   // 去掉 app run 插件
@@ -25,7 +31,7 @@ async function uninstall() {
   await app.init();
   const { db, config } = app;
   // 移除所有表
-  await db.model.removeAll();
+  await db.model.dropAll();
   // 如果数据库类型是 sqlite 则删除对应的文件
   if (config.database.type === 'sqlite') {
     const dbPath = path.join(ROOT, config.database.options.storage);

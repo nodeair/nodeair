@@ -16,7 +16,7 @@ async function loaded() {
   await hook.emit('core.sdk.01', state);
 
   // 监听路由
-  router.push('GET', state.nodeair.router, function (ctx) {
+  router.pushOne('GET', state.nodeair.router, function (ctx) {
     ctx.set('Content-Type', 'application/javascript; charset=utf-8');
     ctx.body = state.nodeair.content;
   });

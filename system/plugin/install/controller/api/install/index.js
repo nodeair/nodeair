@@ -5,8 +5,6 @@ const userConfigGenerator = require('./config-generator');
 
 /**
  * 安装控制器
- * @param {*} ctx 
- * @returns 
  */
 async function installController(ctx) {
   const { log, constant, conf, db, router, plugin } = this;
@@ -43,24 +41,29 @@ async function installController(ctx) {
   // 建表
   log.system('建表');
   await db.model.createAll();
+  // 将用户信息插入到用户表
+  const { models } = db.model;
+  const { User } = models;
+  await User.create({
+    nickname: params.manager.nickname,
+    username: params.manager.username,
+    password: params.manager.password
+  });
   // 移除所有和安装有关的路由
   log.system('移除所有和安装有关的路由');
-  const installRouterPath = path.resolve(__dirname, '../../../router-config');
-  const installRouter = require(installRouterPath);
-  const routers = installRouter.call(this);
-  routers.forEach(item => {
-    router.remove(item.type, item.url);
-  });
+  const routerConfigPath = path.resolve(__dirname, '../../index.js');
+  const routerConfig = require(routerConfigPath);
+  const routers = await routerConfig(this);
+  await router.remove(routers);
+  router.removeErrorHandler('installHandler404');
   // 禁用 install 插件
   log.system('禁用 install 插件');
-  plugin.modifyConfig('@nodeair/plugin-core-install', {
-    enable: false
-  });
+  plugin.modifyConfig('@nodeair/plugin-core-install', { enable: false });
   // 返回结果
   log.system('返回安装结果');
   ctx.body = {
     code: 0,
-    msg: '安装完毕'
+    msg: '安装完毕，请重新启用程序'
   };
 }
 

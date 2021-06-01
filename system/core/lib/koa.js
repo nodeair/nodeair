@@ -15,6 +15,7 @@ koaApp.use(koaRouter.routes());
  */
 class NodeAirKoa {
   constructor(app) {
+    app.log.system('实例化Koa类');
     this.nodeairApp = app;
     this.app = koaApp;
     this.router = koaRouter;

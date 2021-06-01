@@ -6,6 +6,7 @@ const chalk = require('chalk');
 class Log {
   constructor(app) {
     this.app = app;
+    this.system('实例化Log类');
   }
   /**
    * 打印日志
@@ -22,13 +23,26 @@ class Log {
     return this._log.apply(this, ['yellow', ...args ]);
   }
   /**
+   * 成功
+   */
+  success() {
+    const args = Array.from(arguments);
+    return this._log.apply(this, ['green', ...args ]);
+  }
+  /**
+   * 错误
+   */
+  error() {
+    const args = Array.from(arguments);
+    return this._log.apply(this, ['red', ...args ]);
+  }
+  /**
    * 打印
    */
   _log(type) {
-    const { constant, config } = this.app;
-    const { debug } = config;
-    if (!debug) return;
-    const time = new Date();
+    const { env, constant } = this.app;
+    if (env !== 'dev') return;
+    const time = new Date().toLocaleString();
     const args = Array.from(arguments);
     args.shift();
     args.forEach((item, index) => {

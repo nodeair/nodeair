@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "enable": true,
-  "description": "核心插件/基础app应用",
+  "description": "核心插件/基础应用。该插件提供了用户、文章、评论、导航、底部等常规的基础能力",
   "main": "index.js"
 }

@@ -5,6 +5,7 @@
   const { site, database } = params;
   const userConfig = {
     debug: false,
+    createTime: new Date().getTime(),
     isInstalled: true,
     site: {
       title: site.title,
