@@ -53,7 +53,7 @@ class Theme {
   async render(options = {}) {
     const { pageName, data, ctx } = options;
     const { ejs, app, tplPath } = this;
-    const { config, util, hook, lang } = app;
+    const { config, conf, util, hook, lang } = app;
 
     // 尝试读取缓存
     const result = await this._readCache(options);
@@ -74,9 +74,11 @@ class Theme {
       },
       html: ''
     };
-
-    // 触发主题生命周期
-    await this.emitHook('beforeMount', state);
+    
+    if (conf.isUserExists()) {
+      // 触发主题生命周期
+      await this.emitHook('beforeMount', state);
+    }
 
     // 调用钩子
     await hook.emit('core.nodeair.theme.render.01', state);

@@ -30,7 +30,6 @@ async function beforeMount() {
       }, 1000);
     })
   }
-  const categories = await service.call('core/app', 'getCategories');
   this.widget.addData('index-left', 'profile', {
     nickname: await nickname()
   });
@@ -39,7 +38,7 @@ async function beforeMount() {
   });
   this.widget.addData('index-left', 'categories', {
     name: '文章分类',
-    categories
+    categories: await service.call('system/plugin/app', 'getAllCategories')
   });
   this.widget.addData('index-right', 'recent-post', {
     name: '最新文章'

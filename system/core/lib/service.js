@@ -2,7 +2,8 @@
  * 数据服务类
  */
 class Service {
-  constructor() {
+  constructor(app) {
+    this.app = app;
     this._stack = [];
   }
   /**
@@ -34,12 +35,14 @@ class Service {
    * @param {String} serviceName 服务名称
    * @param {Object} params 调用参数
    */
-  call(namespace, serviceName, params) {
+  async call(namespace, serviceName, params) {
     const item = this._stack.find(item => item.namespace === namespace && item.serviceName === serviceName);
     const { handler } = item;
     if (typeof handler === 'function') {
-      return await handler.call(this, params);
+      return await handler.call(this.app, params);
     }
     return undefined;
   }
 }
+
+module.exports = Service;

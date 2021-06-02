@@ -9,6 +9,7 @@ const Router = require('./lib/router');
 const Db = require('./lib/db');
 const Lang = require('./lib/lang');
 const Log = require('./lib/log');
+const Service = require('./lib/service');
 const constant = require('./constant');
 
 /**
@@ -29,6 +30,7 @@ class NodeAir {
     this.router = new Router(this);
     this.theme = new Theme(this);
     this.db = new Db(this);
+    this.service = new Service(this);
   }
   /**
    * 初始化
