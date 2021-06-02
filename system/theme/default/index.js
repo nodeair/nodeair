@@ -23,15 +23,8 @@ async function loaded() {
  */
 async function beforeMount() {
   const { service } = this;
-  const nickname = function() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve('陈治兵');
-      }, 1000);
-    })
-  }
   this.widget.addData('index-left', 'profile', {
-    nickname: await nickname()
+    nickname: '陈治兵'
   });
   this.widget.addData('index-left', 'links', {
     name: '链接'

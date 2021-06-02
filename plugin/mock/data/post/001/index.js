@@ -8,7 +8,7 @@ module.exports = function(baseUrl, time) {
   content = content.replace(/\{baseUrl\}/g, baseUrl);
   return {
     "title": "拆解在线问诊：3大误区，3重真相，3副解药",
-    "poster": baseUrl + '1622623210000.jpg',
+    "poster": baseUrl + 'upload/1622623210000.jpg',
     "category_id": 1, // 医疗服务
     "author_id": 1,
     "summary": "让服务归服务，生态归生态。",

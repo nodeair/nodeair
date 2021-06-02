@@ -13,8 +13,8 @@
       <div class="container">
         <div class="columns">
           <div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen">
-            <% [1, 2, 3, 4, 5].forEach(function(item) { %>
-              <%- include('../components/article-card', { item: item }); %>
+            <% pageData.posts.forEach(function(post) { %>
+              <%- include('../components/article-card', { post: post }); %>
             <% }); %>
           </div>
           <div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1">

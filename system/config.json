@@ -17,7 +17,8 @@
     "app",
     "vector",
     "sdk",
-    "widget"
+    "widget",
+    "upload"
   ],
   "site": {
     "title": "又一个 NodeAir 站点",

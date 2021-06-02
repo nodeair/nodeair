@@ -1,0 +1,8 @@
+{
+  "name": "@nodeair/plugin-core-upload",
+  "version": "1.0.0",
+  "private": true,
+  "enable": true,
+  "description": "核心插件/提供上传能力",
+  "main": "index.js"
+}

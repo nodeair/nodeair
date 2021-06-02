@@ -1,25 +1,22 @@
 <div class="card">
   <div class="card-image">
-    <a class="image is-7by3"
-      href="/hexo-theme-icarus/uncategorized/getting-started-with-icarus/">
-      <img class="fill" src="https://ppoffice.github.io/hexo-theme-icarus/gallery/covers/vector_landscape_1.svg" alt="Getting Started with Icarus"></a>
+    <a class="image is-7by3" href="<%= common.domain %>/post/<%= post.id %>">
+      <img class="fill" src="<%= post.poster %>" alt="Getting Started with Icarus">
+    </a>
   </div>
   <article class="card-content article" role="article">
     <div class="article-meta is-size-7 is-uppercase level is-mobile">
-      <div class="level-left"><span class="level-item">发布于&nbsp;
-        <time datetime="2020-04-01T00:00:00.000Z"
-            title="4/1/2020, 12:00:00 AM">一年前</time>
-          </span>
-          <span class="level-item">需要阅读约3分钟 (一共 461 个字)</span>
-        </div>
+      <div class="level-left">
+        <span class="level-item">发布于&nbsp;
+        <time datetime="2020-04-01T00:00:00.000Z" title="4/1/2020, 12:00:00 AM">一年前</time>
+        </span>
+        <span class="level-item">需要阅读约3分钟 (一共 461 个字)</span>
+      </div>
     </div>
-    <h1 class="title is-3 is-size-4-mobile"><a class="link-muted"
-        href="/hexo-theme-icarus/uncategorized/getting-started-with-icarus/">《彩虹六号：围攻》HIBANA干员模型到手价579元 6月起售</a></h1>
+    <h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="<%= common.domain %>/post/<%= post.id %>"><%= post.title %></a></h1>
     <div class="content">
-      <p>育碧今日公布了《彩虹六号：围攻》的全新模型，该模型取材自游戏中角色HIBANA。这款模型将于今年6月1日正式开订，目前已经在育碧相关电商超市中开放预约，到手价579元。
-        这款模型不仅还原了日本干员HIBANA的经典造型，还有标志性的X-KAIROS爆破弹发射器、附赠游戏内专属武器涂装解锁码。
-      </p>
-    </div><a class="article-more button is-small is-size-7"
-      href="/hexo-theme-icarus/uncategorized/getting-started-with-icarus/#more">阅读更多</a>
+      <p><%= post.summary %></p>
+    </div>
+    <a class="article-more button is-small is-size-7" href="<%= common.domain %>/post/<%= post.id %>">阅读更多</a>
   </article>
 </div>
