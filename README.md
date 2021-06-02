@@ -97,13 +97,12 @@ $ npm install
 
 # 二、开发者文档
 
-## 运行开发模式
+## 命令简介
 
-在你的终端输入以下命令：
-
-```bash
-$ npm run dev
-```
+- ``npm run dev`` 运行开发模式
+- ``npm run dev:watch`` 运行开发模式，会监听文件变化自动重新加载程序
+- ``npm run start`` 运行生产模式
+- ``npm run test`` 运行单元测试
 
 ## 插件或主题的生命周期
 

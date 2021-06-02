@@ -1,0 +1,8 @@
+{
+  "name": "@nodeair/plugin-mock",
+  "version": "1.0.0",
+  "enable": true,
+  "private": true,
+  "description": "安装插件/用于插入模拟数据",
+  "main": "index.js"
+}

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const jsonfile = require('jsonfile');
 
 /**
  * 配置类
@@ -21,6 +22,7 @@ const fs = require('fs');
     this._defaultConfig = this.isSystemExists() ? require(SYSTEM_CONFIG_PATH) : {};
     this._userConfig = this.isUserExists() ? require(USER_CONFIG_PATH) : {};
     this._config = this._mergeConfig(this._defaultConfig, this._userConfig);
+    this.app.config = this.get();
   }
   /**
    * 获取配置信息
@@ -38,7 +40,6 @@ const fs = require('fs');
   modifyUserConfig(configObject) {
     const { constant } = this.app;
     const { USER_CONFIG_PATH } = constant;
-    if (!this.isUserExists()) return;
     this._userConfig = this._mergeConfig(this._userConfig, configObject);
     jsonfile.writeFileSync(USER_CONFIG_PATH, this._userConfig, { spaces: 2 });
     this._config = this._mergeConfig(this._defaultConfig, this._userConfig);
@@ -64,6 +65,7 @@ const fs = require('fs');
   */
   _mergeConfig(sourceConfig, mergeConfig) {
     const sourceKeys = Object.keys(sourceConfig);
+    if (sourceKeys.length === 0) return mergeConfig;
     const newConfig = {};
     sourceKeys.forEach(key => {
       const mergeValue = mergeConfig[key];

@@ -5,6 +5,7 @@ const path = require('path');
  */
 async function loaded() {
   const ejsDir = path.join(__dirname, 'template/widgets');
+  // 注册侧栏小工具
   this.widget.register({
     'index-left': {
       ejsDir,
@@ -21,6 +22,7 @@ async function loaded() {
  * 主题每次进行渲染之前
  */
 async function beforeMount() {
+  const { service } = this;
   const nickname = function() {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -28,6 +30,7 @@ async function beforeMount() {
       }, 1000);
     })
   }
+  const categories = await service.call('core/app', 'getCategories');
   this.widget.addData('index-left', 'profile', {
     nickname: await nickname()
   });
@@ -35,7 +38,8 @@ async function beforeMount() {
     name: '链接'
   });
   this.widget.addData('index-left', 'categories', {
-    name: '文章分类'
+    name: '文章分类',
+    categories
   });
   this.widget.addData('index-right', 'recent-post', {
     name: '最新文章'

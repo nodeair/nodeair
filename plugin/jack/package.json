@@ -1,6 +1,7 @@
 {
   "name": "@nodeair/plugin-jack",
   "version": "1.0.0",
+  "enable": true,
   "private": true,
   "description": "测试插件",
   "main": "index.js"

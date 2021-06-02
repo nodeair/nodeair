@@ -7,8 +7,7 @@
     "dev": "node system/scripts/boot.dev.js",
     "dev:watch": "nodemon node system/scripts/boot.dev.js",
     "start": "node system/scripts/boot.prod.js",
-    "mock": "system/scripts/mock/bin.js",
-    "uninstall": "node system/scripts/uninstall.js",
+    "uninstall": "node system/scripts/uninstall/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

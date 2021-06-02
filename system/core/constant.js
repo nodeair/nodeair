@@ -1,5 +1,8 @@
 const path = require('path');
 
+/**
+ * 常量定义
+ */
 function constant() {
   // 根目录
   const ROOT = path.join(__dirname, '../../');
@@ -21,6 +24,8 @@ function constant() {
   const THEME_NAME = 'theme';
   // 缓存目录名称
   const CACHE_NAME = 'cache';
+  // 附件目录名称
+  const UPLOAD_NAME = 'upload';
   // 用户配置文件路径
   const USER_CONFIG_PATH = path.join(ROOT, USER_CONFIG_FILENAME);
   // 系统配置文件路径
@@ -37,6 +42,8 @@ function constant() {
   const CACHE_DIR = path.join(ROOT, CACHE_NAME);
   // 硬盘缓存索引文件路径
   const CACHE_INDEX_PATH = path.join(CACHE_DIR, CACHE_INDEX_FILENAME);
+  // 附件存放目录
+  const UPLOAD_DIR = path.join(ROOT, UPLOAD_NAME);
   return {
     ROOT,
     APP_NAME,
@@ -48,6 +55,7 @@ function constant() {
     PLUGIN_NAME,
     THEME_NAME,
     CACHE_NAME,
+    UPLOAD_NAME,
     USER_CONFIG_PATH,
     SYSTEM_CONFIG_PATH,
     USER_PLUGIN_DIR,
@@ -55,7 +63,8 @@ function constant() {
     USER_THEME_DIR,
     SYSTEM_THEME_DIR,
     CACHE_DIR,
-    CACHE_INDEX_PATH
+    CACHE_INDEX_PATH,
+    UPLOAD_DIR
   }
 }
 

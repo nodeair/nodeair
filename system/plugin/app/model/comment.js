@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { INTEGER, BIGINT, STRING, BOOLEAN, TEXT } = DataTypes;
+const { INTEGER, TINYINT, BIGINT, STRING, TEXT } = DataTypes;
 
 /**
  * 评论表
@@ -11,7 +11,7 @@ module.exports = function () {
       id: { type: INTEGER, primaryKey: true, unique: true, autoIncrement: true, comment: '评论的ID' },
       root_id: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '根评论的ID' },
       parent_id: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '父评论的ID' },
-      is_checking: { type: BOOLEAN, allowNull: false, defaultValue: false, comment: '评论是否处于审核中' },
+      is_checking: { type: TINYINT(4), allowNull: false, defaultValue: false, comment: '评论是否处于审核中 0 是否 1 是' },
       author_id: { type: INTEGER, allowNull: true, comment: '作者的ID' },
       author_name: { type: STRING(250), allowNull: true, comment: '作者的昵称' },
       author_email: { type: STRING(250), allowNull: true, comment: '作者的邮箱' },

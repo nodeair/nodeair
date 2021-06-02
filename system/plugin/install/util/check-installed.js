@@ -12,8 +12,8 @@ async function checkInstalled(app) {
   // 检测数据库是否连接成功
   const isConnected = await db.checkConnected();
   if (!isConnected) return false;
-  const PostModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/post'));
-  const isModelExist = await db.existsModel(PostModel);
+  const UserModel = require(path.join(SYSTEM_PLUGIN_DIR, 'app', 'model/user'));
+  const isModelExist = await db.existsModel(UserModel);
   return confiIsInstalled && isModelExist;
 }
 

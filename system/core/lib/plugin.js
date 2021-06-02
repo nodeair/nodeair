@@ -4,6 +4,17 @@ const fs = require('fs');
 const jsonfile = require('jsonfile');
 
 /**
+ * 插件生命周期工厂方法
+ */
+const Hooks = function() {
+  return {
+    installed: function () { },
+    loaded: function () { },
+    uninstalled: function () { }
+  };
+}
+
+/**
  * 插件类
  */
 class Plugin {
@@ -16,13 +27,37 @@ class Plugin {
   }
   /**
    * 初始化
-   * @param {*} type 
-   * @returns 
    */
   async init() {
     this._userPlugins = await this._load('user');
     this._systemPlugins = await this._load('system');
-    this._plugins = [...this._userPlugins, ...this._systemPlugins ];
+    this._plugins = [...this._userPlugins, ...this._systemPlugins];
+    await this.emitHook('loaded');
+  }
+  /**
+   * 触发插件的生命周期
+   * @param {String} hookName 生命周期名称
+   */
+  async emitHook(hookName) {
+    const {
+      app,
+      _userPlugins: userPlugins,
+      _systemPlugins: systemPlugins
+    } = this;
+    const emit = async (plugins) => {
+      for (let i = 0; i < plugins.length; i++) {
+        const item = plugins[i];
+        const fn = item.hooks[hookName];
+        const { packageJson } = item;
+        if (typeof fn === 'function' && packageJson.enable === true) {
+          await fn.call(app);
+        }
+      }
+    }
+    // 首先触发用户安装的插件
+    await emit(userPlugins);
+    // 再触发系统自带插件
+    await emit(systemPlugins);
   }
   /**
    * 通过插件名称修改插件配置
@@ -31,6 +66,7 @@ class Plugin {
     const { constant } = this.app;
     const { PACKAGE_NAME } = constant;
     const plugin = this._plugins.find(obj => obj.packageJson.name === name);
+    if (!plugin) return;
     Object.keys(config).forEach(key => {
       plugin.packageJson[key] = config[key];
     });
@@ -47,6 +83,7 @@ class Plugin {
   }
   /**
    * 加载插件
+   * @param {String} type 加载插件的类型 user | system
    */
   async _load(type) {
     const { conf, constant } = this.app;
@@ -83,40 +120,29 @@ class Plugin {
       const pluginDir = path.join(dir, plugin);
       const packagePath = path.join(pluginDir, PACKAGE_NAME);
       let packageJson = {};
+      let mainPath = '';
+      let hooks = Hooks();
       if (fs.existsSync(packagePath)) {
         packageJson = require(packagePath);
-        if (packageJson.enable === true) {
-          const pluginEntry = require(path.join(dir, plugin, packageJson.main));
-          await this._loadPluginEntry(pluginEntry);
-        }
+        mainPath = path.join(dir, plugin, packageJson.main);
       } else {
-        const indexPath = path.join(dir, plugin, 'index.js');
-        if (fs.existsSync(indexPath)) {
-          const pluginEntry = require(indexPath);
-          await this._loadPluginEntry(pluginEntry);
-        }
+        mainPath = path.join(dir, plugin, 'index.js');
+      }
+      if (!fs.existsSync(mainPath)) continue;
+      const pluginEntry = require(mainPath);
+      if (typeof pluginEntry === 'object') {
+        hooks = Object.assign(hooks, pluginEntry);
+      } else if (typeof pluginEntry === 'function') {
+        hooks.loaded = pluginEntry;
       }
       loadedArray.push({
         type,
         dir: pluginDir,
-        packageJson: packageJson
+        packageJson: packageJson,
+        hooks
       });
     }
     return loadedArray;
-  }
-  /**
-   * 加载插件通过 index.js
-   * @param {Function|Object} pluginEntry 入口
-   */
-  async _loadPluginEntry(pluginEntry) {
-    const { app } = this;
-    if (typeof pluginEntry === 'function') {
-      await pluginEntry.call(app);
-    } else if (typeof pluginEntry === 'object') {
-      if (typeof pluginEntry.loaded === 'function') {
-        await pluginEntry.loaded.call(app);
-      }
-    }
   }
 }
 

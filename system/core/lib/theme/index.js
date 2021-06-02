@@ -8,6 +8,18 @@ const htmlUtil = require('./html-util');
 const Head = require('./head');
 
 /**
+ * 主题生命周期工厂方法
+ */
+const Hooks = function () {
+  return {
+    installed: function () { },
+    loaded: function () { },
+    beforeMount: function() { },
+    uninstalled: function () { }
+  };
+}
+
+/**
  * 主题类
  */
 class Theme {
@@ -30,7 +42,7 @@ class Theme {
    */
   async init() {
     this._getCurrentTheme();
-    await this._emitThemeHook('loaded');
+    await this.emitHook('loaded');
     this._getTplPath();
     this._initThemeStaticRes();
   }
@@ -41,23 +53,13 @@ class Theme {
   async render(options = {}) {
     const { pageName, data, ctx } = options;
     const { ejs, app, tplPath } = this;
-    const { constant, cache, config, util, hook, lang } = app;
-    if (config.cache.enable === true) {
-      const { isExpired, value: cachePath } = cache.get({ pageName, data });
-      if (cachePath && fs.existsSync(cachePath)) {
-        await fs.readFile(cachePath, 'utf8');
-        if (isExpired && cachePath) {
-          fs.unlinkSync(cachePath);
-        } else if (!isExpired && cachePath) {
-          const html = await fs.readFile(cachePath);
-          ctx.set('Content-Type', 'text/html; charset=utf-8');
-          ctx.body = html;
-          return html;
-        }
-      }
-    }
+    const { config, util, hook, lang } = app;
 
-    await this._emitThemeHook('beforeMount');
+    // 尝试读取缓存
+    const result = await this._readCache(options);
+    if (result) return result;
+
+    // 定义渲染参数
     const state = {
       filePath: tplPath[pageName],
       renderOptions: {
@@ -73,21 +75,27 @@ class Theme {
       html: ''
     };
 
+    // 触发主题生命周期
+    await this.emitHook('beforeMount', state);
+
     // 调用钩子
     await hook.emit('core.nodeair.theme.render.01', state);
 
-    state.html = await ejs.render(state.filePath, state.renderOptions); // 渲染返回 HTML 代码
+    // 渲染并返回 HTML 代码
+    state.html = await ejs.render(state.filePath, state.renderOptions);
 
     // 调用钩子
     await hook.emit('core.nodeair.theme.render.02', state);
 
+    // 将头部标签插入到html中
     const $ = cheerio.load(state.html);
     state.html = this.head.insertToHtml($);
 
     // 调用钩子
     await hook.emit('core.nodeair.theme.render.03', state);
 
-    state.html = ejs.renderStr(state.html, state.renderOptions); // 再次渲染
+    // 再次渲染
+    state.html = ejs.renderStr(state.html, state.renderOptions);
 
     // 调用钩子
     await hook.emit('core.nodeair.theme.render.04', state);
@@ -109,33 +117,67 @@ class Theme {
     // 调用钩子
     await hook.emit('core.nodeair.theme.render.07', state);
 
+    // 设置响应
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.body = state.html;
 
     // 调用钩子
     await hook.emit('core.nodeair.theme.render.08', state);
 
-    // 判断是否启用了缓存
-    if (config.cache.enable === true) {
-      const { CACHE_DIR } = constant;
-      const fileName = uuidv4();
-      const filePath = path.join(CACHE_DIR, fileName);
-      fs.writeFileSync(filePath, state.html)
-      cache.set({ pageName, data }, filePath);
-    }
+    // 写入缓存
+    await this._writeCache(options, state);
 
     // 返回html
     return state.html;
   }
   /**
+   * 写入缓存
+   * @param {*} options 
+   * @returns 
+   */
+  async _writeCache(options, state) {
+    const { pageName, data } = options;
+    const { app } = this;
+    const { cache, config, constant } = app;
+    if (config.cache.enable === true) {
+      const { CACHE_DIR } = constant;
+      const fileName = uuidv4();
+      const filePath = path.join(CACHE_DIR, fileName);
+      await fs.writeFile(filePath, state.html);
+      cache.set({ pageName, data }, filePath);
+    }
+  }
+  /**
+   * 读取缓存
+   */
+  async _readCache(options) {
+    const { pageName, data, ctx } = options;
+    const { app } = this;
+    const { cache, config } = app;
+    if (config.cache.enable === true) {
+      const { isExpired, value: cachePath } = cache.get({ pageName, data });
+      if (cachePath && fs.existsSync(cachePath)) {
+        await fs.readFile(cachePath, 'utf8');
+        if (isExpired && cachePath) {
+          fs.unlinkSync(cachePath);
+        } else if (!isExpired && cachePath) {
+          const html = await fs.readFile(cachePath);
+          ctx.set('Content-Type', 'text/html; charset=utf-8');
+          ctx.body = html;
+          return html;
+        }
+      }
+    }
+    return undefined;
+  }
+  /**
    * 触发当前主题的生命周期
    */
-  async _emitThemeHook(name) {
-    const { basedir, package: packageJson } = this.currentTheme;
-    const indexPath = path.join(basedir, packageJson.main);
-    const object = require(indexPath);
-    const hookFn = object[name];
-    return await hookFn.call(this.app);
+  async emitHook(name, state) {
+    const hookFn = this.currentTheme.hooks[name];
+    if (typeof hookFn === 'function') {
+      await hookFn.call(this.app, state);
+    }
   }
   /**
    * 获取当前主题信息
@@ -156,6 +198,11 @@ class Theme {
       this.currentTheme.basedir = sysThemeDir;
       this.currentTheme.package = require(sysThemePackagePath);
     }
+    const { basedir, package: packageJson } = this.currentTheme;
+    const indexPath = path.join(basedir, packageJson.main);
+    const themeHooks = require(indexPath);
+    const hooks = Hooks();
+    this.currentTheme.hooks = Object.assign(hooks, themeHooks);
   }
   /**
    * 获取各个模板路径

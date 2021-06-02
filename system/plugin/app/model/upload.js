@@ -15,8 +15,7 @@ module.exports = function() {
       name: { type: STRING(250), allowNull: false, comment: '附件名称' },
       source_name: { type: STRING(250), allowNull: false, comment: '原始文件名' },
       storage_path: { type: STRING(250), allowNull: false, comment: '存储相对位置' },
-      avatar: { type: STRING(250), allowNull: false, comment: '头像地址' },
-      intro: { type: TEXT, allowNull: false, comment: '附件简介' },
+      intro: { type: TEXT, comment: '附件简介' },
       create_time: { type: BIGINT(20), allowNull: false, defaultValue: 0, comment: '数据创建时间' },
       update_time: { type: BIGINT(20), allowNull: false, defaultValue: 0, comment: '数据更新时间' }
     }

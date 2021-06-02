@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { INTEGER, TINYINT, BIGINT, STRING, BOOLEAN, TEXT } = DataTypes;
+const { INTEGER, TINYINT, BIGINT, STRING, TEXT } = DataTypes;
 
 /**
  * 文章表
@@ -10,8 +10,8 @@ module.exports = function() {
     structure: {
       id: { type: INTEGER, primaryKey: true, unique: true, autoIncrement: true, comment: '文章的ID' },
       status: { type: TINYINT(4), allowNull: false, defaultValue: 0, comment: '用户状态 0 正常 1 禁止查看' },
-      is_top: { type: BOOLEAN, allowNull: false, defaultValue: false, comment: '文章是否置顶' },
-      is_lock: { type: BOOLEAN, allowNull: false, defaultValue: false, comment: '文章是否禁止评论' },
+      is_top: { type: TINYINT(4), allowNull: false, defaultValue: 0, comment: '文章是否置顶 0 否 1 是' },
+      is_lock: { type: TINYINT(4), allowNull: false, defaultValue: 0, comment: '文章是否禁止评论 0 否 1 是' },
       title: { type: STRING(60), allowNull: false, comment: '文章的标题' },
       summary: { type: STRING(200), allowNull: true, comment: '文章的摘要' },
       poster: { type: STRING(250), allowNull: true, comment: '文章的封面图片地址（选填）' },
