@@ -8,7 +8,7 @@ module.exports = function(base, time) {
   content = content.replace(/\{baseUrl\}/g, base);
   return {
     title: "美国供应链平台运营商「Project44」获得2亿美元E轮投资，估值达12亿美元",
-    poster: `${base}upload/1622624672000.png`,
+    poster: `${base}/upload/1622624672000.png`,
     category_id: 3, // 创投新闻
     author_id: 1,
     summary: "这可能是供应链可视化平台中最大的一笔投资。",

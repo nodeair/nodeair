@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { INTEGER, TINYINT, BIGINT, STRING, TEXT } = DataTypes;
+const { INTEGER, TINYINT, DATE, STRING, TEXT } = DataTypes;
 
 /**
  * 评论表
@@ -19,9 +19,7 @@ module.exports = function () {
       author_ip: { type: STRING(250), allowNull: true, comment: '作者的IP' },
       author_agent: { type: TEXT, allowNull: true, comment: '作者的agent' },
       content: { type: TEXT, comment: '评论内容' },
-      post_time: { type: BIGINT(20), allowNull: false, defaultValue: 0, comment: '文章发布时间' }, 
-      create_time: { type: BIGINT(20), allowNull: false, defaultValue: 0, comment: '数据创建时间' },
-      update_time: { type: BIGINT(20), allowNull: false, defaultValue: 0, comment: '数据更新时间' }
+      post_time: { type: DATE, comment: '评论发布时间' }
     }
   };
 };

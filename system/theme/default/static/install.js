@@ -182,7 +182,7 @@
       }
     },
     mounted() {
-      this.site.base = window.location.origin + '/';
+      this.site.base = window.location.origin;
     },
     methods: {
       /**

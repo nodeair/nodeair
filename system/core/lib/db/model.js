@@ -7,20 +7,11 @@ class Model {
     this.models = {};
     this._models = {};
     this._commonOptions = {
-      timestamps: false,
+      timestamps: true,
       charset: 'utf8mb4',
       collate: 'utf8mb4_unicode_ci'
     };
-    this._commonHooks = [
-      {
-        hookName: 'beforeCreate',
-        name: 'insertTime',
-        fn(instance) {
-          instance.create_time = new Date().getTime();
-          instance.update_time = new Date().getTime();
-        }
-      }
-    ]
+    this._commonHooks = [];
   }
   /**
    * 添加模型

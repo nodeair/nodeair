@@ -24,7 +24,7 @@
     "title": "又一个 NodeAir 站点",
     "description": "又一个 NodeAir 站点",
     "keywords": "nodeair,nodejs",
-    "base": "http://127.0.0.1:6688/"
+    "base": "http://127.0.0.1:6688"
   },
   "database": {
     "type": "sqlite",
@@ -32,5 +32,6 @@
       "dialect": "sqlite",
       "storage": "data/database.sqlite"
     }
-  }
+  },
+  "copyright": "Powered By <a href=\"http://www.nodeair.com/\">NodeAir {version}</a>"
 }

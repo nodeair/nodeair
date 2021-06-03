@@ -1,3 +1,5 @@
+const path = require('path');
+
 const Util = require('./util');
 const Cache = require('./lib/cache');
 const Koa = require('./lib/koa');
@@ -31,6 +33,23 @@ class NodeAir {
     this.theme = new Theme(this);
     this.db = new Db(this);
     this.service = new Service(this);
+    this.copyright = this.getCopyright();
+  }
+  /**
+   * 获取版本号
+   */
+  getVersion() {
+    const { ROOT } = this.constant;
+    const packageJson = require(path.join(ROOT, 'package.json'));
+    return packageJson.version;
+  }
+  /**
+   * 获取版权信息
+   */
+  getCopyright() {
+    const { config } = this;
+    const version = this.getVersion();
+    return config.copyright.replace(`{version}`, version);
   }
   /**
    * 初始化

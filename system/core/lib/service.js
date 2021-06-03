@@ -36,7 +36,12 @@ class Service {
    * @param {Object} params 调用参数
    */
   async call(namespace, serviceName, params) {
+    const { log } = this.app;
     const item = this._stack.find(item => item.namespace === namespace && item.serviceName === serviceName);
+    if (!item) {
+      log.warn(`警告：没有找到命名空间为“${namespace}”服务名称为“${serviceName}”的服务。`);
+      return undefined;
+    }
     const { handler } = item;
     if (typeof handler === 'function') {
       return await handler.call(this.app, params);

@@ -4,7 +4,8 @@ const cheerio = require('cheerio');
 const { v4: uuidv4 } = require('uuid');
 
 const ejs = require('./ejs');
-const htmlUtil = require('./html-util');
+const utilHtml = require('./util-html');
+const utilRender = require('./util-render');
 const Head = require('./head');
 
 /**
@@ -66,11 +67,14 @@ class Theme {
         text: function (key) {
           return lang.text(key);
         },
+        util: utilRender.call(app),
         common: {
-          domain: util.parseDomain(ctx.request.host),
+          copyright: app.copyright,
+          host: ctx.request.host,
+          base: config.site.base,
           lang: config.lang
         },
-        pageData: data
+        pageData: data,
       },
       html: ''
     };
@@ -104,13 +108,13 @@ class Theme {
 
     // 判断是否需要美化
     if (config.debug) {
-      state.html = htmlUtil.prettify(state.html);
+      state.html = utilHtml.prettify(state.html);
       // 调用钩子
       await hook.emit('core.nodeair.theme.render.05', state);
     } else {
       // 判断是否需要最小化
       if (config.isMinimize) {
-        state.html = htmlUtil.minify(state.html);
+        state.html = utilHtml.minify(state.html);
         // 调用钩子
         await hook.emit('core.nodeair.theme.render.06', state);
       }

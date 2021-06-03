@@ -1,5 +1,14 @@
 const fs = require('fs-extra');
 const path = require('path');
+const types = require('./types.json');
+
+/**
+ * 根据文件后缀获取 content-type
+ * @param {String} extname 文件后缀
+ */
+function getContentType(extname) {
+  return `${types[extname]}; charset=utf-8`;
+}
 
 /**
  * 静态服务类
@@ -26,7 +35,9 @@ class Static {
         if (prefix === _prefix) {
           const _path = ctx.path.slice(prefix.length);
           const filepath = path.join(dir, _path);
+          const extname = path.extname(filepath);
           if (!fs.existsSync(filepath)) continue;
+          ctx.set('Content-Type', getContentType(extname));
           await send(ctx, _path, { root: dir });
         }
       }
@@ -36,7 +47,12 @@ class Static {
    * 注册静态资源服务
    */
   register(dir, prefix = '') {
-    this._stack.push({ dir, prefix });
+    const { log } = this.koa.app;
+    if (dir && prefix) {
+      this._stack.push({ dir, prefix });
+    } else {
+      log.system('register：dir 和 perfix 不能为空');
+    }
   }
 }
 

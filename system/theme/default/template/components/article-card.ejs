@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-image">
-    <a class="image is-7by3" href="<%= common.domain %>/post/<%= post.id %>">
+    <a class="image is-7by3" href="<%= common.base %>/post/<%= post.id %>">
       <img class="fill" src="<%= post.poster %>" alt="Getting Started with Icarus">
     </a>
   </div>
@@ -13,10 +13,10 @@
         <span class="level-item">需要阅读约3分钟 (一共 461 个字)</span>
       </div>
     </div>
-    <h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="<%= common.domain %>/post/<%= post.id %>"><%= post.title %></a></h1>
+    <h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="<%= common.base %>/post/<%= post.id %>"><%= post.title %></a></h1>
     <div class="content">
       <p><%= post.summary %></p>
     </div>
-    <a class="article-more button is-small is-size-7" href="<%= common.domain %>/post/<%= post.id %>">阅读更多</a>
+    <a class="article-more button is-small is-size-7" href="<%= common.base %>/post/<%= post.id %>">阅读更多</a>
   </article>
 </div>

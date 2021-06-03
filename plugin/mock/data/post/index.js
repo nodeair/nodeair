@@ -28,6 +28,5 @@ module.exports = function(baseUrl) {
     const time = new Date().getTime();
     postList.push(postFn(baseUrl, time));
   });
-  // console.log('postList', postList);
   return postList;
 }

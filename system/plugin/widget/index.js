@@ -1,4 +1,5 @@
 const Widget = require('./Widget');
+const _ = require('lodash');
 
 /**
  * 侧栏卡片
@@ -11,7 +12,8 @@ async function loaded() {
   // 将方法注入到模板引擎
   await hook.on('core.nodeair.theme.render.01', async function (state) {
     state.renderOptions.getWidgets = (id) => {
-      return widget.getWidgets(this, id);
+      const common = _.cloneDeep(state.renderOptions);
+      return widget.getWidgets(this, id, common);
     }
   });
 }

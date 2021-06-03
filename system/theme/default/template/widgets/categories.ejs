@@ -1,11 +1,11 @@
 <div class="card widget" data-type="categories" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform-origin: center top;">
   <div class="card-content">
     <div class="menu">
-      <h3 class="menu-label"><%= name %></h3>
+      <h3 class="menu-label"><%= widget.name %></h3>
       <ul class="menu-list">
-        <% categories.forEach(function(cate) { %>
+        <% widget.categories.forEach(function(cate) { %>
         <li>
-          <a class="level is-mobile" href="/cate/<%= cate.id %>">
+          <a class="level is-mobile" href="<%= common.base %>/cate/<%= cate.id %>">
             <span class="level-start">
               <span class="level-item"><%= cate.name %></span>
             </span>

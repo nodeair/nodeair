@@ -1,8 +1,13 @@
 const path = require('path');
 const fs = require('fs-extra');
+
 const CategoryData = require('../../../data/category');
 const UserData = require('../../../data/user');
 const PostData = require('../../../data/post');
+const OptionData = require('../../../data/option');
+const TagData = require('../../../data/tag');
+const CommentData = require('../../../data/comment');
+const UploadData = require('../../../data/upload');
 
 /**
  * 插入初始数据
@@ -14,10 +19,7 @@ const PostData = require('../../../data/post');
   const { model } = db;
   const { Category, Comment, Option, Post, Tag, Upload, User } = model.models;
   const time = new Date().getTime();
-  // 处理 upload 中的文件
-  if (!fs.existsSync(UPLOAD_DIR)) {
-    fs.mkdirsSync(UPLOAD_DIR);
-  }
+  if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirsSync(UPLOAD_DIR);
   const uploadDir = path.join(__dirname, '../../../upload');
   const defaultAvatar = {
     origin: path.join(uploadDir, 'default_avatar.png'),
@@ -33,10 +35,17 @@ const PostData = require('../../../data/post');
     nickname: params.manager.nickname,
     username: params.manager.username,
     password: params.manager.password
-  }
-  await Category.create(CategoryData(time));
-  await User.create(UserData(base, time, user));
-  await Post.create(PostData(base, time));
+  };
+  const results = [
+    Comment.create(CommentData(base, time, user)),
+    Category.create(CategoryData(time)),
+    User.create(UserData(base, time, user)),
+    Post.create(PostData(base, time)),
+    Tag.create(TagData(time)),
+    Option.bulkCreate(OptionData(base, time)),
+    Upload.bulkCreate(UploadData(base, time))
+  ];
+  await Promise.all(results);
 }
 
 module.exports = insertData;

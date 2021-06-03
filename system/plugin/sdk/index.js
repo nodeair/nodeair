@@ -7,7 +7,7 @@ async function loaded() {
     nodeair: {
       type: 'script',
       router: '/vector/nodeair/nodeair.min.js',
-      url: '<%= common.domain %>/vector/nodeair/nodeair.min.js',
+      url: '<%= common.base %>/vector/nodeair/nodeair.min.js',
       content: fs.readFileSync(path.join(__dirname, 'dist/nodeair.min.js'))
     }
   }

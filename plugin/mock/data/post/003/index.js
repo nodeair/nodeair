@@ -8,7 +8,7 @@ module.exports = function(base, time) {
   content = content.replace(/\{baseUrl\}/g, base);
   return {
     title: "为什么中国电动车出海首选挪威？",
-    poster: `${base}upload/1622624904000.png`,
+    poster: `${base}/upload/1622624904000.png`,
     category_id: 4, // 新能源车
     author_id: 1,
     summary: "3个电动车出海首选挪威的理由。",

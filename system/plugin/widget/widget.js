@@ -11,7 +11,9 @@ class Widget {
   register(widgets = {}) {
     if (typeof widgets === 'object' && !Array.isArray(widgets)) {
       this._widgets = Object.assign(this._widgets, widgets);
+      return true;
     }
+    return false;
   }
   /**
    * 给侧边栏添加数据
@@ -19,18 +21,21 @@ class Widget {
    * @param {*} widgetName 侧栏卡片名称
    * @param {*} data 数据
    */
-  addData(id, widgetName, data) {
+  addData(id, widgetName = 'default', data = {}) {
+    if (!id) return false;
     const widget = this._widgets[id];
-    if (!widget) return;
+    if (!widget) return false;
     if (!widget.data) {
       widget.data = {};
     }
     widget.data[widgetName] = data;
+    return true;
   }
   /**
    * 渲染侧边栏并返回HTML代码
    */
-  getWidgets(app, id) {
+  getWidgets(app, id, common = {}) {
+    if (!app || !id) return '';
     const { theme } = app;
     const { ejs } = theme;
     const widgetConf = this._widgets[id];
@@ -39,7 +44,10 @@ class Widget {
     widgetConf.widgets.forEach(name => {
       const tplPath = path.join(ejsDir, name) + '.ejs';
       const tplContent = fs.readFileSync(tplPath, 'utf8');
-      html += ejs.renderStr(tplContent, data[name]);
+      const _data = Object.assign(common, {
+        widget: data[name]
+      });
+      html += ejs.renderStr(tplContent, _data);
     });
     return html;
   }

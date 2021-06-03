@@ -1,52 +1,21 @@
 <div class="card widget" data-type="recent-posts">
   <div class="card-content">
-    <h3 class="menu-label"><%= name %></h3>
+    <h3 class="menu-label"><%= widget.name %></h3>
+    <% widget.posts.forEach(function(post) { %>
     <article class="media">
-      <figure class="media-left"><a class="image"
-          href="/hexo-theme-icarus/uncategorized/getting-started-with-icarus/"><img
-            src="https://ppoffice.github.io/hexo-theme-icarus/gallery/covers/vector_landscape_1.svg" alt="Getting Started with Icarus"></a>
+      <% if (post.poster) { %>
+      <figure class="media-left">
+        <a class="image" href="<%= common.base %>/post/<%= post.id %>">
+          <img src="<%= post.poster %>" alt="Getting Started with Icarus">
+        </a>
       </figure>
+      <% } %>
       <div class="media-content">
-        <p class="date"><time datetime="2020-04-01T00:00:00.000Z">2020-04-01</time></p>
-        <p class="title"><a href="/hexo-theme-icarus/uncategorized/getting-started-with-icarus/">《彩虹六号：围攻》HIBANA干员模型到手价579元 6月起售</a></p>
-        <p class="categories"><a href="/hexo-theme-icarus/categories/Configuration/">游戏</a></p>
+        <p class="date"><time datetime="2020-04-01T00:00:00.000Z"><%= util.dateFormat(post.post_time, 'YYYY-MM-DD') %></time></p>
+        <p class="title"><a href="<%= common.base %>/post/<%= post.id %>"><%= post.title %></a></p>
+        <p class="categories"><a href="<%= common.base %>/cate/<%= post.category_id %>">未知分类</a></p>
       </div>
     </article>
-    <article class="media">
-      <figure class="media-left"><a class="image"
-          href="/hexo-theme-icarus/Configuration/icarus-user-guide-configuring-the-theme/"><img
-            src="https://ppoffice.github.io/hexo-theme-icarus/gallery/covers/vector_landscape_2.svg"
-            alt="Icarus User Guide - Configuring the Theme"></a></figure>
-      <div class="media-content">
-        <p class="date"><time datetime="2020-03-01T00:00:00.000Z">2020-03-01</time></p>
-        <p class="title"><a href="/hexo-theme-icarus/Configuration/icarus-user-guide-configuring-the-theme/">虚幻引擎5本月26日开启抢先体验计划 《黑神话：悟空》主美表示期待</a></p>
-        <p class="categories"><a href="/hexo-theme-icarus/categories/Configuration/">游戏</a></p>
-      </div>
-    </article>
-    <article class="media">
-      <figure class="media-left"><a class="image" href="/hexo-theme-icarus/uncategorized/faq/"><img
-            src="https://ppoffice.github.io/hexo-theme-icarus/gallery/covers/vector_landscape_3.svg" alt="FAQ"></a></figure>
-      <div class="media-content">
-        <p class="date"><time datetime="2020-02-02T00:00:00.000Z">2020-02-02</time></p>
-        <p class="title"><a href="/hexo-theme-icarus/uncategorized/faq/">韩媒Naver发文：中国公司拳头给了RNG不踏实的冠军</a></p>
-        <p class="categories"><a href="/hexo-theme-icarus/categories/Configuration/">游戏</a></p>
-      </div>
-    </article>
-    <article class="media">
-      <figure class="media-left"><a class="image" href="/hexo-theme-icarus/uncategorized/cyberpunk-theme-variant/"><img
-            src="https://ppoffice.github.io/hexo-theme-icarus/gallery/covers/CP77-KV-en.jpg" alt="Cyberpunk Theme Variant"></a></figure>
-      <div class="media-content">
-        <p class="date"><time datetime="2020-02-01T00:00:00.000Z">2020-02-01</time></p>
-        <p class="title"><a href="/hexo-theme-icarus/uncategorized/cyberpunk-theme-variant/">一款全新的开放世界游戏发布了，名叫赛博朋克</a></p>
-        <p class="categories"><a href="/hexo-theme-icarus/categories/Configuration/">游戏</a></p>
-      </div>
-    </article>
-    <article class="media">
-      <div class="media-content">
-        <p class="date"><time datetime="2020-01-01T00:00:00.000Z">2020-01-01</time></p>
-        <p class="title"><a href="/hexo-theme-icarus/uncategorized/upgrade-guide/">《LOL》蒙多重做展示 蒙多表示想去哪就去哪！</a></p>
-        <p class="categories"><a href="/hexo-theme-icarus/categories/Configuration/">游戏</a></p>
-      </div>
-    </article>
+    <% }); %>
   </div>
 </div>

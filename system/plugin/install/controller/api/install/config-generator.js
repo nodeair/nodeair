@@ -3,6 +3,8 @@
  */
  function userConfigGenerator(params = {}) {
   const { site, database } = params;
+  const { base } = site;
+  
   const userConfig = {
     debug: false,
     createTime: new Date().getTime(),
@@ -15,7 +17,7 @@
       title: site.title,
       description: site.description,
       keywords: site.keywords,
-      base: site.base
+      base: ['/', '\\'].includes(base.charAt(base.length - 1)) ? base.substr(0, base.length - 1) : base
     },
     database: {
       type: '',
