@@ -8,8 +8,6 @@ module.exports = async function (ctx, next) {
     }
   };
 
-  // console.log(state.data.posts);
-
   // 调用钩子
   await hook.emit('core.app.controller.home.01', state);
 

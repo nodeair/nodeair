@@ -16,23 +16,22 @@ class Router {
     const { app } = this;
     const { koa } = app;
     const { errorHandlers } = this;
+    const emitHandlers = async (ctx, next) => {
+      for (let i = 0; i < errorHandlers.length; i++) {
+        const item = errorHandlers[i];
+        const { controller } = item;
+        await controller.apply(app, [ctx, next]);
+      }
+    }
     koa.app.use(async (ctx, next) => {
       try {
         await next();
         if (!ctx.body) {
-          for (let i = 0; i < errorHandlers.length; i++) {
-            const item = errorHandlers[i];
-            const { controller } = item;
-            await controller.apply(app, [ctx, next]);
-          }
+          await emitHandlers(ctx, next);
         }
       } catch (e) {
         app.log.error(e);
-        for (let i = 0; i < errorHandlers.length; i++) {
-          const item = errorHandlers[i];
-          const { controller } = item;
-          await controller.apply(app, [ctx, next]);
-        }
+        await emitHandlers(ctx, next);
       }
     });
   }
@@ -87,15 +86,16 @@ class Router {
    */
   pushOne(method, path, controller) {
     const { koa } = this.app;
+    const { middleware } = koa;
     method = method.toLowerCase();
     if (typeof controller !== 'function') return;
-    const routerFn = koa.router[method];
+    const routerFn = middleware.router[method];
     if (typeof routerFn !== 'function') return;
 
     const key = this._key(method, path);
     controller = controller.bind(this.app);
     this.routers[key] = controller;
-    koa.router[method](path, controller);
+    middleware.router[method](path, controller);
   }
   /**
    * 删除多个路由和控制器
@@ -118,15 +118,16 @@ class Router {
    */
   removeOne(method, path) {
     const { koa } = this.app;
+    const { middleware } = koa;
     method = method.toLowerCase();
-    const routerFn = this.app.koa.router[method];
+    const routerFn = this.app.koa.middleware.router[method];
     if (typeof routerFn !== 'function') return;
     const key = this._key(method, path);
     delete this.routers[key];
-    for (let i = 0; i < koa.router.stack.length; i++) {
-      const layer = koa.router.stack[i];
+    for (let i = 0; i < middleware.router.stack.length; i++) {
+      const layer = middleware.router.stack[i];
       if (layer.methods.includes(method.toUpperCase()) && layer.path === path) {
-        koa.router.stack.splice(i, 1);
+        middleware.router.stack.splice(i, 1);
       }
     }
   }

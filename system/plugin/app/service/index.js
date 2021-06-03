@@ -1,9 +1,9 @@
 const namespace = 'system/plugin/app';
 
 /**
- * 获取文章
+ * 获取文章列表
  */
- async function getPosts(params = {}) {
+async function getPosts(params = {}) {
   const { db } = this;
   const { pageNumber = 1, pageSize = 10 } = params;
   const { model } = db;
@@ -17,7 +17,18 @@ const namespace = 'system/plugin/app';
 }
 
 /**
- * 获取所有分类
+ * 获取所有管理员
+ */
+async function getManagers() {
+  const { db } = this;
+  const { model } = db;
+  const { models } = model;
+  const { User } = models;
+  return User.findAll({ where: { type: 0 }, raw: true });
+}
+
+/**
+ * 获取分类列表
  */
 async function getAllCategories() {
   const { db } = this;
@@ -37,5 +48,10 @@ module.exports = [
     namespace,
     serviceName: 'getPosts',
     handler: getPosts
+  },
+  {
+    namespace,
+    serviceName: 'getManagers',
+    handler: getManagers
   }
 ];

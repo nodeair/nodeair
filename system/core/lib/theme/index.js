@@ -226,11 +226,10 @@ class Theme {
    * 初始化主题的静态资源
    */
   _initThemeStaticRes() {
-    const { koa } = this.app;
-    const staticPath = path.join(this.currentTheme.basedir);
-    koa.app.use(koa.staticCache(staticPath), {
-      filter: ['static']
-    });
+    const { staticServer } = this.app;
+    const STATIC_NAME = 'static';
+    const STATIC_DIR = path.join(this.currentTheme.basedir, STATIC_NAME);
+    staticServer.register(STATIC_DIR, `/${STATIC_NAME}`);
   }
 }
 

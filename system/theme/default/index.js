@@ -23,15 +23,15 @@ async function loaded() {
  */
 async function beforeMount() {
   const { service } = this;
-  this.widget.addData('index-left', 'profile', {
-    nickname: '陈治兵'
-  });
+  const SERVICE_NAMESPACE = 'system/plugin/app';
+  const managers = await service.call(SERVICE_NAMESPACE, 'getManagers');
+  this.widget.addData('index-left', 'profile', managers[0]);
   this.widget.addData('index-left', 'links', {
     name: '链接'
   });
   this.widget.addData('index-left', 'categories', {
     name: '文章分类',
-    categories: await service.call('system/plugin/app', 'getAllCategories')
+    categories: await service.call(SERVICE_NAMESPACE, 'getAllCategories')
   });
   this.widget.addData('index-right', 'recent-post', {
     name: '最新文章'

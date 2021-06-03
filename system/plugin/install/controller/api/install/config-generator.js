@@ -14,7 +14,8 @@
     site: {
       title: site.title,
       description: site.description,
-      keywords: site.keywords
+      keywords: site.keywords,
+      base: site.base
     },
     database: {
       type: '',

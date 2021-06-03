@@ -62,6 +62,10 @@
         keywords: [
           { required: true, message: '请输入站点关键词', trigger: 'blur' },
           { min: 1, max: 250, message: '长度在 1 到 250 个字符', trigger: 'blur' }
+        ],
+        base: [
+          { required: true, message: '请输入网站网址', trigger: 'blur' },
+          { min: 1, max: 250, message: '长度在 1 到 250 个字符', trigger: 'blur' }
         ]
       };
     }
@@ -123,7 +127,8 @@
     return {
       title: '',
       description: '',
-      keywords: ''
+      keywords: '',
+      base: ''
     }
   };
   const Database = function (type) {
@@ -175,6 +180,9 @@
           }
         });
       }
+    },
+    mounted() {
+      this.site.base = window.location.origin + '/';
     },
     methods: {
       /**

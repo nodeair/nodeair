@@ -1,14 +1,13 @@
 const path = require('path');
-const jsonfile = require('jsonfile');
 const checkConnected = require('./check-connected');
 const userConfigGenerator = require('./config-generator');
+const insertData = require('./insert-data');
 
 /**
  * 安装控制器
  */
 async function installController(ctx) {
   const { log, constant, conf, db, router, plugin } = this;
-  const { USER_CONFIG_PATH  } = constant;
   // 获取POST请求数据
   log.system('获取POST请求数据');
   const params = ctx.request.body;
@@ -25,7 +24,6 @@ async function installController(ctx) {
   // 将配置信息写入文件
   log.system('将配置信息写入文件');
   conf.modifyUserConfig(userConfig);
-  // jsonfile.writeFileSync(USER_CONFIG_PATH, userConfig, { spaces: 2 });
   // 重新加载用户配置文件
   log.system('重新加载用户配置文件');
   conf.load();
@@ -42,14 +40,8 @@ async function installController(ctx) {
   // 建表
   log.system('建表');
   await db.model.createAll();
-  // 将用户信息插入到用户表
-  const { models } = db.model;
-  const { User } = models;
-  await User.create({
-    nickname: params.manager.nickname,
-    username: params.manager.username,
-    password: params.manager.password
-  });
+  // 插入初始数据
+  await insertData.call(this, params);
   // 移除所有和安装有关的路由
   log.system('移除所有和安装有关的路由');
   const routerConfigPath = path.resolve(__dirname, '../../index.js');
