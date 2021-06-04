@@ -7,11 +7,9 @@
     </div>
     <div class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item is-active" href="<%= common.base %>">首页</a>
-        <a class="navbar-item" href="/hexo-theme-icarus/archives">归档</a>
-        <a class="navbar-item" href="/hexo-theme-icarus/categories">分类</a>
-        <a class="navbar-item" href="/hexo-theme-icarus/tags">标签</a>
-        <a class="navbar-item" href="/hexo-theme-icarus/about">关于</a>
+        <% pageData.topNav.forEach(function(nav) { %>
+        <a class="navbar-item" href="<%= nav.url %>" target="<%= nav.openType === 1 ? '_blank' : '_self' %>"><%= nav.name %></a>
+        <% }); %>
       </div>
       <div class="navbar-end">
         <a class="navbar-item" target="_blank" rel="noopener" title="Join Gitter" href="https://gitter.im/hexo-theme-icarus/community"><i class="fab fa-gitter"></i></a>

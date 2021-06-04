@@ -1,6 +1,10 @@
 const parseDomain = require('./parse-domain');
 const hashPassword = require('./hash-password');
 const dateFormat = require('./date-format');
+const dateBeautify = require('./date-beautify');
+const wordCount = require('./word-count');
+const removeHtmlTag = require('./remove-html-tag');
+const getReadTime = require('./get-read-time');
 
 /**
  * 工具类
@@ -14,5 +18,9 @@ class Util {
 Util.prototype.parseDomain = parseDomain;
 Util.prototype.hashPassword = hashPassword;
 Util.prototype.dateFormat = dateFormat;
+Util.prototype.dateBeautify = dateBeautify;
+Util.prototype.wordCount = wordCount;
+Util.prototype.removeHtmlTag = removeHtmlTag;
+Util.prototype.getReadTime = getReadTime;
 
 module.exports = Util;

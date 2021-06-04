@@ -30,11 +30,11 @@ class Theme {
     this.ejs = ejs;
     this.THEME_NAME = this.app.config.theme;
     this.PAGES_NAME = [
-      'index',
-      'search',
-      'install',
-      'post',
-      'not-installed'
+      'index', // 0
+      'search', // 1
+      'install', // 2
+      'post', // 3
+      'not-installed' // 4
     ];
     this.head = new Head(this);
   }
@@ -52,17 +52,16 @@ class Theme {
    * @param {Object} options 参数
    */
   async render(options = {}) {
-    const { pageName, data, ctx } = options;
-    const { ejs, app, tplPath } = this;
-    const { config, conf, util, hook, lang } = app;
+    const { pageId, data, ctx } = options;
+    const { ejs, app, tplPath, PAGES_NAME } = this;
+    const { plugin, config, conf, hook, lang } = app;
 
     // 尝试读取缓存
     const result = await this._readCache(options);
     if (result) return result;
-
     // 定义渲染参数
     const state = {
-      filePath: tplPath[pageName],
+      filePath: tplPath[PAGES_NAME[pageId]],
       renderOptions: {
         text: function (key) {
           return lang.text(key);
@@ -82,6 +81,8 @@ class Theme {
     if (conf.isUserExists()) {
       // 触发主题生命周期
       await this.emitHook('beforeMount', state);
+      // 触发插件生命周期
+      await plugin.emitHook('beforeMount', state);
     }
 
     // 调用钩子
@@ -142,7 +143,7 @@ class Theme {
    * @returns 
    */
   async _writeCache(options, state) {
-    const { pageName, data } = options;
+    const { pageId, data } = options;
     const { app } = this;
     const { cache, config, constant } = app;
     if (config.cache.enable === true) {
@@ -150,18 +151,18 @@ class Theme {
       const fileName = uuidv4();
       const filePath = path.join(CACHE_DIR, fileName);
       await fs.writeFile(filePath, state.html);
-      cache.set({ pageName, data }, filePath);
+      cache.set({ pageId, data }, filePath);
     }
   }
   /**
    * 读取缓存
    */
   async _readCache(options) {
-    const { pageName, data, ctx } = options;
+    const { pageId, data, ctx } = options;
     const { app } = this;
     const { cache, config } = app;
     if (config.cache.enable === true) {
-      const { isExpired, value: cachePath } = cache.get({ pageName, data });
+      const { isExpired, value: cachePath } = cache.get({ pageId, data });
       if (cachePath && fs.existsSync(cachePath)) {
         await fs.readFile(cachePath, 'utf8');
         if (isExpired && cachePath) {

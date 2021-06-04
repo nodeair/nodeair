@@ -25,7 +25,7 @@ async function loaded() {
   }
 
   // 调用钩子
-  await hook.emit('core.install.01', state);
+  await hook.emit('system.plugin.install.01', state);
 
   // 处理404情况
   router.pushErrorHandler('installHandler404', state.installHandler404);

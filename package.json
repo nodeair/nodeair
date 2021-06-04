@@ -8,18 +8,18 @@
     "dev:watch": "nodemon node system/scripts/boot.dev.js",
     "start": "node system/scripts/boot.prod.js",
     "uninstall": "node system/scripts/uninstall/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lisniuse/nodeair.git"
+    "url": "git+https://github.com/nodeair/nodeair.git"
   },
   "author": "zhibing",
   "license": "GPLv2",
   "bugs": {
-    "url": "https://github.com/lisniuse/nodeair/issues"
+    "url": "https://github.com/nodeair/nodeair/issues"
   },
-  "homepage": "https://github.com/lisniuse/nodeair#readme",
+  "homepage": "https://github.com/nodeair/nodeair#readme",
   "dependencies": {
     "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.9",
@@ -43,6 +43,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "mocha": "^8.4.0",
     "nodemon": "^2.0.7"
   }
 }

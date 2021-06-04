@@ -3,11 +3,15 @@
     <nav class="level">
       <div class="level-item has-text-centered flex-shrink-1">
         <div>
-          <figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="<%= widget.avatar %>"
-              alt="PPOffice"></figure>
-          <p class="title is-size-4 is-block" style="line-height:inherit;"><%= widget.nickname %></p>
-          <p class="is-size-6 is-block">Web前端工程师</p>
-          <p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>太阳系，地球，中国</span></p>
+          <figure class="image is-128x128 mx-auto mb-2">
+            <img class="avatar" src="<%= widget.manager.avatar %>" alt="<%= widget.manager.nickname %>">
+          </figure>
+          <p class="title is-size-4 is-block" style="line-height:inherit;"><%= widget.manager.nickname %></p>
+          <p class="is-size-6 is-block"><%= widget.manager.intro %></p>
+          <p class="is-size-6 is-flex justify-content-center">
+            <i class="fas fa-map-marker-alt mr-1"></i>
+            <span><%= widget.manager.address %></span>
+          </p>
         </div>
       </div>
     </nav>
@@ -15,21 +19,21 @@
       <div class="level-item has-text-centered is-marginless">
         <div>
           <p class="heading">文章</p><a href="/hexo-theme-icarus/archives">
-            <p class="title">40</p>
+            <p class="title"><%= widget.postCount %></p>
           </a>
         </div>
       </div>
       <div class="level-item has-text-centered is-marginless">
         <div>
           <p class="heading">分类</p><a href="/hexo-theme-icarus/categories">
-            <p class="title">9</p>
+            <p class="title"><%= widget.cateCount %></p>
           </a>
         </div>
       </div>
       <div class="level-item has-text-centered is-marginless">
         <div>
           <p class="heading">标签</p><a href="/hexo-theme-icarus/tags">
-            <p class="title">4</p>
+            <p class="title"><%= widget.tagCount %></p>
           </a>
         </div>
       </div>

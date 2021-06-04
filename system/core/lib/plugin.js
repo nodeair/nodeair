@@ -10,6 +10,7 @@ const Hooks = function() {
   return {
     installed: function () { },
     loaded: function () { },
+    beforeMount: function () { },
     uninstalled: function () { }
   };
 }

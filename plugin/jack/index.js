@@ -1,8 +1,15 @@
 async function loaded() {
   const { hook } = this;
-  await hook.on('core.app.controller.home.01', async function (state) {
+  await hook.on('system.plugin.app.controller.home.01', async function (state) {
     state.data.title += 'Jack.';
   });
 }
 
-module.exports = loaded;
+async function beforeMount() {
+  console.log('每次渲染之前做点什么');
+}
+
+module.exports = {
+  loaded,
+  beforeMount,
+};

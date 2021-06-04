@@ -13,7 +13,7 @@ async function loaded() {
   }
 
   // 调用钩子
-  await hook.emit('core.sdk.01', state);
+  await hook.emit('system.plugin.sdk.01', state);
 
   // 监听路由
   router.pushOne('GET', state.nodeair.router, function (ctx) {

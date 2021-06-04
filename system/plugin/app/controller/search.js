@@ -8,16 +8,16 @@ module.exports = async function (ctx, next) {
   }
 
   // 调用钩子
-  await hook.emit('core.app.controller.search.01', state);
+  await hook.emit('system.plugin.app.controller.search.01', state);
 
   const renderParams = {
-    pageName: 'search',
+    pageId: 1,
     data: state.data,
     ctx
   }
 
   // 调用钩子
-  await hook.emit('core.app.controller.search.02', renderParams);
+  await hook.emit('system.plugin.app.controller.search.02', renderParams);
 
   return await theme.render(renderParams);
 }

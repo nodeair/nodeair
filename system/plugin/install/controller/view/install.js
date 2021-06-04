@@ -8,7 +8,7 @@ async function installController(ctx, next) {
   }
 
   // 调用钩子
-  await hook.emit('core.install.controller.view.install.01', state);
+  await hook.emit('system.plugin.install.controller.view.install.01', state);
 
   const renderParams = {
     pageName: 'install',
@@ -17,7 +17,7 @@ async function installController(ctx, next) {
   };
 
   // 调用钩子
-  await hook.emit('core.install.controller.view.install.02', renderParams);
+  await hook.emit('system.plugin.install.controller.view.install.02', renderParams);
 
   return await theme.render(renderParams);
 }

@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "enable": true,
   "private": true,
-  "description": "测试插件",
+  "description": "示例插件",
   "main": "index.js"
 }

@@ -28,7 +28,7 @@ async function loaded() {
   }
 
   // 调用钩子
-  await hook.emit('core.vector.01', state);
+  await hook.emit('system.plugin.vector.01', state);
 
   // 注册静态资源服务
   const staticDir = path.join(__dirname, 'static');

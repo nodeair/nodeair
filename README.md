@@ -24,26 +24,35 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
   "port": 6688,
   "lang": "zh-cn",
   "isMinimize": true,
-  "isInstalled": true,
+  "isInstalled": false,
+  "cache": {
+    "enable": false,
+    "interval": 60000
+  },
   "debug": true,
   "systemPluginOrder": [
     "install",
-    "template",
     "run",
     "app",
-    "vector"
+    "vector",
+    "sdk",
+    "widget",
+    "upload"
   ],
   "site": {
     "title": "又一个 NodeAir 站点",
     "description": "又一个 NodeAir 站点",
-    "keywords": "nodeair站点"
+    "keywords": "nodeair,nodejs",
+    "base": "http://127.0.0.1:6688"
   },
   "database": {
     "type": "sqlite",
     "options": {
+      "dialect": "sqlite",
       "storage": "data/database.sqlite"
     }
-  }
+  },
+  "copyright": "Powered By <a href=\"http://www.nodeair.com/\">NodeAir {version}</a>"
 }
 ```
 
@@ -62,6 +71,8 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
 ``lang`` | 程序所支持的语言，选择 ``zh-cn``、``zh-tw``，``en-us`` 其一
 ``isMinimize`` | 输出的html是否最小化
 ``isInstalled`` | 程序是否安装过（初始化过数据库）
+``cache.enable`` | 是否启用硬盘缓存，值为 ``true`` 或者 ``false``
+``cache.interval`` | 硬盘缓存过期时间间隔，单位为毫秒
 ``debug`` | 是否启用调试模式（开发模式）
 ``systemPluginOrder`` | 系统插件的加载顺序（不建议修改）
 ``site.title`` | 站点配置 - 站点名称
@@ -70,7 +81,8 @@ NodeAir 是一款基于KoaJs的开源的CMS/BLOG程序，拥有完整的插件�
 ``site.base`` | 网站网址前缀，组成为：协议+域名。
 ``database`` | 数据库配置（详细配置见下表）
 ``database.type`` | 表示数据库类型，选择 ``sqlite``、``mysql``、``mariadb``、``postgres``、``mssql`` 其一
-
+``database.options`` |  数据库配置项，由安装程序生成
+``copyright`` | NodeAir 版权信息，免费用户禁止更改
 ### 各类型的数据库配置
 
 #### SQLite
@@ -105,19 +117,19 @@ $ npm install
 - ``npm run start`` 运行生产模式
 - ``npm run test`` 运行单元测试
 
-## 插件或主题的生命周期
+## 插件&主题的生命周期
 
 需要注意的几点：
 
 1. 每一个主题或者插件的入口文件里，都可以导出以下这三个函数，但不是必须的。
 2. 如果默认只导出一个函数的时候，则这个函数代表的是``loaded``这个生命周期。
 
-生命周期如下：
+生命周期：
 
 1. ``installed`` - 插件或主题安装完成时执行，只会在插件安装完成后执行一次。
 1. ``loaded`` - 插件或主题加载完成时执行，每次启动程序时都会执行一次。
+1. ``beforeMount`` - 内核主题模块进行页面渲染之前，执行一次。
 1. ``uninstalled`` - 插件或主题卸载完成时执行，只会在插件安装完成后执行一次。
-
 ## 插件或主题的编写约定
 
 1. 插件是一个目录。
@@ -131,6 +143,8 @@ $ npm install
 1. ``template`` - 用于存放 ejs 模板文件的目录。
 1. ``static`` - 用于存放主题所需静态资源的目录。
 1. ``index.js`` - 一般入口文件，导出一个函数，函数体返回插件或主题所需的生命周期函数。
+
+具体可以参考默认主题，路径为：``system/theme/default``。
 
 ## 开源许可协议
 

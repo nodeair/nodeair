@@ -8,7 +8,7 @@ async function loaded() {
   };
 
   // 调用钩子
-  await hook.emit('core.run.01', state);
+  await hook.emit('system.plugin.run.01', state);
 
   // 监听端口
   koa.app.listen(state.port, () => {

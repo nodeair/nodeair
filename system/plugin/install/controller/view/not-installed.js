@@ -8,7 +8,7 @@ async function notInstalledController(ctx) {
   }
 
   // 调用钩子
-  await hook.emit('core.install.controller.view.install.01', state);
+  await hook.emit('system.plugin.install.controller.view.notInstall.01', state);
 
   const renderParams = {
     pageName: 'not-installed',
@@ -17,7 +17,7 @@ async function notInstalledController(ctx) {
   };
 
   // 调用钩子
-  await hook.emit('core.install.controller.view.install.02', renderParams);
+  await hook.emit('system.plugin.install.controller.view.notInstall.02', renderParams);
 
   return await theme.render(renderParams);
 }

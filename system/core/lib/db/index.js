@@ -63,7 +63,7 @@ class Db {
    * 连接数据库
    */
    connect(databaseConfig) {
-    const { constant } = this.app;
+    const { constant, log } = this.app;
     const { config } = this.app;
     const { ROOT } = constant;
     const { type, options } = databaseConfig;
@@ -72,14 +72,14 @@ class Db {
         const dbPath = path.join(ROOT, options.storage);
         if (!fs.existsSync(dbPath)) fs.ensureFileSync(dbPath);
         return new Sequelize({
-          logging: config.debug,
+          logging: config.debug ? console.log : false,
           dialect: options.dialect,
           storage: dbPath
         });
       case 'mysql':
         const { database, username, password, host, port } = options;
         return new Sequelize(database, username, password, {
-          logging: config.debug,
+          logging: config.debug ? console.log : false,
           host,
           port,
           dialectOptions: {

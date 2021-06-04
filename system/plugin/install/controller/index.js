@@ -13,7 +13,7 @@ async function routerConfig(app) {
   };
 
   // 调用钩子
-  await hook.emit('core.app.install.routerConfig.01', state);
+  await hook.emit('system.plugin.install.routerConfig.01', state);
 
   // 返回路由配置
   return state.routers;

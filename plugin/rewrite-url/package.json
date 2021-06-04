@@ -1,0 +1,8 @@
+{
+  "name": "@nodeair/plugin-rewrite-url",
+  "version": "1.0.0",
+  "enable": false,
+  "private": true,
+  "description": "伪静态插件",
+  "main": "index.js"
+}

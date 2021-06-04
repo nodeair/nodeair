@@ -2,6 +2,17 @@ const namespace = 'system/plugin/app';
 
 const handlers = {
   /**
+   * 获取单个文章
+   */
+  async getPost(params = {}) {
+    const { Post } = this.db.model.models;
+    const { id } = params;
+    return Post.findOne({
+      where: { id },
+      raw: true
+    });
+  },
+  /**
    * 获取文章列表
    */
   async getPosts(params = {}) {
@@ -13,6 +24,13 @@ const handlers = {
       offset: (pageNumber - 1) * pageSize,
       raw: true
     });
+  },
+  /**
+   * 获取文章总数
+   */
+  async getPostCount() {
+    const { Post } = this.db.model.models;
+    return Post.count();
   },
   /**
    * 获取所有管理员
@@ -29,11 +47,25 @@ const handlers = {
     return Category.findAll({ raw: true });
   },
   /**
+   * 获取分类总数
+   */
+   async getCateCount() {
+    const { Category } = this.db.model.models;
+    return Category.count();
+  },
+  /**
    * 获取标签列表
    */
   async getTags() {
     const { Tag } = this.db.model.models;
     return Tag.findAll({ raw: true });
+  },
+  /**
+   * 获取标签总数
+   */
+  async getTagCount() {
+    const { Tag } = this.db.model.models;
+    return Tag.count();
   },
   /**
    * 获取数据库中的配置信息

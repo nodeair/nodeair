@@ -1,3 +1,6 @@
+<% 
+  const wordCount = util.wordCount(util.removeHtmlTag(post.content_html));
+%>
 <div class="card">
   <div class="card-image">
     <a class="image is-7by3" href="<%= common.base %>/post/<%= post.id %>">
@@ -8,9 +11,9 @@
     <div class="article-meta is-size-7 is-uppercase level is-mobile">
       <div class="level-left">
         <span class="level-item">发布于&nbsp;
-        <time datetime="2020-04-01T00:00:00.000Z" title="4/1/2020, 12:00:00 AM">一年前</time>
+        <time datetime="<%= post.post_time %>" title="<%= util.dateFormat(post.post_time) %>"><%= util.dateBeautify(post.post_time) %></time>
         </span>
-        <span class="level-item">需要阅读约3分钟 (一共 461 个字)</span>
+        <span class="level-item">需要阅读约<%= util.getReadTime(wordCount) %>分钟 (一共 <%= wordCount %> 个字)</span>
       </div>
     </div>
     <h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="<%= common.base %>/post/<%= post.id %>"><%= post.title %></a></h1>

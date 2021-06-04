@@ -1,23 +1,23 @@
 module.exports = async function (ctx, next) {
-  const { hook, theme } = this;
+  const { hook, theme, service } = this;
+  const { id } = ctx.params;
   const state = {
     data: {
-      title: '文章',
-      text: 'Hello World! My Name is '
+      post: await service.call('system/plugin/app', 'getPost', { id })
     }
-  }
+  };
 
   // 调用钩子
-  await hook.emit('core.app.controller.post.01', state);
+  await hook.emit('system.plugin.app.controller.post.01', state);
 
   const renderParams = {
-    pageName: 'post',
+    pageId: 3,
     data: state.data,
     ctx
-  }
+  };
 
   // 调用钩子
-  await hook.emit('core.app.controller.post.02', renderParams);
+  await hook.emit('system.plugin.app.controller.post.02', renderParams);
 
   return await theme.render(renderParams);
 }
