@@ -11,7 +11,7 @@ async function notInstalledController(ctx) {
   await hook.emit('system.plugin.install.controller.view.notInstall.01', state);
 
   const renderParams = {
-    pageName: 'not-installed',
+    pageId: 4,
     data: state.data,
     ctx
   };

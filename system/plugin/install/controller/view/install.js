@@ -10,8 +10,8 @@ async function installController(ctx, next) {
   // 调用钩子
   await hook.emit('system.plugin.install.controller.view.install.01', state);
 
-  const renderParams = {
-    pageName: 'install',
+  const renderParams = { 
+    pageId: 2,
     data: state.data,
     ctx
   };

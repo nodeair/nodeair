@@ -33,8 +33,10 @@ async function loaded() {
   // 调用 render 钩子
   hook.on('core.nodeair.theme.render.01', async function(renderState) {
     // 注入导航数据
-    const nav = await service.call('system/plugin/app', 'getOption', { key: 'top-nav' });
-    renderState.renderOptions.pageData.topNav = nav;
+    if (config.isInstalled) {
+      const nav = await service.call('system/plugin/app', 'getOption', { key: 'top-nav' });
+      renderState.renderOptions.pageData.topNav = nav;
+    }
     // 注入路由获取方法
     renderState.renderOptions.getUrl = state.getUrl;
   });

@@ -1,6 +1,6 @@
 const Post = require('./post');
 const User = require('./user');
-const Comment = require('./Comment');
+const Comment = require('./comment');
 const Category = require('./category');
 const Tag = require('./tag');
 const Option = require('./option');

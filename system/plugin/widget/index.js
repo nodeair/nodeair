@@ -1,4 +1,4 @@
-const Widget = require('./Widget');
+const Widget = require('./widget');
 const _ = require('lodash');
 
 /**
