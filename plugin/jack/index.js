@@ -6,7 +6,7 @@ async function loaded() {
 }
 
 async function beforeMount() {
-  console.log('每次渲染之前做点什么');
+  // console.log('每次渲染之前做点什么');
 }
 
 module.exports = {

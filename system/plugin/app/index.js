@@ -3,7 +3,7 @@ const routerConfig = require('./controller');
 const serviceConfig = require('./service');
 
 async function loaded() {
-  const { config, db, router, service, hook } = this;
+  const { conf, config, db, router, service, hook } = this;
   // 注册模型
   db.model.push(model);
   // 注册路由
@@ -33,7 +33,8 @@ async function loaded() {
   // 调用 render 钩子
   hook.on('core.nodeair.theme.render.01', async function(renderState) {
     // 注入导航数据
-    if (config.isInstalled) {
+    const _config = conf.get();
+    if (_config.isInstalled) {
       const nav = await service.call('system/plugin/app', 'getOption', { key: 'top-nav' });
       renderState.renderOptions.pageData.topNav = nav;
     }

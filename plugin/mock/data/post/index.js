@@ -25,7 +25,7 @@ module.exports = function(baseUrl) {
     });
     const indexPath = path.join(__dirname, dir, 'index.js');
     const postFn = require(indexPath);
-    const time = new Date().getTime();
+    const time = moment().format('YYYY-MM-DD HH:mm:ss');
     postList.push(postFn(baseUrl, time));
   });
   return postList;
