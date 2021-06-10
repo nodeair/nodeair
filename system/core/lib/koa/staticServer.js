@@ -17,6 +17,7 @@ class Static {
   constructor(koa) {
     this.koa = koa;
     this._stack = [];
+    this.types = types;
     this._init();
   }
   /**
