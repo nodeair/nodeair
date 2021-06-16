@@ -19,6 +19,7 @@ module.exports = function() {
       author_id: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '作者的ID' },
       content_type: { type: TINYINT(4), allowNull: false, defaultValue: 0, comment: '内容类型 0 HTML（富文本） 1（markdwon）' },
       content_html: { type: TEXT, comment: '文章内容（html类型）' },
+      tags: { type: STRING(200), allowNull: false, defaultValue: '', comment: '标签的id，用英文逗号分隔' },
       stat_view: { type: INTEGER, defaultValue: 0, comment: '文章浏览数' },
       stat_comment: { type: INTEGER, defaultValue: 0, comment: '文章被评论数' },
       meta: { type: TEXT, defaultValue: '{}', comment: '网页meta信息'},

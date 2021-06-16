@@ -34,7 +34,9 @@ class Theme {
       'search', // 1
       'install', // 2
       'post', // 3
-      'not-installed' // 4
+      'not-installed', // 4
+      'category', // 5
+      'tag' // 6
     ];
     this.head = new Head(this);
   }

@@ -1,4 +1,3 @@
-const CategoryData = require('../data/category');
 const PostData = require('../data/post/index');
 
 async function insertController(ctx) {
@@ -9,12 +8,26 @@ async function insertController(ctx) {
   }
   const { db, plugin } = this;
   const { models } = db.model;
-  const { Post, Category, Upload } = models;
+  const { Post, Category, Tag, Upload } = models;
   
   const baseUrl = 'http://127.0.0.1:6688/';
   const postData = PostData.call(this, baseUrl);
   const { postList, uploadList } = postData;
-  await Category.bulkCreate(CategoryData.call(this, baseUrl));
+  for (let i = 0; i < postList.length; i++) {
+    const post = postList[i];
+    const findCategory = await Category.findOne({ where: { name: post.category_id }, raw: true });
+    const category = findCategory ? findCategory : await Category.create({
+      name: post.category_id,
+      count: 1
+    });
+    post.category_id = category.id;
+    const findTag = await Tag.findOne({ where: { name: post.tags }, raw: true });
+    const tag = findTag ? findTag : await Tag.create({
+      name: post.tags,
+      count: 1
+    });
+    post.tags = tag.id;
+  }
   await Post.bulkCreate(postList);
   await Upload.bulkCreate(uploadList);
   ctx.body = {

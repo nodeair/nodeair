@@ -2,7 +2,7 @@
   "name": "@nodeair/plugin-core-install",
   "version": "1.0.0",
   "private": true,
-  "enable": false,
+  "enable": true,
   "description": "核心插件/校验是否安装；安装程序",
   "main": "index.js"
 }

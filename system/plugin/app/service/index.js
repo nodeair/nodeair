@@ -16,9 +16,16 @@ const handlers = {
    * 获取文章列表
    */
   async getPosts(params = {}) {
+    const { sequelize } = this.db;
     const { Post } = this.db.model.models;
-    const { pageNumber = 1, pageSize = 10, order = '' } = params;
+    const { pageNumber = 1, pageSize = 10, order = '', categoryId = '', tagId = '' } = params;
+    let where = {};
+    if (tagId) {
+      where = sequelize.fn('FIND_IN_SET', tagId, sequelize.col('tags'));
+    }
+    if (categoryId) where.category_id = categoryId;
     return Post.findAll({
+      where,
       order,
       limit: pageSize,
       offset: (pageNumber - 1) * pageSize,
@@ -47,11 +54,43 @@ const handlers = {
     return Category.findAll({ raw: true });
   },
   /**
+   * 获取单个分类
+   */
+  async getCategory(params = {}) {
+    const { Category } = this.db.model.models;
+    const { id } = params;
+    return Category.findOne({
+      where: { id },
+      raw: true
+    });
+  },
+  /**
    * 获取分类总数
    */
-   async getCateCount() {
+  async getCateCount() {
     const { Category } = this.db.model.models;
     return Category.count();
+  },
+  /**
+   * 获取单个标签
+   */
+  async getTag(params = {}) {
+    const { Tag } = this.db.model.models;
+    const { id } = params;
+    return Tag.findOne({
+      where: { id },
+      raw: true
+    });
+  },
+  /**
+   * 通过标签名称获取单个标签
+   */
+  async getTagByName(name) {
+    const { Tag } = this.db.model.models;
+    return Tag.findOne({
+      where: { name },
+      raw: true
+    });
   },
   /**
    * 获取标签列表

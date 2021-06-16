@@ -12,6 +12,7 @@ module.exports = function(base, time) {
     category_id: 1,
     author_id: 1,
     summary: "欢迎使用 NodeAir 搭建你的网站，你可以编辑或删除这篇文章。",
+    tags: '1',
     content_html: content,
     post_time: moment(time).format('YYYY-MM-DD HH:mm:ss')
   }

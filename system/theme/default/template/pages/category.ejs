@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="<%= common.lang %>">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../components/head') -%>
+    <title><%= pageData.title %></title>
+  </head>
+  <body class="is-3-column pace-done">
+    <%- include('../components/nav') -%>
+    <div class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen">
+            <div class="card">
+              <div class="card-content">
+                <nav class="breadcrumb" aria-label="breadcrumbs">
+                  <ul>
+                    <li>
+                      <a href="#" aria-current="page">分类</a>
+                    </li>
+                    <li class="is-active">
+                      <a href="#" aria-current="page"><%= pageData.category.name %></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <% pageData.posts.forEach(function(post) { %>
+              <%- include('../components/article-card', { post: post }); %>
+            <% }); %>
+          </div>
+          <div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1">
+            <%- getWidgets('index-left') -%>
+          </div>
+          <div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3">
+            <%- getWidgets('index-right') -%>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../components/footer') -%>
+  </body>
+</html>

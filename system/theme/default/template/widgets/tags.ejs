@@ -5,7 +5,7 @@
       <div class="field is-grouped is-grouped-multiline">
         <% widget.tags.forEach(function(tag) { %>
         <div class="control">
-          <a class="tags has-addons" href="<%= common.base %>/tag/<%= tag.id %>">
+          <a class="tags has-addons" href="<%= common.base %>/tag/<%= tag.name %>">
             <span class="tag"><%= tag.name %></span>
             <span class="tag"><%= tag.count %></span>
           </a>
