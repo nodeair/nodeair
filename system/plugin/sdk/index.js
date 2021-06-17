@@ -3,6 +3,7 @@ const path = require('path');
 
 async function loaded() {
   const { router, theme, hook } = this;
+  const HOOK_NAMESPACE = 'system/plugin/sdk/index';
   const state = {
     nodeair: {
       type: 'script',
@@ -13,7 +14,7 @@ async function loaded() {
   }
 
   // 调用钩子
-  await hook.emit('system.plugin.sdk.01', state);
+  await hook.emit(HOOK_NAMESPACE, 1, state);
 
   // 监听路由
   router.pushOne('GET', state.nodeair.router, function (ctx) {

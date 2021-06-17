@@ -1,5 +1,6 @@
 async function notInstalledController(ctx) {
   const { theme, hook } = this;
+  const HOOK_NAMESPACE = 'system/plugin/install/controller/view/notInstall';
   const state = {
     data: {
       title: '安装页',
@@ -8,7 +9,7 @@ async function notInstalledController(ctx) {
   }
 
   // 调用钩子
-  await hook.emit('system.plugin.install.controller.view.notInstall.01', state);
+  await hook.emit(HOOK_NAMESPACE, 1, state);
 
   const renderParams = {
     pageId: 4,
@@ -17,7 +18,7 @@ async function notInstalledController(ctx) {
   };
 
   // 调用钩子
-  await hook.emit('system.plugin.install.controller.view.notInstall.02', renderParams);
+  await hook.emit(HOOK_NAMESPACE, 2, renderParams);
 
   return await theme.render(renderParams);
 }

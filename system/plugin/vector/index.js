@@ -2,8 +2,8 @@ const path = require('path');
 
 async function loaded() {
   const { log, hook, theme, staticServer } = this;
+  const HOOK_NAMESPACE = 'system/plugin/vector/index';
   log.system('加载 vector 插件');
-  const VECTOR_NAME = 'vector';
   const state = {
     vue: {
       type: 'script',
@@ -28,7 +28,7 @@ async function loaded() {
   }
 
   // 调用钩子
-  await hook.emit('system.plugin.vector.01', state);
+  await hook.emit(HOOK_NAMESPACE, 1, state);
 
   // 注册静态资源服务
   const staticDir = path.join(__dirname, 'static');

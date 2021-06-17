@@ -4,6 +4,7 @@ const installApiController = require('./api/install');
 
 async function routerConfig(app) {
   const { hook } = app;
+  const HOOK_NAMESPACE = 'system/plugin/install/controller/index';
   const state = {
     routers: [
       { method: 'GET', path: '/install', controller: installViewController },
@@ -13,7 +14,7 @@ async function routerConfig(app) {
   };
 
   // 调用钩子
-  await hook.emit('system.plugin.install.routerConfig.01', state);
+  await hook.emit(HOOK_NAMESPACE, 1, state);
 
   // 返回路由配置
   return state.routers;

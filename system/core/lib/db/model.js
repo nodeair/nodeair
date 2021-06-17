@@ -25,6 +25,7 @@ class Model {
    */
   _initModel(modelObj) {
     const { sequelize, app } = this.db;
+    const { util } = app;
     if (!sequelize) return;
     const { models, _commonOptions, _commonHooks } = this;
     const modelNames = Object.keys(modelObj);
@@ -33,6 +34,10 @@ class Model {
       if (typeof modelFactory === 'function' && !models[modelName]) {
         const params = modelFactory.call(app);
         const { name, structure, options } = params;
+        // 真实字段名改下划线形式
+        Object.keys(structure).forEach(key => {
+            structure[key].field = util.nameToLine(key);
+        });
         const model = sequelize.define(name, structure, Object.assign({}, _commonOptions, options));
         _commonHooks.forEach(item => {
           const { hookName, name, fn } = item;

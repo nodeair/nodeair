@@ -1,9 +1,11 @@
+const { SERVICE_NAMESPACE } = require('../../../app/package.json').constant;
+
 module.exports = function (base, time) {
   return [
     {
       id: 1,
-      namespace: "system/plugin/app",
-      key: "links",
+      namespace: SERVICE_NAMESPACE,
+      key: 'links',
       value: JSON.stringify([
         {
           name: 'NodeAir',
@@ -13,8 +15,8 @@ module.exports = function (base, time) {
     },
     {
       id: 2,
-      namespace: "system/plugin/app",
-      key: "top-nav",
+      namespace: SERVICE_NAMESPACE,
+      key: 'top-nav',
       value: JSON.stringify([
         {
           name: '首页',

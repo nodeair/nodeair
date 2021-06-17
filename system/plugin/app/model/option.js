@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { INTEGER, BIGINT, STRING, TEXT } = DataTypes;
+const { INTEGER, STRING, TEXT } = DataTypes;
 
 /**
  * 配置表

@@ -58,12 +58,12 @@ function getData(baseUrl) {
         }
       }
       uploadList.push({
-        author_id: 1,
+        authorId: 1,
         size: fs.statSync(oldPath).size,
-        mime_type: staticServer.types[`.${extension}`],
+        mimeType: staticServer.types[`.${extension}`],
         name: `${newName}.${extension}`,
-        source_name: `${name}.${extension}`,
-        storage_path: `upload/${newName}.${extension}`
+        sourceName: `${name}.${extension}`,
+        storagePath: `upload/${newName}.${extension}`
       });
     }
     const factoryFn = require(path.join(__dirname, dir, 'index.js'));

@@ -1,7 +1,7 @@
-module.exports = function(time) {
+module.exports = function() {
   return {
     id: 1,
-    name: "nodeair",
+    name: 'nodeair',
     count: 1
   }
 }

@@ -4,11 +4,11 @@ module.exports = function(poster, content, postTime) {
     title: '“猪食平台”绞杀长视频',
     poster,
     // https://36kr.com/motif/327688192001
-    category_id: '产业观察', // 产业观察
-    author_id: 1,
+    categoryId: '产业观察', // 产业观察
+    authorId: 1,
     summary: '对于长视频行业的悲观已经反应在了股价当中。',
     tags: '长视频',
-    content_html: content,
-    post_time: postTime
+    contentHtml: content,
+    postTime: postTime
   }
 }

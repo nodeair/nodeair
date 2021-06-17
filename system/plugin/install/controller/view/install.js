@@ -1,5 +1,6 @@
-async function installController(ctx, next) {
+async function installController(ctx) {
   const { theme, hook } = this;
+  const HOOK_NAMESPACE = 'system/plugin/install/controller/view/install';
   const state = {
     data: {
       title: '安装页',
@@ -8,8 +9,9 @@ async function installController(ctx, next) {
   }
 
   // 调用钩子
-  await hook.emit('system.plugin.install.controller.view.install.01', state);
+  await hook.emit(HOOK_NAMESPACE, 1, state);
 
+  // 构造
   const renderParams = { 
     pageId: 2,
     data: state.data,
@@ -17,8 +19,9 @@ async function installController(ctx, next) {
   };
 
   // 调用钩子
-  await hook.emit('system.plugin.install.controller.view.install.02', renderParams);
+  await hook.emit(HOOK_NAMESPACE, 2, renderParams);
 
+  // 返回
   return await theme.render(renderParams);
 }
 

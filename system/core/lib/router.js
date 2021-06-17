@@ -70,10 +70,11 @@ class Router {
    */
   async push(array) {
     const { hook } = this.app;
-    await hook.emit('core.nodeair.router.push.01', array);
+    const HOOK_NAMESPACE = 'system/core/router/push';
+    await hook.emit(HOOK_NAMESPACE, 1, array);
     for (let i = 0; i < array.length; i++) {
       const item = array[i];
-      await hook.emit('core.nodeair.router.push.02', item);
+      await hook.emit(HOOK_NAMESPACE, 2, item);
       const { method, path, controller } = item;
       this.pushOne(method, path, controller);
     }
@@ -103,10 +104,11 @@ class Router {
    */
   async remove(array) {
     const { hook } = this.app;
-    await hook.emit('core.nodeair.router.remove.01', array);
+    const HOOK_NAMESPACE = 'system/core/router/remove';
+    await hook.emit(HOOK_NAMESPACE, 1, array);
     for (let i = 0; i < array.length; i++) {
       const item = array[i];
-      await hook.emit('core.nodeair.router.remove.02', item);
+      await hook.emit(HOOK_NAMESPACE, 2, item);
       const { method, path } = item;
       this.removeOne(method, path);
     }

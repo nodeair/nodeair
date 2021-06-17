@@ -4,7 +4,8 @@ async function loaded() {
   const { log, hook, koa } = this;
   const app = this;
   log.print('加载 rewrite-url 插件');
-  hook.on('system.plugin.app.controller.routerConfig.01', async function(state) {
+
+  hook.on('system/plugin/app/controller/index', 1, async function(state) {
     const routers = _.cloneDeep(state.routers);
     state.routers = [];
     const routerMap = {

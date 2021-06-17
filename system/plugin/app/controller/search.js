@@ -1,3 +1,5 @@
+const HOOK_NAMESPACE = 'system/plugin/app/controller/search';
+
 module.exports = async function (ctx, next) {
   const { hook, theme } = this;
   const state = {
@@ -8,7 +10,7 @@ module.exports = async function (ctx, next) {
   }
 
   // 调用钩子
-  await hook.emit('system.plugin.app.controller.search.01', state);
+  await hook.emit(HOOK_NAMESPACE, 1, state);
 
   const renderParams = {
     pageId: 1,
@@ -17,7 +19,7 @@ module.exports = async function (ctx, next) {
   }
 
   // 调用钩子
-  await hook.emit('system.plugin.app.controller.search.02', renderParams);
+  await hook.emit(HOOK_NAMESPACE, 2, renderParams);
 
   return await theme.render(renderParams);
 }

@@ -1,6 +1,6 @@
 async function loaded() {
   const { hook } = this;
-  await hook.on('system.plugin.app.controller.home.01', async function (state) {
+  await hook.on('system/plugin/app/controller/home', 1, async function (state) {
     state.data.title += 'Jack.';
   });
 }

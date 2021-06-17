@@ -9,8 +9,8 @@ module.exports = function () {
     name: 'na_category',
     structure: {
       id: { type: INTEGER, primaryKey: true, unique: true, autoIncrement: true, comment: '分类的ID' },
-      root_id: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '根分类的ID' },
-      parent_id: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '父分类的ID' },
+      rootId: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '根分类的ID' },
+      parentId: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '父分类的ID' },
       name: { type: STRING(250), allowNull: false, comment: '分类名称' },
       order: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '分类排序' },
       description: { type: TEXT, allowNull: true, comment: '分类描述'},

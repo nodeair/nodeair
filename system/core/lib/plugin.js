@@ -77,6 +77,12 @@ class Plugin {
     }
   }
   /**
+   * 获取某个插件的信息
+   */
+  getPlugin(name) {
+    return this._plugins.find(obj => obj.packageJson.name === name);
+  }
+  /**
    * 获取插件加载后的列表
    */
   getPlugins() {

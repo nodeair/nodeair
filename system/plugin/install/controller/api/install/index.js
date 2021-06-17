@@ -7,7 +7,7 @@ const insertData = require('./insert-data');
  * 安装控制器
  */
 async function installController(ctx) {
-  const { log, constant, conf, db, router, plugin } = this;
+  const { log, conf, db, router, plugin } = this;
   // 获取POST请求数据
   log.system('获取POST请求数据');
   const params = ctx.request.body;

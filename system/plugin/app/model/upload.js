@@ -9,12 +9,12 @@ module.exports = function() {
     name: 'na_upload',
     structure: {
       id: { type: INTEGER, primaryKey: true, unique: true, autoIncrement: true, comment: '附件的ID' },
-      author_id: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '作者的ID' },
+      authorId: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '作者的ID' },
       size: { type: INTEGER, allowNull: false, defaultValue: 0, comment: '附件大小' },
-      mime_type: { type: STRING(250), allowNull: false, comment: '附件的mime类型' },
+      mimeType: { type: STRING(250), allowNull: false, comment: '附件的mime类型' },
       name: { type: STRING(250), allowNull: false, comment: '附件名称' },
-      source_name: { type: STRING(250), allowNull: false, comment: '原始文件名' },
-      storage_path: { type: STRING(250), allowNull: false, comment: '存储相对位置' },
+      sourceName: { type: STRING(250), allowNull: false, comment: '原始文件名' },
+      storagePath: { type: STRING(250), allowNull: false, comment: '存储相对位置' },
       intro: { type: TEXT, comment: '附件简介' }
     }
   };

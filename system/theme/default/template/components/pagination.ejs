@@ -1,0 +1,22 @@
+<% if (pageData.pagination && pageData.pagination.count > pageData.pagination.pageSize) { %>
+<!-- 分页组件 -->
+<nav class="pagination" role="navigation" aria-label="pagination">
+  <% if (pageData.pagination.prevUrl) { %>
+  <div class="pagination-previous">
+    <a href="<%= pageData.pagination.prevUrl %>">上一页</a>
+  </div>
+  <% } %>
+  <% if (pageData.pagination.nextUrl) { %>
+  <div class="pagination-next">
+    <a href="<%= pageData.pagination.nextUrl %>">下一页</a>
+  </div>
+  <% } %>
+  <ul class="pagination-list is-hidden-mobile">
+    <% for (let i = 0; i < pageData.pagination.pages; i++) { %>
+    <li>
+      <a class="pagination-link<%= pageData.pagination.pageNumber === (i + 1) ? ' is-current' : '' %>" href="<%= common.base %><%= pageData.pagination.routePrefix %><%= i + 1 %>" cursorshover="true"><%= i + 1 %></a>
+    </li>
+    <% } %>
+  </ul>
+</nav>
+<% } %>

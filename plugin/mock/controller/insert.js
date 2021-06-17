@@ -15,12 +15,12 @@ async function insertController(ctx) {
   const { postList, uploadList } = postData;
   for (let i = 0; i < postList.length; i++) {
     const post = postList[i];
-    const findCategory = await Category.findOne({ where: { name: post.category_id }, raw: true });
+    const findCategory = await Category.findOne({ where: { name: post.categoryId }, raw: true });
     const category = findCategory ? findCategory : await Category.create({
-      name: post.category_id,
+      name: post.categoryId,
       count: 1
     });
-    post.category_id = category.id;
+    post.categoryId = category.id;
     const findTag = await Tag.findOne({ where: { name: post.tags }, raw: true });
     const tag = findTag ? findTag : await Tag.create({
       name: post.tags,

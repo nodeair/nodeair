@@ -57,6 +57,7 @@ class Theme {
     const { pageId, data, ctx } = options;
     const { ejs, app, tplPath, PAGES_NAME } = this;
     const { plugin, config, conf, hook, lang } = app;
+    const HOOK_NAMESPACE = 'system/core/theme/render';
 
     // 尝试读取缓存
     const result = await this._readCache(options);
@@ -88,50 +89,50 @@ class Theme {
     }
 
     // 调用钩子
-    await hook.emit('core.nodeair.theme.render.01', state);
+    await hook.emit(HOOK_NAMESPACE, 1, state);
 
     // 渲染并返回 HTML 代码
     state.html = await ejs.render(state.filePath, state.renderOptions);
 
     // 调用钩子
-    await hook.emit('core.nodeair.theme.render.02', state);
+    await hook.emit(HOOK_NAMESPACE, 2, state);
 
     // 将头部标签插入到html中
     const $ = cheerio.load(state.html);
     state.html = this.head.insertToHtml($);
 
     // 调用钩子
-    await hook.emit('core.nodeair.theme.render.03', state);
+    await hook.emit(HOOK_NAMESPACE, 3, state);
 
     // 再次渲染
     state.html = ejs.renderStr(state.html, state.renderOptions);
 
     // 调用钩子
-    await hook.emit('core.nodeair.theme.render.04', state);
+    await hook.emit(HOOK_NAMESPACE, 4, state);
 
     // 判断是否需要美化
     if (config.debug) {
       state.html = utilHtml.prettify(state.html);
       // 调用钩子
-      await hook.emit('core.nodeair.theme.render.05', state);
+      await hook.emit(HOOK_NAMESPACE, 5, state);
     } else {
       // 判断是否需要最小化
       if (config.isMinimize) {
         state.html = utilHtml.minify(state.html);
         // 调用钩子
-        await hook.emit('core.nodeair.theme.render.06', state);
+        await hook.emit(HOOK_NAMESPACE, 6, state);
       }
     }
 
     // 调用钩子
-    await hook.emit('core.nodeair.theme.render.07', state);
+    await hook.emit(HOOK_NAMESPACE, 7, state);
 
     // 设置响应
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.body = state.html;
 
     // 调用钩子
-    await hook.emit('core.nodeair.theme.render.08', state);
+    await hook.emit(HOOK_NAMESPACE, 8, state);
 
     // 写入缓存
     await this._writeCache(options, state);

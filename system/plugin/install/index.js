@@ -5,6 +5,7 @@ const notInstalledViewController = require('./controller/view/not-installed');
 
 async function loaded() {
   const { lang, router, hook } = this;
+  const HOOK_NAMESPACE = 'system/plugin/install/index';
   const app = this;
 
   // 判断程序是否已安装
@@ -25,7 +26,7 @@ async function loaded() {
   }
 
   // 调用钩子
-  await hook.emit('system.plugin.install.01', state);
+  await hook.emit(HOOK_NAMESPACE, 1, state);
 
   // 处理404情况
   router.pushErrorHandler('installHandler404', state.installHandler404);

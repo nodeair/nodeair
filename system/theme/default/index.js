@@ -36,8 +36,9 @@ async function loaded() {
  * 主题每次进行渲染之前
  */
 async function beforeMount() {
-  const { service } = this;
-  const SERVICE_NAMESPACE = 'system/plugin/app';
+  const { service, plugin } = this;
+  const { packageJson } = plugin.getPlugin('@nodeair/plugin-core-app');
+  const { SERVICE_NAMESPACE } = packageJson.constant;
   const s = (serviceName, params = {}) => service.call(SERVICE_NAMESPACE, serviceName, params);
   const managers = await s('getManagers');
   const categories = await s('getAllCategories');

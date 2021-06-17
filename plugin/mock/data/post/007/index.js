@@ -4,11 +4,11 @@ module.exports = function(poster, content, postTime) {
     title: '从《摩尔庄园》回归看儿童社交价值',
     poster,
     // https://36kr.com/motif/327689814017
-    category_id: '互联网新鲜事', // 互联网新鲜事
-    author_id: 1,
+    categoryId: '互联网新鲜事', // 互联网新鲜事
+    authorId: 1,
     summary: '十年一梦，《摩尔庄园》却卷土重来。',
     tags: '社交',
-    content_html: content,
-    post_time: postTime
+    contentHtml: content,
+    postTime: postTime
   }
 }

@@ -1,6 +1,8 @@
 const model = require('./model');
 const routerConfig = require('./controller');
 const serviceConfig = require('./service');
+const { SERVICE_NAMESPACE } = require('./package.json').constant;
+const HOOK_NAMESPACE = 'system/plugin/app/index';
 
 async function loaded() {
   const { conf, config, db, router, service, hook } = this;
@@ -27,15 +29,15 @@ async function loaded() {
     }
   };
   // 触发事件
-  await hook.emit('system.plugin.app.01', state);
+  await hook.emit(HOOK_NAMESPACE, 1, state);
   // 注册服务
   service.register(serviceConfig);
-  // 调用 render 钩子
-  hook.on('core.nodeair.theme.render.01', async function(renderState) {
+  // 调用 render 1 号钩子
+  hook.on('system/core/theme/render', 1, async function(renderState) {
     // 注入导航数据
     const _config = conf.get();
     if (_config.isInstalled) {
-      const nav = await service.call('system/plugin/app', 'getOption', { key: 'top-nav' });
+      const nav = await service.call(SERVICE_NAMESPACE, 'getOption', { key: 'top-nav' });
       renderState.renderOptions.pageData.topNav = nav;
     }
     // 注入路由获取方法

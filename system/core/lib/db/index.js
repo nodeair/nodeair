@@ -88,6 +88,9 @@ class Db {
             supportBigNumbers: true,
             bigNumberStrings: true
           },
+          define: {
+            underscored: true
+          },
           dialect: 'mysql'
         });
     }

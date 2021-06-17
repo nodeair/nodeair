@@ -5,6 +5,7 @@ const dateBeautify = require('./date-beautify');
 const wordCount = require('./word-count');
 const removeHtmlTag = require('./remove-html-tag');
 const getReadTime = require('./get-read-time');
+const nameToLine = require('./name-to-line');
 
 /**
  * 工具类
@@ -22,5 +23,6 @@ Util.prototype.dateBeautify = dateBeautify;
 Util.prototype.wordCount = wordCount;
 Util.prototype.removeHtmlTag = removeHtmlTag;
 Util.prototype.getReadTime = getReadTime;
+Util.prototype.nameToLine = nameToLine;
 
 module.exports = Util;

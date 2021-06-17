@@ -16,6 +16,7 @@
             <% pageData.posts.forEach(function(post) { %>
               <%- include('../components/article-card', { post: post }); %>
             <% }); %>
+            <%- include('../components/pagination') -%>
           </div>
           <div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1">
             <%- getWidgets('index-left') -%>

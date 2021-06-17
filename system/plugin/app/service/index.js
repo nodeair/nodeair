@@ -1,4 +1,4 @@
-const namespace = 'system/plugin/app';
+const { SERVICE_NAMESPACE } = require('../package.json').constant;
 
 const handlers = {
   /**
@@ -20,10 +20,8 @@ const handlers = {
     const { Post } = this.db.model.models;
     const { pageNumber = 1, pageSize = 10, order = '', categoryId = '', tagId = '' } = params;
     let where = {};
-    if (tagId) {
-      where = sequelize.fn('FIND_IN_SET', tagId, sequelize.col('tags'));
-    }
-    if (categoryId) where.category_id = categoryId;
+    if (tagId) where = sequelize.fn('FIND_IN_SET', tagId, sequelize.col('tags'));
+    if (categoryId) where.categoryId = categoryId;
     return Post.findAll({
       where,
       order,
@@ -35,9 +33,9 @@ const handlers = {
   /**
    * 获取文章总数
    */
-  async getPostCount() {
+  async getPostCount(where = {}) {
     const { Post } = this.db.model.models;
-    return Post.count();
+    return Post.count({ where });
   },
   /**
    * 获取所有管理员
@@ -110,7 +108,7 @@ const handlers = {
    * 获取数据库中的配置信息
    */
   async getOption(params = {}) {
-    const { key, namespace = 'system/plugin/app' } = params;
+    const { key, namespace = SERVICE_NAMESPACE } = params;
     const { Option } = this.db.model.models;
     const item = await Option.findOne({ where: { namespace, key }, raw: true });
     try {
@@ -143,7 +141,7 @@ module.exports = (() => {
   for (const serviceName in handlers) {
     if (Object.hasOwnProperty.call(handlers, serviceName)) {
       const handler = handlers[serviceName];
-      array.push({ namespace, serviceName, handler });
+      array.push({ namespace: SERVICE_NAMESPACE, serviceName, handler });
     }
   }
   return array;
