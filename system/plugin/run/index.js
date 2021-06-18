@@ -1,6 +1,6 @@
 async function loaded() {
   const { koa, hook, config } = this;
-  const HOOK_NAMESPACE = 'system/plugin/run/index';
+  const HOOK_NAMESPACE = 'system/plugin/run/loaded';
 
   // 定义状态
   const state = {

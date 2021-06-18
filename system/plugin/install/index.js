@@ -5,7 +5,7 @@ const notInstalledViewController = require('./controller/view/not-installed');
 
 async function loaded() {
   const { lang, router, hook } = this;
-  const HOOK_NAMESPACE = 'system/plugin/install/index';
+  const HOOK_NAMESPACE = 'system/plugin/install/loaded';
   const app = this;
 
   // 判断程序是否已安装

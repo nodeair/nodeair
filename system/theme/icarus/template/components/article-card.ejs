@@ -1,5 +1,5 @@
 <% 
-  const wordCount = util.wordCount(util.removeHtmlTag(post.content_html));
+  const wordCount = util.wordCount(util.removeHtmlTag(post.contentHtml));
 %>
 <div class="card">
   <div class="card-image">
@@ -11,7 +11,7 @@
     <div class="article-meta is-size-7 is-uppercase level is-mobile">
       <div class="level-left">
         <span class="level-item">发布于&nbsp;
-        <time datetime="<%= post.post_time %>" title="<%= util.dateFormat(post.post_time) %>"><%= util.dateBeautify(post.post_time) %></time>
+        <time datetime="<%= post.postTime %>" title="<%= util.dateFormat(post.postTime) %>"><%= util.dateBeautify(post.postTime) %></time>
         </span>
         <span class="level-item">需要阅读约<%= util.getReadTime(wordCount) %>分钟 (一共 <%= wordCount %> 个字)</span>
       </div>

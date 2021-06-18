@@ -1,0 +1,40 @@
+{
+  "name": "@nodeair/theme-icarus",
+  "dname": "默认主题",
+  "version": "0.0.1",
+  "author": "zhibing & ppoffice",
+  "private": true,
+  "description": "默认主题 - icarus",
+  "homepage": "https://github.com/ppoffice/hexo-theme-icarus",
+  "license": "MIT",
+  "main": "index.js",
+  "pages": {
+    "index": "template/pages/index.ejs",
+    "category": "template/pages/category.ejs",
+    "tag": "template/pages/tag.ejs",
+    "search": "template/pages/search.ejs",
+    "install": "template/pages/install.ejs",
+    "post": "template/pages/post.ejs",
+    "not-installed": "template/pages/not-installed.ejs"
+  },
+  "widgets": {
+    "index": [
+      "recent-post",
+      "archives",
+      "tags"
+    ]
+  },
+  "scripts": {
+    "dev": "rollup --config ./config/rollup.config.dev.js -w",
+    "build": "rollup --config ./config/rollup.config.prod.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "cross-env": "^7.0.3",
+    "rollup": "^2.50.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}

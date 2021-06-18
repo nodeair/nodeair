@@ -21,19 +21,19 @@
               </span>
             </div>
             <% 
-              const wordCount = util.wordCount(util.removeHtmlTag(pageData.post.content_html));
+              const wordCount = util.wordCount(util.removeHtmlTag(pageData.post.contentHtml));
             %>
             <article class="card-content article" role="article">
               <div class="article-meta is-size-7 is-uppercase level is-mobile">
                 <div class="level-left">
                   <span class="level-item">
-                    <time datetime="<%= util.dateFormat(pageData.post.post_time) %>" title="<%= util.dateFormat(pageData.post.post_time) %>"><%= util.dateBeautify(pageData.post.post_time) %></time>发表</span>
+                    <time datetime="<%= util.dateFormat(pageData.post.postTime) %>" title="<%= util.dateFormat(pageData.post.postTime) %>"><%= util.dateBeautify(pageData.post.postTime) %></time>发表</span>
                     <span class="level-item"><%= util.getReadTime(wordCount) %> 分钟读完（大约<%= wordCount %>个字）</span>
                   </div>
               </div>
               <h1 class="title is-3 is-size-4-mobile"><%= pageData.post.title %></h1>
               <div class="content">
-                <%- pageData.post.content_html %>
+                <%- pageData.post.contentHtml %>
               </div>
               <div class="article-licensing box">
                 <div class="licensing-title">
@@ -126,6 +126,7 @@
       </div>
     </div>
   </div>
+  <%- include('../components/back-to-top') -%>
   <%- include('../components/footer') -%>
 </body>
 

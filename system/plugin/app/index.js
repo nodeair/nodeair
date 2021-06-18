@@ -2,10 +2,12 @@ const model = require('./model');
 const routerConfig = require('./controller');
 const serviceConfig = require('./service');
 const { SERVICE_NAMESPACE } = require('./package.json').constant;
-const HOOK_NAMESPACE = 'system/plugin/app/index';
 
 async function loaded() {
   const { conf, config, db, router, service, hook } = this;
+  const HOOK_NAMESPACE = 'system/plugin/app/loaded';
+  const HOOK_RENDER = 'system/core/theme/render';
+
   // 注册模型
   db.model.push(model);
   // 注册路由
@@ -33,7 +35,7 @@ async function loaded() {
   // 注册服务
   service.register(serviceConfig);
   // 调用 render 1 号钩子
-  hook.on('system/core/theme/render', 1, async function(renderState) {
+  hook.on(HOOK_RENDER, 1, async function(renderState) {
     // 注入导航数据
     const _config = conf.get();
     if (_config.isInstalled) {

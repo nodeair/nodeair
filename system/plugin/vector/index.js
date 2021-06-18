@@ -2,7 +2,8 @@ const path = require('path');
 
 async function loaded() {
   const { log, hook, theme, staticServer } = this;
-  const HOOK_NAMESPACE = 'system/plugin/vector/index';
+  const HOOK_NAMESPACE = 'system/plugin/vector/loaded';
+
   log.system('加载 vector 插件');
   const state = {
     vue: {

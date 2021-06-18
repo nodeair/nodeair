@@ -3,7 +3,8 @@ const path = require('path');
 
 async function loaded() {
   const { router, theme, hook } = this;
-  const HOOK_NAMESPACE = 'system/plugin/sdk/index';
+  const HOOK_NAMESPACE = 'system/plugin/sdk/loaded';
+
   const state = {
     nodeair: {
       type: 'script',
