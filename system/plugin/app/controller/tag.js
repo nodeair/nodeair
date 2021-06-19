@@ -4,9 +4,9 @@ const HOOK_NAMESPACE = 'system/plugin/app/controller/tag';
 module.exports = async function (ctx) {
   const { hook, theme, service } = this;
   const { name } = ctx.params;
-  const tag = await service.call(SERVICE_NAMESPACE, 'getTagByName', name);
+  const tag = await service.call(`${SERVICE_NAMESPACE}/tag`, 'getTagByName', name);
   if (!tag) return;
-  const posts = await service.call(SERVICE_NAMESPACE, 'getPosts', { tagId: tag.id });
+  const posts = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPosts', { tagId: tag.id });
   const state = {
     data: {
       title: `${tag.name}标签下的文章`,

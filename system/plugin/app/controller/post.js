@@ -4,7 +4,7 @@ const HOOK_NAMESPACE = 'system/plugin/app/controller/post';
 module.exports = async function (ctx) {
   const { hook, theme, service } = this;
   const { id } = ctx.params;
-  const post = await service.call(SERVICE_NAMESPACE, 'getPost', { id });
+  const post = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPost', { id });
   const state = {
     data: {
       post

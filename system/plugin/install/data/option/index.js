@@ -24,6 +24,16 @@ module.exports = function (base, time) {
           url: base
         },
         {
+          name: '归档',
+          openType: 2, // 归档
+          url: `${base}/archives`
+        },
+        {
+          name: '关于',
+          openType: 2, // 关于
+          url: `${base}/about`,
+        },
+        {
           name: 'NodeAir',
           openType: 1, // 1 新窗口打开 2 替换当前窗口
           url: 'https://www.nodeair.com'

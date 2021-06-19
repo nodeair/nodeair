@@ -39,7 +39,7 @@ async function loaded() {
     // 注入导航数据
     const _config = conf.get();
     if (_config.isInstalled) {
-      const nav = await service.call(SERVICE_NAMESPACE, 'getOption', { key: 'top-nav' });
+      const nav = await service.call(`${SERVICE_NAMESPACE}/option`, 'getOption', { key: 'top-nav' });
       renderState.renderOptions.pageData.topNav = nav;
     }
     // 注入路由获取方法

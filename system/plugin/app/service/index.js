@@ -1,148 +1,27 @@
+const fs = require('fs-extra');
+const path = require('path');
 const { SERVICE_NAMESPACE } = require('../package.json').constant;
 
-const handlers = {
-  /**
-   * 获取单个文章
-   */
-  async getPost(params = {}) {
-    const { Post } = this.db.model.models;
-    const { id } = params;
-    return Post.findOne({
-      where: { id },
-      raw: true
-    });
-  },
-  /**
-   * 获取文章列表
-   */
-  async getPosts(params = {}) {
-    const { sequelize } = this.db;
-    const { Post } = this.db.model.models;
-    const { pageNumber = 1, pageSize = 10, order = '', categoryId = '', tagId = '' } = params;
-    let where = {};
-    if (tagId) where = sequelize.fn('FIND_IN_SET', tagId, sequelize.col('tags'));
-    if (categoryId) where.categoryId = categoryId;
-    return Post.findAll({
-      where,
-      order,
-      limit: pageSize,
-      offset: (pageNumber - 1) * pageSize,
-      raw: true
-    });
-  },
-  /**
-   * 获取文章总数
-   */
-  async getPostCount(where = {}) {
-    const { Post } = this.db.model.models;
-    return Post.count({ where });
-  },
-  /**
-   * 获取所有管理员
-   */
-  async getManagers() {
-    const { User } = this.db.model.models;
-    return User.findAll({ where: { type: 0 }, raw: true });
-  },
-  /**
-   * 获取分类列表
-   */
-  async getAllCategories() {
-    const { Category } = this.db.model.models;
-    return Category.findAll({ raw: true });
-  },
-  /**
-   * 获取单个分类
-   */
-  async getCategory(params = {}) {
-    const { Category } = this.db.model.models;
-    const { id } = params;
-    return Category.findOne({
-      where: { id },
-      raw: true
-    });
-  },
-  /**
-   * 获取分类总数
-   */
-  async getCateCount() {
-    const { Category } = this.db.model.models;
-    return Category.count();
-  },
-  /**
-   * 获取单个标签
-   */
-  async getTag(params = {}) {
-    const { Tag } = this.db.model.models;
-    const { id } = params;
-    return Tag.findOne({
-      where: { id },
-      raw: true
-    });
-  },
-  /**
-   * 通过标签名称获取单个标签
-   */
-  async getTagByName(name) {
-    const { Tag } = this.db.model.models;
-    return Tag.findOne({
-      where: { name },
-      raw: true
-    });
-  },
-  /**
-   * 获取标签列表
-   */
-  async getTags() {
-    const { Tag } = this.db.model.models;
-    return Tag.findAll({ raw: true });
-  },
-  /**
-   * 获取标签总数
-   */
-  async getTagCount() {
-    const { Tag } = this.db.model.models;
-    return Tag.count();
-  },
-  /**
-   * 获取数据库中的配置信息
-   */
-  async getOption(params = {}) {
-    const { key, namespace = SERVICE_NAMESPACE } = params;
-    const { Option } = this.db.model.models;
-    const item = await Option.findOne({ where: { namespace, key }, raw: true });
-    try {
-      const json = JSON.parse(item.value);
-      return json;
-    } catch (e) {
-      return {};
-    }
-  },
-  /**
-   * 获取文章归档
-   */
-  async getArchives() {
-    const { sequelize } = this.db;
-    const { SELECT } = sequelize.QueryTypes
-    const { Post } = this.db.model.models;
-    const tableName = Post.getTableName();
-    const postTimeField = 'post_time';
-    const sql = `SELECT YEAR(${postTimeField}) AS 'year',
-                MONTH(${postTimeField}) AS 'month',COUNT(*) AS 'count'
-                FROM ${tableName} GROUP BY YEAR(${postTimeField}) DESC,
-                MONTH(${postTimeField});`;
-    return sequelize.query(sql, { type: SELECT });
-  }
-}
-
-// 导出服务
-module.exports = (() => {
+/**
+ * 导出所有服务
+ */
+function getServices() {
   const array = [];
-  for (const serviceName in handlers) {
-    if (Object.hasOwnProperty.call(handlers, serviceName)) {
-      const handler = handlers[serviceName];
-      array.push({ namespace: SERVICE_NAMESPACE, serviceName, handler });
+  const filenames = fs.readdirSync(__dirname);
+  for (let i = 0; i < filenames.length; i++) {
+    const filename = filenames[i];
+    if (filename === 'index.js') continue;
+    const name = filename.substring(0, filename.lastIndexOf('.'));
+    const handlers = require(path.join(__dirname, filename));
+    for (const serviceName in handlers) {
+      if (Object.hasOwnProperty.call(handlers, serviceName)) {
+        const handler = handlers[serviceName];
+        array.push({ namespace: `${SERVICE_NAMESPACE}/${name}`, serviceName, handler });
+      }
     }
   }
   return array;
-})();
+}
+
+// 导出服务
+module.exports = getServices();

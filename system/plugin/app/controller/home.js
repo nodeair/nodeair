@@ -19,8 +19,8 @@ module.exports = async function (ctx) {
   await hook.emit(HOOK_NAMESPACE, 1, state);
 
   // 处理分页
-  state.data.posts = await service.call(SERVICE_NAMESPACE, 'getPosts', { pageNumber });
-  pagination.count = await service.call(SERVICE_NAMESPACE, 'getPostCount');
+  state.data.posts = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPosts', { pageNumber });
+  pagination.count = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPostCount');
   pagination.pages = Math.ceil(pagination.count / pagination.pageSize);
   pagination.initUrl();
 

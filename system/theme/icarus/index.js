@@ -39,19 +39,19 @@ async function beforeMount() {
   const { service, plugin } = this;
   const { packageJson } = plugin.getPlugin('@nodeair/plugin-core-app');
   const { SERVICE_NAMESPACE } = packageJson.constant;
-  const s = (serviceName, params = {}) => service.call(SERVICE_NAMESPACE, serviceName, params);
-  const managers = await s('getManagers');
-  const categories = await s('getAllCategories');
-  const links = await s('getOption', { key: 'links' });
-  const tags = await s('getTags');
-  const archives = await s('getArchives');
-  const posts = await s('getPosts', { order: [['post_time', 'DESC']] });
+  const s = (prefix, serviceName, params = {}) => service.call(`${SERVICE_NAMESPACE}/${prefix}`, serviceName, params);
+  const managers = await s('user', 'getManagers');
+  const categories = await s('category', 'getAllCategories');
+  const links = await s('option', 'getOption', { key: 'links' });
+  const tags = await s('tag', 'getTags');
+  const archives = await s('archive', 'getArchives');
+  const posts = await s('post', 'getPosts', { order: [['post_time', 'DESC']] });
   const profileData = {
     name: '站长简介',
     manager: managers[0],
-    postCount: await s('getPostCount'),
-    cateCount: await s('getCateCount'),
-    tagCount: await s('getTagCount')
+    postCount: await s('post', 'getPostCount'),
+    cateCount: await s('category', 'getCateCount'),
+    tagCount: await s('tag', 'getTagCount')
   };
   this.widget.addData('index-left', 'profile', profileData);
   this.widget.addData('index-left', 'categories', { name: '文章分类', categories });

@@ -7,8 +7,8 @@ module.exports = async function (ctx) {
   const id = Number(ctx.params.id) || 1;
   const pageNumber = Number(ctx.params.pageNumber) || 1;
   const pagination = new Pagination({ pageNumber });
-  const category = await service.call(SERVICE_NAMESPACE, 'getCategory', { id });
-  const posts = await service.call(SERVICE_NAMESPACE, 'getPosts', { pageNumber, categoryId: id });
+  const category = await service.call(`${SERVICE_NAMESPACE}/category`, 'getCategory', { id });
+  const posts = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPosts', { pageNumber, categoryId: id });
 
   const state = {
     data: {
@@ -23,7 +23,7 @@ module.exports = async function (ctx) {
   await hook.emit(HOOK_NAMESPACE, 1, state);
 
   // 处理分页
-  pagination.count = await service.call('system/plugin/app', 'getPostCount', { categoryId: id });
+  pagination.count = await service.call('system/plugin/app/post', 'getPostCount', { categoryId: id });
   pagination.pages = Math.ceil(pagination.count / pagination.pageSize);
   pagination.initUrl();
 
