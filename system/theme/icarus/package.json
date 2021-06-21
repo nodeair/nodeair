@@ -11,6 +11,8 @@
   "pages": {
     "index": "template/pages/index.ejs",
     "category": "template/pages/category.ejs",
+    "archive": "template/pages/archive.ejs",
+    "about": "template/pages/about.ejs",
     "tag": "template/pages/tag.ejs",
     "search": "template/pages/search.ejs",
     "install": "template/pages/install.ejs",

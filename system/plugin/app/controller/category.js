@@ -8,6 +8,7 @@ module.exports = async function (ctx) {
   const pageNumber = Number(ctx.params.pageNumber) || 1;
   const pagination = new Pagination({ pageNumber });
   const category = await service.call(`${SERVICE_NAMESPACE}/category`, 'getCategory', { id });
+  if (!category) return;
   const posts = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPosts', { pageNumber, categoryId: id });
 
   const state = {

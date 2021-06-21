@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="<%= common.lang %>">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../components/head') -%>
+    <title><%= pageData.title %></title>
+  </head>
+  <body class="is-3-column pace-done">
+    <%- include('../components/nav') -%>
+    <div class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen">
+            xxxx
+          </div>
+          <div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1">
+            <%- getWidgets('index-left') -%>
+          </div>
+          <div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3">
+            <%- getWidgets('index-right') -%>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../components/back-to-top') -%>
+    <%- include('../components/footer') -%>
+  </body>
+</html>

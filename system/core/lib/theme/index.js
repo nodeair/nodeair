@@ -36,7 +36,9 @@ class Theme {
       'post', // 3
       'not-installed', // 4
       'category', // 5
-      'tag' // 6
+      'tag', // 6
+      'archive', // 7
+      'about' // 8
     ];
     this.head = new Head(this);
   }
@@ -218,6 +220,7 @@ class Theme {
    * 获取各个模板路径
    */
   _getTplPath() {
+    const { app } = this;
     const { basedir, package: packageJson } = this.currentTheme;
 
     if (!packageJson) {
@@ -227,6 +230,10 @@ class Theme {
     // 拼接所需页面路径
     this.tplPath = {};
     this.PAGES_NAME.forEach(name => {
+      const pagePath = packageJson.pages[name];
+      if (!pagePath) {
+        return app.log.warn(`【读取主题配置警告】名为“${name}”的模板页面路径定义缺失`);
+      }
       this.tplPath[name] = path.join(basedir, packageJson.pages[name]);
     });
   }

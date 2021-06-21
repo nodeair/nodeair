@@ -3,6 +3,8 @@ const searchController = require('./search');
 const postController = require('./post');
 const categoryController = require('./category');
 const tagController = require('./tag');
+const archiveController = require('./archive');
+const aboutController = require('./about');
 const HOOK_NAMESPACE = 'system/plugin/app/controller/index';
 
 async function routerConfig(app) {
@@ -21,6 +23,10 @@ async function routerConfig(app) {
       // 标签页
       { pageId: 6, params: [ 'name' ], method: 'GET', path: '/tag/:name', controller: tagController },
       { pageId: 6, params: [ 'name', 'pageNumber' ], method: 'GET', path: '/tag/:name/:pageNumber', controller: tagController },
+      // 归档页
+      { pageId: 7, params: [], method: 'GET', path: '/archive', controller: archiveController },
+      // 关于
+      { pageId: 8, params: [], method: 'GET', path: '/about', controller: aboutController },
       // 文章页
       { pageId: 3, params: [ 'id' ], method: 'GET', path: '/post/:id', controller: postController },
     ]

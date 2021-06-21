@@ -26,7 +26,7 @@ module.exports = function (base, time) {
         {
           name: '归档',
           openType: 2, // 归档
-          url: `${base}/archives`
+          url: `${base}/archive`
         },
         {
           name: '关于',
