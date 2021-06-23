@@ -1,17 +1,12 @@
 const { SERVICE_NAMESPACE } = require('../package.json').constant;
-const HOOK_NAMESPACE = 'system/plugin/app/controller/archive';
+const HOOK_NAMESPACE = 'system/plugin/app/controller/about';
 
 module.exports = async function (ctx) {
   const { hook, theme, service } = this;
-  const archives = await service.call(`${SERVICE_NAMESPACE}/archive`, 'getArchives', true);
-  for (let i = 0; i < archives.length; i++) {
-    const { year } = archives[i];
-    archives[i].posts = await service.call(`${SERVICE_NAMESPACE}/archive`, 'getPostsByDate', year);
-  }
-
+  const pages = await service.call(`${SERVICE_NAMESPACE}/option`, 'getOption', { key: 'pages' });
   const state = {
     data: {
-      list: archives
+      html: pages.about
     }
   };
 
@@ -19,7 +14,7 @@ module.exports = async function (ctx) {
   await hook.emit(HOOK_NAMESPACE, 1, state);
 
   const renderParams = {
-    pageId: 7,
+    pageId: 8,
     data: state.data,
     ctx
   };
