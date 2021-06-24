@@ -35,8 +35,22 @@ async function getPostCount(where = {}) {
   return Post.count({ where });
 }
 
+/**
+ * 获取某篇文章的上下两篇
+ */
+async function getPostNeighbor(id) {
+  const { sequelize } = this.db;
+  const { SELECT } = sequelize.QueryTypes
+  const { Post } = this.db.model.models;
+  const tableName = Post.getTableName();
+  const sql = `select * from ${tableName} where id in((select max(id) from ${tableName} where id < ${id}),
+  (select min(id) from ${tableName} where id > ${id}))`;
+  return sequelize.query(sql, { type: SELECT });
+}
+
 module.exports = {
   getPost,
   getPosts,
-  getPostCount
+  getPostCount,
+  getPostNeighbor
 };

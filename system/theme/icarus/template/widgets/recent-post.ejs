@@ -12,7 +12,7 @@
       <% } %>
       <div class="media-content">
         <p class="date"><time datetime="2020-04-01T00:00:00.000Z"><%= util.dateFormat(post.postTime, 'YYYY-MM-DD') %></time></p>
-        <p class="title"><a href="<%= common.base %>/post/<%= post.id %>"><%= post.title %></a></p>
+        <p class="title"><a href="<%= getUrl(3, post) %>"><%= post.title %></a></p>
         <p class="categories"><a href="<%= common.base %>/cate/<%= post.categoryId %>">未知分类</a></p>
       </div>
     </article>

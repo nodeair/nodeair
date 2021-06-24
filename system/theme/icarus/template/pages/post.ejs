@@ -99,26 +99,28 @@
                 </div>
                 <div class="st-btn st-last" data-network="sharethis" style="display: inline-block;">
                   <img alt="sharethis sharing button" src="https://platform-cdn.sharethis.com/img/sharethis.svg">
-
                 </div>
               </div>
-              <script
-                src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons"
-                defer=""></script>
             </article>
           </div>
-          <!--!-->
-          <nav class="post-navigation mt-4 level is-mobile"
-            style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform-origin: center top;">
-            <div class="level-start"><a class="article-nav-prev level level-item link-muted"
-                href="/hexo-theme-icarus/Plugins/Comment/icarus-user-guide-comment-plugins/"><i
-                  class="level-item fas fa-chevron-left"></i><span class="level-item">Icarus User Guide - Comment
-                  Plugins</span></a></div>
-            <div class="level-end"><a class="article-nav-next level level-item link-muted"
-                href="/hexo-theme-icarus/Configuration/icarus%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97-%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"><span
-                  class="level-item">Icarus用户指南 - 主题配置</span><i class="level-item fas fa-chevron-right"></i></a></div>
+          <nav class="post-navigation mt-4 level is-mobile">
+            <% if (pageData.prev) { %>
+            <div class="level-start">
+              <a class="article-nav-prev level level-item link-muted" href="<%= getUrl(3, pageData.prev) %>">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item"><%= pageData.prev.title %></span>
+              </a>
+            </div>
+            <% } %>
+            <% if (pageData.next) { %>
+            <div class="level-end">
+              <a class="article-nav-next level level-item link-muted" href="<%= getUrl(3, pageData.next) %>">
+                <span class="level-item"><%= pageData.next.title %></span>
+                <i class="level-item fas fa-chevron-right"></i>
+              </a>
+            </div>
+            <% } %>
           </nav>
-          <!--!-->
         </div>
         <div class="column column-left is-4-tablet is-4-desktop is-4-widescreen order-1 is-sticky">
           <%- getWidgets('index-left') -%>
