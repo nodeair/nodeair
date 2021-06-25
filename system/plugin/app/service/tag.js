@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 /**
  * 获取单个标签
  */
@@ -33,10 +35,25 @@ async function getTagCount() {
   const { Tag } = this.db.model.models;
   return Tag.count();
 }
+/**
+ * 获取标签通过ids
+ */
+async function getTagsByIds(ids) {
+  const { Tag } = this.db.model.models;
+  return Tag.findAll({
+    where: {
+      id: {
+        [Sequelize.Op.in]: ids
+      }
+    },
+    raw: true
+  });
+}
 
 module.exports = {
   getTag,
   getTagByName,
   getTags,
-  getTagCount
+  getTagCount,
+  getTagsByIds
 };

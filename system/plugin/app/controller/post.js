@@ -6,9 +6,12 @@ module.exports = async function (ctx) {
   const { id } = ctx.params;
   const post = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPost', { id });
   const neighbor = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPostNeighbor', id);
+  const tags = await service.call(`${SERVICE_NAMESPACE}/tag`, 'getTagsByIds', post.tags.split(','));
+
   const state = {
     data: {
       post,
+      tags,
       prev: '',
       next: ''
     }

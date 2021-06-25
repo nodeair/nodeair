@@ -61,18 +61,22 @@
                     <div class="level-item is-narrow">
                       <div>
                         <h6>许可协议</h6>
-                        <p><a class="icons" rel="noopener" target="_blank" title="Creative Commons"
-                            href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a
-                            class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0"
-                            href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+                        <p>
+                          <a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                            <i class="icon fab fa-creative-commons"></i>
+                          </a>
+                          <a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag"
-                  href="/hexo-theme-icarus/tags/Getting-Started/">Getting Started</a><a class="link-muted mr-2"
-                  rel="tag" href="/hexo-theme-icarus/tags/Icarus%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/">Icarus用户指南</a>
+              <div class="article-tags is-size-7 mb-4">
+                <span class="mr-2">#</span>
+                <% pageData.tags.forEach(function(tag) { %>
+                <a class="link-muted mr-2" rel="tag" href="<%= getUrl(6, tag) %>"><%= tag.name %></a>
+                <% }) %>
               </div>
               <div class="sharethis-inline-share-buttons st-center  st-inline-share-buttons st-animated" id="st-1">
                 <div class="st-total ">
@@ -83,19 +87,15 @@
                 </div>
                 <div class="st-btn st-first" data-network="facebook" style="display: inline-block;">
                   <img alt="facebook sharing button" src="https://platform-cdn.sharethis.com/img/facebook.svg">
-
                 </div>
                 <div class="st-btn" data-network="twitter" style="display: inline-block;">
                   <img alt="twitter sharing button" src="https://platform-cdn.sharethis.com/img/twitter.svg">
-
                 </div>
                 <div class="st-btn" data-network="pinterest" style="display: inline-block;">
                   <img alt="pinterest sharing button" src="https://platform-cdn.sharethis.com/img/pinterest.svg">
-
                 </div>
                 <div class="st-btn" data-network="email" style="display: inline-block;">
                   <img alt="email sharing button" src="https://platform-cdn.sharethis.com/img/email.svg">
-
                 </div>
                 <div class="st-btn st-last" data-network="sharethis" style="display: inline-block;">
                   <img alt="sharethis sharing button" src="https://platform-cdn.sharethis.com/img/sharethis.svg">
