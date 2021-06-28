@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const moment = require('moment');
+const uploadUtil = require('../../../../system/plugin/upload/util');
 
 /**
  * 获取文件名和文件扩展
@@ -41,7 +42,8 @@ function getData(baseUrl) {
       const filename = uploadFiles[i];
       let { name, extension } = getFileNameAndExtension(filename);
       const oldPath = path.join(uploadDir, `${name}.${extension}`);
-      const newName = timestamp + i * 1000;
+      const _time = timestamp + i * 1000;
+      const newName = uploadUtil.getFilename(_time);
       if (name !== 'poster') {
         imgs.push({
           oldName: name,

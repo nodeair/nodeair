@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 
+const uploadUtil = require('../../../../upload/util');
 const CategoryData = require('../../../data/category');
 const UserData = require('../../../data/user');
 const PostData = require('../../../data/post');
@@ -13,7 +14,7 @@ const UploadData = require('../../../data/upload');
  * 插入初始数据
  */
  async function insertData(params) {
-  const { db, config, constant } = this;
+  const { db, config, constant, util } = this;
   const { UPLOAD_DIR } = constant;
   const { base } = config.site;
   const { model } = db;
@@ -21,13 +22,14 @@ const UploadData = require('../../../data/upload');
   const time = new Date().getTime();
   if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirsSync(UPLOAD_DIR);
   const uploadDir = path.join(__dirname, '../../../upload');
+  const targetFilename = uploadUtil.getFilename();
   const defaultAvatar = {
     origin: path.join(uploadDir, 'default_avatar.png'),
     target: path.join(UPLOAD_DIR, 'default_avatar.png')
   };
   const posterPath = {
     origin: path.join(uploadDir, 'poster.jpg'),
-    target: path.join(UPLOAD_DIR, `${time}.jpg`)
+    target: path.join(UPLOAD_DIR, `${targetFilename}.jpg`)
   };
   fs.copyFileSync(defaultAvatar.origin, defaultAvatar.target);
   fs.copyFileSync(posterPath.origin, posterPath.target);
@@ -40,10 +42,10 @@ const UploadData = require('../../../data/upload');
     Comment.create(CommentData(base, time, user)),
     Category.create(CategoryData(time)),
     User.create(UserData(base, time, user)),
-    Post.create(PostData(base, time)),
+    Post.create(PostData(base, time, targetFilename)),
     Tag.create(TagData(time)),
     Option.bulkCreate(OptionData(base, time)),
-    Upload.bulkCreate(UploadData(base, time))
+    Upload.bulkCreate(UploadData(base, time, targetFilename))
   ];
   await Promise.all(results);
 }
