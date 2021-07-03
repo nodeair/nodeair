@@ -1,8 +1,10 @@
+'use strict';
+
 const Pagination = require('../pagination');
 const { SERVICE_NAMESPACE } = require('../package.json').constant;
 const HOOK_NAMESPACE = 'system/plugin/app/controller/home';
 
-module.exports = async function (ctx) {
+module.exports = async function(ctx) {
   const { hook, theme, service } = this;
   const pageNumber = Number(ctx.params.pageNumber) || 1;
   const pagination = new Pagination({ pageNumber });
@@ -11,8 +13,8 @@ module.exports = async function (ctx) {
     data: {
       title: '首页',
       posts: [],
-      pagination
-    }
+      pagination,
+    },
   };
 
   // 调用钩子
@@ -31,12 +33,12 @@ module.exports = async function (ctx) {
   const renderParams = {
     pageId: 0,
     data: state.data,
-    ctx
-  }
+    ctx,
+  };
 
   // 调用钩子
   await hook.emit(HOOK_NAMESPACE, 3, renderParams);
 
   // 返回
   return await theme.render(renderParams);
-}
+};

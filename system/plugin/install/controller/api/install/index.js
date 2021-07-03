@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const checkConnected = require('./check-connected');
 const userConfigGenerator = require('./config-generator');
@@ -5,13 +7,14 @@ const insertData = require('./insert-data');
 
 /**
  * 安装控制器
+ * @param {Object} ctx Koa上下文对象
  */
 async function installController(ctx) {
   const { log, conf, db, router, plugin } = this;
   // 获取POST请求数据
   log.system('获取POST请求数据');
   const params = ctx.request.body;
-  // 生成用户配置 
+  // 生成用户配置
   log.system('生成用户配置');
   const userConfig = userConfigGenerator(params);
   // 检测数据库是否可以连接
@@ -56,7 +59,7 @@ async function installController(ctx) {
   log.system('返回安装结果');
   ctx.body = {
     code: 0,
-    msg: '安装完毕，请重新启用程序'
+    msg: '安装完毕，请重新启用程序',
   };
 }
 

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 多语言类
  */
@@ -8,7 +10,7 @@ class Lang {
     this._langText = {
       'zh-cn': {},
       'zh-tw': {},
-      'en-us': {}
+      'en-us': {},
     };
   }
   /**
@@ -16,7 +18,7 @@ class Lang {
    */
   register(langObj = {}) {
     Object.keys(langObj).forEach(key => {
-      const langSet = this._langText[key]
+      const langSet = this._langText[key];
       if (langSet) {
         this._langText[key] = Object.assign(langSet, langObj[key]);
       }
@@ -34,9 +36,8 @@ class Lang {
     if (langSet) {
       const _text = langSet[key];
       return _text ? _text : unknownText;
-    } else {
-      return unknownText;
     }
+    return unknownText;
   }
 }
 

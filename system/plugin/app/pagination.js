@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 分页类
  */
@@ -16,8 +18,8 @@ class Pagination {
    */
   initUrl() {
     const { pages, routePrefix, pageNumber } = this;
-    const nextUrl = `${routePrefix}${pageNumber+1}`;
-    const prevUrl = `${routePrefix}${pageNumber-1}`;
+    const nextUrl = `${routePrefix}${pageNumber + 1}`;
+    const prevUrl = `${routePrefix}${pageNumber - 1}`;
     if (pageNumber <= 1) {
       this.prevUrl = '';
       this.nextUrl = nextUrl;

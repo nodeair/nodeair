@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 获取分类列表
  */
@@ -13,7 +15,7 @@ async function getCategory(params = {}) {
   const { id } = params;
   return Category.findOne({
     where: { id },
-    raw: true
+    raw: true,
   });
 }
 /**
@@ -22,10 +24,10 @@ async function getCategory(params = {}) {
 async function getCateCount() {
   const { Category } = this.db.model.models;
   return Category.count();
-};
+}
 
 module.exports = {
   getAllCategories,
   getCategory,
-  getCateCount
+  getCateCount,
 };

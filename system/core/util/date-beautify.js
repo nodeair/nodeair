@@ -1,25 +1,27 @@
+'use strict';
+
 /**
  * 日期美化
  * @param {Number} timestamp 时间戳
  * @returns {String} 美化之后的日期
  */
 function dateBeautify(timestamp) {
-  let dateTimeStamp = timestamp;
-  let minute = 1000 * 60;
-  let hour = minute * 60;
-  let day = hour * 24;
-  let month = day * 30;
-  let year = month * 12;
-  let now = new Date().getTime();
-  let diffValue = now - dateTimeStamp;
-  let result = ''
+  const dateTimeStamp = timestamp;
+  const minute = 1000 * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+  const month = day * 30;
+  const year = month * 12;
+  const now = new Date().getTime();
+  const diffValue = now - dateTimeStamp;
+  let result = '';
   if (diffValue < 0) return;
-  let monthC = diffValue / month;
-  let weekC = diffValue / (7 * day);
-  let dayC = diffValue / day;
-  let hourC = diffValue / hour;
-  let minC = diffValue / minute;
-  let yearC = diffValue / year
+  const monthC = diffValue / month;
+  const weekC = diffValue / (7 * day);
+  const dayC = diffValue / day;
+  const hourC = diffValue / hour;
+  const minC = diffValue / minute;
+  const yearC = diffValue / year;
   if (yearC >= 1) return `${parseInt(yearC)}年前`;
   if (monthC >= 1) {
     result = `${parseInt(monthC)}月前`;

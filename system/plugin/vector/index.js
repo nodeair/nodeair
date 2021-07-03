@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 
 async function loaded() {
@@ -8,25 +10,25 @@ async function loaded() {
   const state = {
     vue: {
       type: 'script',
-      url: `//<%= common.host %>/vector/vue/2.6.12/vue.min.js`
+      url: '//<%= common.host %>/vector/vue/2.6.12/vue.min.js',
     },
     jquery: {
       type: 'script',
-      url: '//<%= common.host %>/vector/jquery/3.6.0/jquery.min.js'
+      url: '//<%= common.host %>/vector/jquery/3.6.0/jquery.min.js',
     },
     axios: {
       type: 'script',
-      url: '//<%= common.host %>/vector/axios/0.21.1/axios.min.js'
+      url: '//<%= common.host %>/vector/axios/0.21.1/axios.min.js',
     },
     elementUiJs: {
       type: 'script',
-      url: '//<%= common.host %>/vector/element-ui/2.15.1/index.js'
+      url: '//<%= common.host %>/vector/element-ui/2.15.1/index.js',
     },
     elementUiCss: {
       type: 'css',
-      url: '//<%= common.host %>/vector/element-ui/2.15.1/index.css'
-    }
-  }
+      url: '//<%= common.host %>/vector/element-ui/2.15.1/index.css',
+    },
+  };
 
   // 调用钩子
   await hook.emit(HOOK_NAMESPACE, 1, state);

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 获取单个文章
  */
@@ -6,7 +8,7 @@ async function getPost(params = {}) {
   const { id } = params;
   return Post.findOne({
     where: { id },
-    raw: true
+    raw: true,
   });
 }
 /**
@@ -24,7 +26,7 @@ async function getPosts(params = {}) {
     order,
     limit: pageSize,
     offset: (pageNumber - 1) * pageSize,
-    raw: true
+    raw: true,
   });
 }
 /**
@@ -40,7 +42,7 @@ async function getPostCount(where = {}) {
  */
 async function getPostNeighbor(id) {
   const { sequelize } = this.db;
-  const { SELECT } = sequelize.QueryTypes
+  const { SELECT } = sequelize.QueryTypes;
   const { Post } = this.db.model.models;
   const tableName = Post.getTableName();
   const sql = `select * from ${tableName} where id in((select max(id) from ${tableName} where id < ${id}),
@@ -52,5 +54,5 @@ module.exports = {
   getPost,
   getPosts,
   getPostCount,
-  getPostNeighbor
+  getPostNeighbor,
 };

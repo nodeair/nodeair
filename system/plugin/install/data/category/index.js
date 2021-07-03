@@ -1,7 +1,9 @@
-module.exports = function () {
+'use strict';
+
+module.exports = function() {
   return {
     id: 1,
     name: '未知分类',
-    count: 1
+    count: 1,
   };
 };

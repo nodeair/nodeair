@@ -1,3 +1,5 @@
+'use strict';
+
 const { SERVICE_NAMESPACE } = require('../package.json').constant;
 
 /**
@@ -16,5 +18,5 @@ async function getOption(params = {}) {
 }
 
 module.exports = {
-  getOption
+  getOption,
 };

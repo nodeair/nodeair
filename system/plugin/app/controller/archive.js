@@ -1,7 +1,9 @@
+'use strict';
+
 const { SERVICE_NAMESPACE } = require('../package.json').constant;
 const HOOK_NAMESPACE = 'system/plugin/app/controller/archive';
 
-module.exports = async function (ctx) {
+module.exports = async function(ctx) {
   const { hook, theme, service } = this;
   const archives = await service.call(`${SERVICE_NAMESPACE}/archive`, 'getArchives', true);
   for (let i = 0; i < archives.length; i++) {
@@ -11,8 +13,8 @@ module.exports = async function (ctx) {
 
   const state = {
     data: {
-      list: archives
-    }
+      list: archives,
+    },
   };
 
   // 调用钩子
@@ -21,11 +23,11 @@ module.exports = async function (ctx) {
   const renderParams = {
     pageId: 7,
     data: state.data,
-    ctx
+    ctx,
   };
 
   // 调用钩子
   await hook.emit(HOOK_NAMESPACE, 2, renderParams);
 
   return await theme.render(renderParams);
-}
+};

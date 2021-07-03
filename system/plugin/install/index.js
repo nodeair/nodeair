@@ -1,3 +1,5 @@
+'use strict';
+
 const routerConfig = require('./controller');
 const langConf = require('./lang');
 const checkInstalled = require('./util/check-installed');
@@ -18,12 +20,12 @@ async function loaded() {
   // 定义状态
   const state = {
     routers: await routerConfig(app),
-    installHandler404: async function(ctx, next) {
-      if (ctx.status == '404') {
-        await notInstalledViewController.apply(app, [ctx, next]);
+    async installHandler404(ctx, next) {
+      if (String(ctx.status) === '404') {
+        await notInstalledViewController.apply(app, [ ctx, next ]);
       }
-    }
-  }
+    },
+  };
 
   // 调用钩子
   await hook.emit(HOOK_NAMESPACE, 1, state);

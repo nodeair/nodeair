@@ -1,8 +1,10 @@
+'use strict';
+
 const Pagination = require('../pagination');
 const { SERVICE_NAMESPACE } = require('../package.json').constant;
 const HOOK_NAMESPACE = 'system/plugin/app/controller/category';
 
-module.exports = async function (ctx) {
+module.exports = async function(ctx) {
   const { hook, theme, service } = this;
   const id = Number(ctx.params.id) || 1;
   const pageNumber = Number(ctx.params.pageNumber) || 1;
@@ -16,8 +18,8 @@ module.exports = async function (ctx) {
       title: `${category.name}分类下的文章`,
       posts,
       category,
-      pagination
-    }
+      pagination,
+    },
   };
 
   // 调用钩子
@@ -35,12 +37,12 @@ module.exports = async function (ctx) {
   const renderParams = {
     pageId: 5,
     data: state.data,
-    ctx
-  }
+    ctx,
+  };
 
   // 调用钩子
   await hook.emit(HOOK_NAMESPACE, 3, renderParams);
 
   // 返回
   return await theme.render(renderParams);
-}
+};

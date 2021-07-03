@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 模型类
  */
@@ -9,7 +11,7 @@ class Model {
     this._commonOptions = {
       timestamps: true,
       charset: 'utf8mb4',
-      collate: 'utf8mb4_unicode_ci'
+      collate: 'utf8mb4_unicode_ci',
     };
     this._commonHooks = [];
   }
@@ -36,7 +38,7 @@ class Model {
         const { name, structure, options } = params;
         // 真实字段名改下划线形式
         Object.keys(structure).forEach(key => {
-            structure[key].field = util.nameToLine(key);
+          structure[key].field = util.nameToLine(key);
         });
         const model = sequelize.define(name, structure, Object.assign({}, _commonOptions, options));
         _commonHooks.forEach(item => {

@@ -1,3 +1,5 @@
+'use strict';
+
 const createController = require('./create');
 
 async function routerConfig(app) {
@@ -5,8 +7,8 @@ async function routerConfig(app) {
   const HOOK_NAMESPACE = 'system/plugin/captcha/controller/index';
   const state = {
     routers: [
-      { method: 'GET', path: '/api/captcha/create', controller: createController }
-    ]
+      { method: 'GET', path: '/api/captcha/create', controller: createController },
+    ],
   };
 
   // 调用钩子

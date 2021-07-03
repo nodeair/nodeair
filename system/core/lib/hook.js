@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 
 /**
@@ -21,7 +23,7 @@ class Hook {
       this.events[eventName] = {};
     }
     if (!Array.isArray(this.events[eventName][id])) {
-      this.events[eventName][id] = [handler];
+      this.events[eventName][id] = [ handler ];
     } else {
       this.events[eventName][id].push(handler);
     }

@@ -1,3 +1,5 @@
+'use strict';
+
 const homeController = require('./home');
 const searchController = require('./search');
 const postController = require('./post');
@@ -29,7 +31,7 @@ async function routerConfig(app) {
       { pageId: 8, params: [], method: 'GET', path: '/about', controller: aboutController },
       // 文章页
       { pageId: 3, params: [ 'id' ], method: 'GET', path: '/post/:id', controller: postController },
-    ]
+    ],
   };
 
   // 调用钩子

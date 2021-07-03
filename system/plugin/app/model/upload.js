@@ -1,5 +1,7 @@
+'use strict';
+
 const { DataTypes } = require('sequelize');
-const { INTEGER, BIGINT, STRING, TEXT } = DataTypes;
+const { INTEGER, STRING, TEXT } = DataTypes;
 
 /**
  * 附件表
@@ -15,7 +17,7 @@ module.exports = function() {
       name: { type: STRING(250), allowNull: false, comment: '附件名称' },
       sourceName: { type: STRING(250), allowNull: false, comment: '原始文件名' },
       storagePath: { type: STRING(250), allowNull: false, comment: '存储相对位置' },
-      intro: { type: TEXT, comment: '附件简介' }
-    }
+      intro: { type: TEXT, comment: '附件简介' },
+    },
   };
 };

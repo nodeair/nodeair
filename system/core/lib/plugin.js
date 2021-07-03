@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const _ = require('lodash');
 const fs = require('fs');
@@ -8,12 +10,12 @@ const jsonfile = require('jsonfile');
  */
 const Hooks = function() {
   return {
-    installed: function () { },
-    loaded: function () { },
-    beforeMount: function () { },
-    uninstalled: function () { }
+    installed() { },
+    loaded() { },
+    beforeMount() { },
+    uninstalled() { },
   };
-}
+};
 
 /**
  * 插件类
@@ -32,7 +34,7 @@ class Plugin {
   async init() {
     this._userPlugins = await this._load('user');
     this._systemPlugins = await this._load('system');
-    this._plugins = [...this._userPlugins, ...this._systemPlugins];
+    this._plugins = [ ...this._userPlugins, ...this._systemPlugins ];
     await this.emitHook('loaded');
   }
   /**
@@ -43,9 +45,9 @@ class Plugin {
     const {
       app,
       _userPlugins: userPlugins,
-      _systemPlugins: systemPlugins
+      _systemPlugins: systemPlugins,
     } = this;
-    const emit = async (plugins) => {
+    const emit = async plugins => {
       for (let i = 0; i < plugins.length; i++) {
         const item = plugins[i];
         const fn = item.hooks[hookName];
@@ -54,7 +56,7 @@ class Plugin {
           await fn.call(app);
         }
       }
-    }
+    };
     // 首先触发用户安装的插件
     await emit(userPlugins);
     // 再触发系统自带插件
@@ -109,6 +111,8 @@ class Plugin {
         plugins = fs.readdirSync(dir);
         order = conf.get(type).systemPluginOrder;
         break;
+      default:
+        break;
     }
     return await this._loadPlugin(plugins, order, dir, type);
   }
@@ -145,8 +149,8 @@ class Plugin {
       loadedArray.push({
         type,
         dir: pluginDir,
-        packageJson: packageJson,
-        hooks
+        packageJson,
+        hooks,
       });
     }
     return loadedArray;

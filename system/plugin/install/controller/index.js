@@ -1,3 +1,5 @@
+'use strict';
+
 const installViewController = require('./view/install');
 const notInstalledViewController = require('./view/not-installed');
 const installApiController = require('./api/install');
@@ -9,8 +11,8 @@ async function routerConfig(app) {
     routers: [
       { method: 'GET', path: '/install', controller: installViewController },
       { method: 'POST', path: '/api/install', controller: installApiController },
-      { method: 'GET', path: '/', controller: notInstalledViewController }
-    ]
+      { method: 'GET', path: '/', controller: notInstalledViewController },
+    ],
   };
 
   // 调用钩子

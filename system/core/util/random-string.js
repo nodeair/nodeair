@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 生成指定长度的随机英文字符串
  * @param {Number} len 字符串长度

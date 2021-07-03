@@ -1,3 +1,5 @@
+'use strict';
+
 const NodeAir = require('../core');
 
 async function boot() {

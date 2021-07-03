@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 
 /**
@@ -64,8 +66,8 @@ function constant() {
     SYSTEM_THEME_DIR,
     CACHE_DIR,
     CACHE_INDEX_PATH,
-    UPLOAD_DIR
-  }
+    UPLOAD_DIR,
+  };
 }
 
 module.exports = constant;

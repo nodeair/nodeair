@@ -1,4 +1,5 @@
-const path = require('path');
+'use strict';
+
 const fs = require('fs-extra');
 const jsonfile = require('jsonfile');
 
@@ -16,11 +17,11 @@ class Cache {
     const { constant } = this.app;
     const { CACHE_INDEX_PATH } = constant;
     const cacheJson = this.getCache();
-    const _key = typeof key === 'object' ?  JSON.stringify(key) : key;
+    const _key = typeof key === 'object' ? JSON.stringify(key) : key;
     cacheJson.cache[_key] = {
       value,
       createTime: new Date().getTime(),
-      timeInterval
+      timeInterval,
     };
     jsonfile.writeFileSync(CACHE_INDEX_PATH, cacheJson, { spaces: 2 });
   }
@@ -30,7 +31,7 @@ class Cache {
   get(key) {
     const { log } = this.app;
     const cacheJson = this.getCache();
-    const _key = typeof key === 'object' ?  JSON.stringify(key) : key;
+    const _key = typeof key === 'object' ? JSON.stringify(key) : key;
     const cacheItem = cacheJson.cache[_key];
     if (typeof cacheItem === 'object') {
       const { value, createTime, timeInterval } = cacheItem;
@@ -39,22 +40,20 @@ class Cache {
         log.system(`缓存 [${_key}] 已过期`);
         this.remove(_key);
         return { isExpired: true, value };
-      } else {
-        return { isExpired: false, value };
       }
-    } else {
-      return { isExpired: false, value: undefined };
+      return { isExpired: false, value };
     }
+    return { isExpired: false, value: undefined };
   }
   /**
    * 删除缓存
-   * @returns 
+   * @param {String} key 缓存key
    */
   remove(key) {
     const { constant } = this.app;
     const { CACHE_INDEX_PATH } = constant;
     const cacheJson = this.getCache();
-    const _key = typeof key === 'object' ?  JSON.stringify(key) : key;
+    const _key = typeof key === 'object' ? JSON.stringify(key) : key;
     delete cacheJson.cache[_key];
     jsonfile.writeFileSync(CACHE_INDEX_PATH, cacheJson, { spaces: 2 });
   }
@@ -65,7 +64,7 @@ class Cache {
     const { constant } = this.app;
     const { CACHE_INDEX_PATH } = constant;
     const defaultJson = {
-      cache: {}
+      cache: {},
     };
     if (!fs.existsSync(CACHE_INDEX_PATH)) {
       fs.ensureFileSync(CACHE_INDEX_PATH);

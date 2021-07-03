@@ -1,5 +1,7 @@
+'use strict';
+
 const { DataTypes } = require('sequelize');
-const { INTEGER, BIGINT, TINYINT, STRING, TEXT } = DataTypes;
+const { INTEGER, TINYINT, STRING, TEXT } = DataTypes;
 
 /**
  * 用户表
@@ -20,16 +22,16 @@ module.exports = function() {
       username: { type: STRING(250), allowNull: false, comment: '用户名' },
       password: { type: STRING(250), allowNull: false, comment: '密码' },
       email: { type: STRING(250), comment: '邮箱' },
-      meta: { type: TEXT, defaultValue: '{}', comment: '网页meta信息'},
-      template: { type: STRING(200), defaultValue: 'user', comment: '所使用的模板名称' }
+      meta: { type: TEXT, defaultValue: '{}', comment: '网页meta信息' },
+      template: { type: STRING(200), defaultValue: 'user', comment: '所使用的模板名称' },
     },
     options: {
       hooks: {
         beforeCreate(user) {
           const hashedPassword = util.hashPassword(user.password);
           user.password = hashedPassword;
-        }
-      }
-    }
+        },
+      },
+    },
   };
 };

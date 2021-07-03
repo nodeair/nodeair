@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(base, time, user) {
   return {
     id: 1,
@@ -8,6 +10,6 @@ module.exports = function(base, time, user) {
     address: '太阳系，地球，中国',
     site: base,
     username: user.username,
-    password: user.password
-  }
-}
+    password: user.password,
+  };
+};

@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const fs = require('fs-extra');
 const { Sequelize } = require('sequelize');
@@ -20,7 +22,7 @@ class Db {
     const config = conf.get();
     this.sequelize = this.connect(config.database);
   }
-  /** 
+  /**
    * 检测数据库是否连接成功
    */
   async checkConnected() {
@@ -37,8 +39,6 @@ class Db {
   }
   /**
    * 获取所有表名
-   * @param {*} Model 
-   * @returns 
    */
   async getAllModelName() {
     if (!this.sequelize) return {};
@@ -62,39 +62,39 @@ class Db {
   /**
    * 连接数据库
    */
-   connect(databaseConfig) {
-    const { constant, log } = this.app;
+  connect(databaseConfig) {
+    const { constant } = this.app;
     const { config } = this.app;
     const { ROOT } = constant;
     const { type, options } = databaseConfig;
-    switch(type) {
+    const dbPath = path.join(ROOT, options.storage);
+    const { database, username, password, host, port } = options;
+    switch (type) {
       case 'sqlite':
-        const dbPath = path.join(ROOT, options.storage);
         if (!fs.existsSync(dbPath)) fs.ensureFileSync(dbPath);
         return new Sequelize({
           logging: config.debug ? console.log : false,
           dialect: options.dialect,
-          storage: dbPath
+          storage: dbPath,
         });
       case 'mysql':
-        const { database, username, password, host, port } = options;
         return new Sequelize(database, username, password, {
           logging: config.debug ? console.log : false,
           host,
           port,
           dialectOptions: {
-            charset: "utf8mb4",
-            collate: "utf8mb4_unicode_ci",
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_unicode_ci',
             supportBigNumbers: true,
-            bigNumberStrings: true
+            bigNumberStrings: true,
           },
           define: {
-            underscored: true
+            underscored: true,
           },
-          dialect: 'mysql'
+          dialect: 'mysql',
         });
+      default: return undefined;
     }
-    return '';
   }
 }
 

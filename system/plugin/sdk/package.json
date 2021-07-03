@@ -6,8 +6,8 @@
   "description": "核心插件/nodeair前端SDK",
   "main": "index.js",
   "scripts": {
-    "dev": "rollup --config rollup.config.dev.js -w",
-    "build": "rollup --config rollup.config.prod.js"
+    "dev": "rollup --config config/rollup.config.dev.js -w",
+    "build": "rollup --config config/rollup.config.prod.js"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

@@ -1,10 +1,12 @@
+'use strict';
+
 const fs = require('fs');
 const jsonfile = require('jsonfile');
 
 /**
  * 配置类
  */
- class Config {
+class Config {
   constructor(app) {
     app.log.system('实例化Config类');
     this.app = app;
@@ -31,7 +33,7 @@ const jsonfile = require('jsonfile');
     switch (type) {
       case 'user': return this._userConfig;
       case 'system': return this._defaultConfig;
-      default: return this._config; 
+      default: return this._config;
     }
   }
   /**

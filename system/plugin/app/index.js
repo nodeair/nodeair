@@ -1,3 +1,5 @@
+'use strict';
+
 const model = require('./model');
 const routerConfig = require('./controller');
 const serviceConfig = require('./service');
@@ -21,14 +23,14 @@ async function loaded() {
      * @param {Number} data 模型数据
      */
     getUrl(pageId, data) {
-      const route = routers.find(route => route.pageId == pageId);
+      const route = routers.find(route => Number(route.pageId) === Number(pageId));
       if (!route) return '/';
       let path = route.path;
       route.params.forEach(key => {
         path = path.replace(`:${key}`, data[key]);
       });
       return `${config.site.base}${path}`;
-    }
+    },
   };
   // 触发事件
   await hook.emit(HOOK_NAMESPACE, 1, state);

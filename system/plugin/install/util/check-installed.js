@@ -1,7 +1,11 @@
+'use strict';
+
 const path = require('path');
 
 /**
  * 检查 NodeAir 是否安装
+ * @param {NodeAir} app NodeAir实例
+ * @return {Boolean} true/false
  */
 async function checkInstalled(app) {
   const { constant, conf, config, db } = app;

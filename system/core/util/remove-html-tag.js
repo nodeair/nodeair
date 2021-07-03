@@ -1,3 +1,5 @@
+'use strict';
+
 const cheerio = require('cheerio');
 
 /**
@@ -6,7 +8,7 @@ const cheerio = require('cheerio');
  */
 function removeHtmlTag(html) {
   const _html = `<div id="_container">${html}</div>`;
-  $ = cheerio.load(_html);
+  const $ = cheerio.load(_html);
   return $('#_container').text();
 }
 

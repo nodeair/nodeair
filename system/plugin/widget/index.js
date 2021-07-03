@@ -1,3 +1,5 @@
+'use strict';
+
 const Widget = require('./widget');
 const _ = require('lodash');
 
@@ -11,11 +13,11 @@ async function loaded() {
   this.widget = widget;
   log.system('加载 widget 插件完毕');
   // 将方法注入到模板引擎
-  await hook.on(HOOK_RENDER, 1, async function (state) {
-    state.renderOptions.getWidgets = (id) => {
+  await hook.on(HOOK_RENDER, 1, async function(state) {
+    state.renderOptions.getWidgets = id => {
       const common = _.cloneDeep(state.renderOptions);
       return widget.getWidgets(this, id, common);
-    }
+    };
   });
 }
 

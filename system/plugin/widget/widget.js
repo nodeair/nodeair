@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const fs = require('fs-extra');
 
@@ -7,6 +9,8 @@ class Widget {
   }
   /**
    * 注册侧边栏
+   * @param {Object} widgets 侧边栏对象
+   * @return {Boolean} 成功/失败 true/false
    */
   register(widgets = {}) {
     if (typeof widgets === 'object' && !Array.isArray(widgets)) {
@@ -33,6 +37,10 @@ class Widget {
   }
   /**
    * 渲染侧边栏并返回HTML代码
+   * @param {NodeAir} app NodeAir实例
+   * @param {String} id 侧栏卡片名称
+   * @param {Object} common 数据
+   * @return {String} 返回html代码
    */
   getWidgets(app, id, common = {}) {
     if (!app || !id) return '';
@@ -45,7 +53,7 @@ class Widget {
       const tplPath = path.join(ejsDir, name) + '.ejs';
       const tplContent = fs.readFileSync(tplPath, 'utf8');
       const _data = Object.assign(common, {
-        widget: data[name]
+        widget: data[name],
       });
       html += ejs.renderStr(tplContent, _data);
     });

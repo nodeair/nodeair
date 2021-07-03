@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 路由类
  */
@@ -20,9 +22,9 @@ class Router {
       for (let i = 0; i < errorHandlers.length; i++) {
         const item = errorHandlers[i];
         const { controller } = item;
-        await controller.apply(app, [ctx, next]);
+        await controller.apply(app, [ ctx, next ]);
       }
-    }
+    };
     koa.app.use(async (ctx, next) => {
       try {
         await next();
@@ -49,7 +51,7 @@ class Router {
   pushErrorHandler(name, controller) {
     this.errorHandlers.push({
       name,
-      controller
+      controller,
     });
   }
   /**

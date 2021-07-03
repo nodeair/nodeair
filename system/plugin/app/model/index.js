@@ -1,3 +1,5 @@
+'use strict';
+
 const Post = require('./post');
 const User = require('./user');
 const Comment = require('./comment');
@@ -13,5 +15,5 @@ module.exports = {
   Category,
   Tag,
   Option,
-  Upload
+  Upload,
 };

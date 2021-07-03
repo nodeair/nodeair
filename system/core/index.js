@@ -1,5 +1,6 @@
-const path = require('path');
+'use strict';
 
+const path = require('path');
 const Util = require('./util');
 const Cache = require('./lib/cache');
 const Koa = require('./lib/koa');
@@ -49,7 +50,7 @@ class NodeAir {
   getCopyright() {
     const { config } = this;
     const version = this.getVersion();
-    return config.copyright.replace(`{version}`, version);
+    return config.copyright.replace('{version}', version);
   }
   /**
    * 初始化

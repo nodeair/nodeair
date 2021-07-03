@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs-extra');
 const path = require('path');
 const { SERVICE_NAMESPACE } = require('../package.json').constant;

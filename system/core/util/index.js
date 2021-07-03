@@ -1,3 +1,5 @@
+'use strict';
+
 const parseDomain = require('./parse-domain');
 const hashPassword = require('./hash-password');
 const dateFormat = require('./date-format');

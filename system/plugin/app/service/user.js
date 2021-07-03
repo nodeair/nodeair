@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 获取所有管理员
  */
@@ -7,5 +9,5 @@ async function getManagers() {
 }
 
 module.exports = {
-  getManagers
+  getManagers,
 };

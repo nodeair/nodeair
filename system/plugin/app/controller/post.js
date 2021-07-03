@@ -1,7 +1,9 @@
+'use strict';
+
 const { SERVICE_NAMESPACE } = require('../package.json').constant;
 const HOOK_NAMESPACE = 'system/plugin/app/controller/post';
 
-module.exports = async function (ctx) {
+module.exports = async function(ctx) {
   const { hook, theme, service } = this;
   const { id } = ctx.params;
   const post = await service.call(`${SERVICE_NAMESPACE}/post`, 'getPost', { id });
@@ -13,8 +15,8 @@ module.exports = async function (ctx) {
       post,
       tags,
       prev: '',
-      next: ''
-    }
+      next: '',
+    },
   };
   if (neighbor.length === 1) {
     const item = neighbor[0];
@@ -34,11 +36,11 @@ module.exports = async function (ctx) {
   const renderParams = {
     pageId: 3,
     data: state.data,
-    ctx
+    ctx,
   };
 
   // 调用钩子
   await hook.emit(HOOK_NAMESPACE, 2, renderParams);
 
   return await theme.render(renderParams);
-}
+};

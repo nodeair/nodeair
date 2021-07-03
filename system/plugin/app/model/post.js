@@ -1,3 +1,5 @@
+'use strict';
+
 const { DataTypes } = require('sequelize');
 const { INTEGER, TINYINT, DATE, STRING, TEXT } = DataTypes;
 
@@ -22,9 +24,9 @@ module.exports = function() {
       tags: { type: STRING(200), allowNull: false, defaultValue: '', comment: '标签的id，用英文逗号分隔' },
       statView: { type: INTEGER, defaultValue: 0, comment: '文章浏览数' },
       statComment: { type: INTEGER, defaultValue: 0, comment: '文章被评论数' },
-      meta: { type: TEXT, defaultValue: '{}', comment: '网页meta信息'},
+      meta: { type: TEXT, defaultValue: '{}', comment: '网页meta信息' },
       template: { type: STRING(200), defaultValue: 'post', comment: '所使用的模板名称' },
-      postTime: { type: DATE, comment: '文章发布时间' }
-    }
+      postTime: { type: DATE, comment: '文章发布时间' },
+    },
   };
 };

@@ -1,9 +1,12 @@
+'use strict';
+
 /**
  * 获取文章归档
+ * @param {Boolean} onlyYear 是否只查询年份
  */
 async function getArchives(onlyYear = false) {
   const { sequelize } = this.db;
-  const { SELECT } = sequelize.QueryTypes
+  const { SELECT } = sequelize.QueryTypes;
   const { Post } = this.db.model.models;
   const tableName = Post.getTableName();
   const timeField = 'post_time';
@@ -24,7 +27,7 @@ async function getArchives(onlyYear = false) {
  */
 async function getPostsByDate(date = '') {
   const { sequelize, log } = this.db;
-  const { SELECT } = sequelize.QueryTypes
+  const { SELECT } = sequelize.QueryTypes;
   const { Post } = this.db.model.models;
   const tableName = Post.getTableName();
   const timeField = 'post_time';
@@ -47,5 +50,5 @@ async function getPostsByDate(date = '') {
 
 module.exports = {
   getArchives,
-  getPostsByDate
+  getPostsByDate,
 };

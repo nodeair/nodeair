@@ -1,3 +1,5 @@
+'use strict';
+
 const ejs = require('ejs');
 
 /**
@@ -6,15 +8,15 @@ const ejs = require('ejs');
 module.exports = {
   /**
    * 渲染文件
-   * @param {*} filePath 
-   * @param {*} data 
-   * @returns 
+   * @param {String} filePath 模板文件路径
+   * @param {String} data 模板数据
+   * @return {String} html代码
    */
   render(filePath, data) {
     return new Promise((resolve, reject) => {
       ejs.renderFile(filePath, data, {
-        async: false
-      }, function (err, str) {
+        async: false,
+      }, (err, str) => {
         if (err) {
           reject(err);
         } else {
@@ -28,5 +30,5 @@ module.exports = {
    */
   renderStr(str, data) {
     return ejs.render(str, data);
-  }
-}
+  },
+};

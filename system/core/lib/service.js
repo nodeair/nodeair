@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 数据服务类
  */
@@ -16,7 +18,7 @@ class Service {
     this._stack.push({
       namespace,
       serviceName,
-      handler
+      handler,
     });
   }
   /**

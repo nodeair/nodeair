@@ -3,3 +3,9 @@
 /upload
 /cache
 nodeair.config.json
+.vscode
+npm-debug.log
+package-lock.json
+yarn.lock
+.DS_Store
+.logs

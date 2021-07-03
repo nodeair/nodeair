@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const fs = require('fs-extra');
 
@@ -12,9 +14,10 @@ const UploadData = require('../../../data/upload');
 
 /**
  * 插入初始数据
+ * @param {Object} params 参数
  */
- async function insertData(params) {
-  const { db, config, constant, util } = this;
+async function insertData(params) {
+  const { db, config, constant } = this;
   const { UPLOAD_DIR } = constant;
   const { base } = config.site;
   const { model } = db;
@@ -25,18 +28,18 @@ const UploadData = require('../../../data/upload');
   const targetFilename = uploadUtil.getFilename();
   const defaultAvatar = {
     origin: path.join(uploadDir, 'default_avatar.png'),
-    target: path.join(UPLOAD_DIR, 'default_avatar.png')
+    target: path.join(UPLOAD_DIR, 'default_avatar.png'),
   };
   const posterPath = {
     origin: path.join(uploadDir, 'poster.jpg'),
-    target: path.join(UPLOAD_DIR, `${targetFilename}.jpg`)
+    target: path.join(UPLOAD_DIR, `${targetFilename}.jpg`),
   };
   fs.copyFileSync(defaultAvatar.origin, defaultAvatar.target);
   fs.copyFileSync(posterPath.origin, posterPath.target);
   const user = {
     nickname: params.manager.nickname,
     username: params.manager.username,
-    password: params.manager.password
+    password: params.manager.password,
   };
   const results = [
     Comment.create(CommentData(base, time, user)),
@@ -44,8 +47,8 @@ const UploadData = require('../../../data/upload');
     User.create(UserData(base, time, user)),
     Post.create(PostData(base, time, targetFilename)),
     Tag.create(TagData(time)),
-    Option.bulkCreate(OptionData(base, time)),
-    Upload.bulkCreate(UploadData(base, time, targetFilename))
+    Option.bulkCreate(OptionData(base)),
+    Upload.bulkCreate(UploadData(base, time, targetFilename)),
   ];
   await Promise.all(results);
 }

@@ -1,3 +1,5 @@
+'use strict';
+
 const chalk = require('chalk');
 
 /**
@@ -13,35 +15,35 @@ class Log {
    */
   print() {
     const args = Array.from(arguments);
-    return this._log.apply(this, ['blue', ...args ]);
+    return this._log.apply(this, [ 'blue', ...args ]);
   }
   /**
    * 系统日志
    */
   system() {
     const args = Array.from(arguments);
-    return this._log.apply(this, ['cyan', ...args ]);
+    return this._log.apply(this, [ 'cyan', ...args ]);
   }
   /**
    * 成功
    */
   success() {
     const args = Array.from(arguments);
-    return this._log.apply(this, ['green', ...args ]);
+    return this._log.apply(this, [ 'green', ...args ]);
   }
   /**
    * 警告
    */
   warn() {
     const args = Array.from(arguments);
-    return this._log.apply(this, ['yellow', ...args ]);
+    return this._log.apply(this, [ 'yellow', ...args ]);
   }
   /**
    * 错误
    */
   error() {
     const args = Array.from(arguments);
-    return this._log.apply(this, ['red', ...args ]);
+    return this._log.apply(this, [ 'red', ...args ]);
   }
   /**
    * 打印

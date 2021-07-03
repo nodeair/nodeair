@@ -1,10 +1,12 @@
+'use strict';
+
 const { DataTypes } = require('sequelize');
 const { INTEGER, TINYINT, DATE, STRING, TEXT } = DataTypes;
 
 /**
  * 评论表
  */
-module.exports = function () {
+module.exports = function() {
   return {
     name: 'na_comment',
     structure: {
@@ -19,7 +21,7 @@ module.exports = function () {
       authorIp: { type: STRING(250), allowNull: true, comment: '作者的IP' },
       authorAgent: { type: TEXT, allowNull: true, comment: '作者的agent' },
       content: { type: TEXT, comment: '评论内容' },
-      postTime: { type: DATE, comment: '评论发布时间' }
-    }
+      postTime: { type: DATE, comment: '评论发布时间' },
+    },
   };
 };

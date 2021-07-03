@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const fs = require('fs-extra');
 const cheerio = require('cheerio');
@@ -11,14 +13,14 @@ const Head = require('./head');
 /**
  * 主题生命周期工厂方法
  */
-const Hooks = function () {
+const Hooks = function() {
   return {
-    installed: function () { },
-    loaded: function () { },
-    beforeMount: function() { },
-    uninstalled: function () { }
+    installed: () => {},
+    loaded: () => {},
+    beforeMount: () => {},
+    uninstalled: () => {},
   };
-}
+};
 
 /**
  * 主题类
@@ -38,7 +40,7 @@ class Theme {
       'category', // 5
       'tag', // 6
       'archive', // 7
-      'about' // 8
+      'about', // 8
     ];
     this.head = new Head(this);
   }
@@ -68,7 +70,7 @@ class Theme {
     const state = {
       filePath: tplPath[PAGES_NAME[pageId]],
       renderOptions: {
-        text: function (key) {
+        text: key => {
           return lang.text(key);
         },
         util: utilRender.call(app),
@@ -76,13 +78,13 @@ class Theme {
           copyright: app.copyright,
           host: ctx.request.host,
           base: config.site.base,
-          lang: config.lang
+          lang: config.lang,
         },
         pageData: data,
       },
-      html: ''
+      html: '',
     };
-    
+
     if (conf.isUserExists()) {
       // 触发主题生命周期
       await this.emitHook('beforeMount', state);
@@ -144,10 +146,10 @@ class Theme {
   }
   /**
    * 写入缓存
-   * @param {*} options 
-   * @returns 
+   * @param {Object} options 选项对象
+   * @param {Object} state 状态对象
    */
-  async _writeCache(options, state) {
+  async _writeCache(options = {}, state = {}) {
     const { pageId, data } = options;
     const { app } = this;
     const { cache, config, constant } = app;
@@ -162,7 +164,7 @@ class Theme {
   /**
    * 读取缓存
    */
-  async _readCache(options) {
+  async _readCache(options = {}) {
     const { pageId, data, ctx } = options;
     const { app } = this;
     const { cache, config } = app;
