@@ -1,0 +1,8 @@
+{
+  "name": "@nodeair/plugin-core-captcha",
+  "version": "1.0.0",
+  "private": true,
+  "enable": true,
+  "description": "核心插件/验证码系统",
+  "main": "index.js"
+}

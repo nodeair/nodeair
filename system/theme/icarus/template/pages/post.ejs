@@ -14,13 +14,13 @@
     <div class="container">
       <div class="columns">
         <div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen">
-          <div class="card" style="transition: opacity 0.3s ease-out 0s, transform 0.3s ease-out 0s; opacity: 1; transform-origin: center top;">
+          <div class="card">
             <div class="card-image">
               <span class="image is-7by3">
                 <img class="fill" src="<%= pageData.post.poster %>" alt="<%= pageData.post.title %>">
               </span>
             </div>
-            <% 
+            <%
               const wordCount = util.wordCount(util.removeHtmlTag(pageData.post.contentHtml));
             %>
             <article class="card-content article" role="article">
@@ -121,10 +121,11 @@
             </div>
             <% } %>
           </nav>
+          <%- include('../components/comment') -%>
         </div>
         <div class="column column-left is-4-tablet is-4-desktop is-4-widescreen order-1 is-sticky">
           <%- getWidgets('index-left') -%>
-        </div> 
+        </div>
       </div>
     </div>
   </div>

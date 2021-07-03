@@ -1,3 +1,5 @@
+'use strict';
+
 const routerConfig = require('./controller');
 
 async function loaded() {
@@ -12,8 +14,8 @@ async function loaded() {
 
   // 定义状态
   const state = {
-    routers: await routerConfig(app)
-  }
+    routers: await routerConfig(app),
+  };
 
   // 注册路由
   await router.push(state.routers);

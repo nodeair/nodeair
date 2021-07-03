@@ -1,3 +1,5 @@
+'use strict';
+
 // https://36kr.com/p/1260739781689984
 module.exports = function(poster, content, postTime) {
   return {
@@ -9,6 +11,6 @@ module.exports = function(poster, content, postTime) {
     summary: '别忘了，像视觉四小龙的崛起，也仅仅是这几年的事。',
     tags: 'AI',
     contentHtml: content,
-    postTime: postTime
-  }
-}
+    postTime,
+  };
+};

@@ -1,0 +1,10 @@
+.vscode
+node_modules
+test
+logs
+run
+cache
+system/plugin/vector/static
+system/theme/icarus/static
+system/theme/icarus/src
+system/theme/icarus/config

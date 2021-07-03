@@ -1,3 +1,5 @@
+'use strict';
+
 // https://36kr.com/p/1260518518276999
 module.exports = function(poster, content, postTime) {
   return {
@@ -9,6 +11,6 @@ module.exports = function(poster, content, postTime) {
     summary: '股价持续下跌，美的急了？',
     tags: '股票',
     contentHtml: content,
-    postTime: postTime
-  }
-}
+    postTime,
+  };
+};

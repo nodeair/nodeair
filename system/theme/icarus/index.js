@@ -1,13 +1,15 @@
+'use strict';
+
 const path = require('path');
 
 /**
  * 获取域名
  * @param {String} link 网址
- * @returns {String} 域名
+ * @return {String} 域名
  */
 function getDomain(link) {
   try {
-    let url = new URL(link.url);
+    const url = new URL(link.url);
     return url.host;
   } catch (e) {
     return 'unknown';
@@ -23,12 +25,12 @@ async function loaded() {
   this.widget.register({
     'index-left': {
       ejsDir,
-      widgets: ['profile', 'links', 'categories']
+      widgets: [ 'profile', 'links', 'categories' ],
     },
     'index-right': {
       ejsDir,
-      widgets: ['recent-post', 'archives', 'tags']
-    }
+      widgets: [ 'recent-post', 'archives', 'tags' ],
+    },
   });
 }
 
@@ -45,13 +47,13 @@ async function beforeMount() {
   const links = await s('option', 'getOption', { key: 'links' });
   const tags = await s('tag', 'getTags');
   const archives = await s('archive', 'getArchives');
-  const posts = await s('post', 'getPosts', { order: [['post_time', 'DESC']] });
+  const posts = await s('post', 'getPosts', { order: [[ 'post_time', 'DESC' ]] });
   const profileData = {
     name: '站长简介',
     manager: managers[0],
     postCount: await s('post', 'getPostCount'),
     cateCount: await s('category', 'getCateCount'),
-    tagCount: await s('tag', 'getTagCount')
+    tagCount: await s('tag', 'getTagCount'),
   };
   this.widget.addData('index-left', 'profile', profileData);
   this.widget.addData('index-left', 'categories', { name: '文章分类', categories });
@@ -65,5 +67,5 @@ module.exports = {
   installed() {},
   loaded,
   beforeMount,
-  uninstalled() {}
+  uninstalled() {},
 };

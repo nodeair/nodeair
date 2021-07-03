@@ -1,3 +1,5 @@
+'use strict';
+
 // https://36kr.com/motif/327685832705
 module.exports = function(poster, content, postTime) {
   return {
@@ -9,6 +11,6 @@ module.exports = function(poster, content, postTime) {
     summary: '一个全民微醺的创业潮流。',
     tags: '消费',
     contentHtml: content,
-    postTime: postTime
-  }
-}
+    postTime,
+  };
+};

@@ -6114,3 +6114,49 @@
 .fa,.fas {
   font-weight: 900
 }
+
+.comment .submit-div{
+  height: 45px;
+}
+
+.comment .com-info ul {
+  list-style:none
+}
+
+.comment .com-info li {
+  float: none;
+  margin-bottom: 12px
+}
+
+.comment .com-info li input {
+  width: 40%;
+  height: 38px;
+  line-height: 38px;
+  padding-left: 8px;
+  border: 1px solid #ddd;
+}
+
+.comment .text-input {
+  margin: 10px 0;
+}
+
+.comment .text-input textarea {
+  border-radius: 1px;
+  width: 100%;
+  border: 1px solid #ddd;
+  display: block;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing:border-box;
+  box-shadow: 0 1px 6px 0 rgba(41,47,54,.15), 0 5px 10px 0 rgba(41,47,54,.025);
+}
+
+.comment .com-info li .verifyimg {
+  height: 38px;
+  line-height: 38px;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 2px;
+  cursor: pointer;
+}

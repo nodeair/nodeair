@@ -1,9 +1,12 @@
+
+'use strict';
+
 const path = require('path');
 const fs = require('fs-extra');
 const NodeAir = require('../../core');
 
 const steps = {
-  '实例化': async function () {
+  'Instantiation': async function () {
     this.app = new NodeAir();
   },
   '检测数据库是否连接': async function () {

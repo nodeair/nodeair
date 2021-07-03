@@ -1,20 +1,22 @@
+'use strict';
+
 const fs = require('fs-extra');
 const path = require('path');
 const moment = require('moment');
 const uploadUtil = require('../../../../system/plugin/upload/util');
 
 /**
- * 获取文件名和文件扩展
- * @param {*} filename 
- * @returns {String}
+ * Get file name and file extension
+ * @param {String} filename file name
+ * @return {String} file name and extension
  */
 function getFileNameAndExtension(filename) {
-  let fileArr = filename.split('.');
-  let extension = fileArr[fileArr.length - 1];
+  const fileArr = filename.split('.');
+  const extension = fileArr[fileArr.length - 1];
   fileArr.pop();
   return {
     name: fileArr.join('.'),
-    extension
+    extension,
   };
 }
 
@@ -30,17 +32,17 @@ function getData(baseUrl) {
     const postTime = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
     const uploadDir = path.join(__dirname, dir, 'upload');
     const uploadFiles = fs.readdirSync(uploadDir);
-    let postObj = {};
-    let poster = {
+    const poster = {
       extension: '',
       oldName: 'poster',
-      newName: ''
+      newName: '',
     };
-    let imgs = [];
+    const imgs = [];
+    let postObj = {};
     // 处理图片
     for (let i = 0; i < uploadFiles.length; i++) {
       const filename = uploadFiles[i];
-      let { name, extension } = getFileNameAndExtension(filename);
+      const { name, extension } = getFileNameAndExtension(filename);
       const oldPath = path.join(uploadDir, `${name}.${extension}`);
       const _time = timestamp + i * 1000;
       const newName = uploadUtil.getFilename(_time);
@@ -48,7 +50,7 @@ function getData(baseUrl) {
         imgs.push({
           oldName: name,
           newName,
-          extension
+          extension,
         });
       } else {
         poster.extension = extension;
@@ -65,7 +67,7 @@ function getData(baseUrl) {
         mimeType: staticServer.types[`.${extension}`],
         name: `${newName}.${extension}`,
         sourceName: `${name}.${extension}`,
-        storagePath: `upload/${newName}.${extension}`
+        storagePath: `upload/${newName}.${extension}`,
       });
     }
     const factoryFn = require(path.join(__dirname, dir, 'index.js'));
@@ -86,7 +88,7 @@ function getData(baseUrl) {
   });
   return {
     postList,
-    uploadList
+    uploadList,
   };
 }
 

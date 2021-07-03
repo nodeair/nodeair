@@ -1,0 +1,59 @@
+<!-- 评论组件 -->
+<div class="card comment" id="comment">
+  <div class="card-content">
+    <div class="menu">
+      <h3 class="menu-label">评论</h3>
+      <div class="form-wrap">
+        <form
+          id="commentForm"
+          target="_self"
+          method="post"
+          action="https://t2.zblogsm.com/zb_system/cmd.php?act=cmt&amp;postid=23&amp;key=1760e58060a0227d74e7cb3488460b03"
+        >
+          <input type="hidden" name="rootId" id="rootId" value="0">
+          <input type="hidden" name="parentId" id="parentId" value="0">
+          <div class="cancel-reply" style="display:none;"><a rel="nofollow" id="cancel-reply" href="#comments">取消回复</a></div>
+          <div class="com-info">
+            <ul>
+              <li>
+                <input class="ipt" type="text" name="inpName" id="inpName" value="" tabindex="2" placeholder="昵称(必填)">
+              </li>
+              <li>
+                <input class="ipt" type="text" name="inpEmail" id="inpEmail" value="" tabindex="3" placeholder="邮箱">
+              </li>
+              <li>
+                <input class="ipt" type="text" name="inpHomePage" id="inpHomePage" value="" tabindex="4"
+                  placeholder="网址">
+              </li>
+              <li>
+                <input class="ipt" type="text" name="inpVerify" id="inpVerify" tabindex="4" placeholder="输入验证码">
+                <span>
+                  <img src="/api/captcha/create" class="verifyimg" onclick="javascript:this.src='/api/captcha/create?tm='+Math.random();">
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div class="text-input">
+            <textarea
+              placeholder="书写你的真知灼见..."
+              class="textarea"
+              name="txaArticle"
+              id="txaArticle" rows="5"
+              tabindex="1"></textarea>
+          </div>
+          <div class="com-info submit-div">
+            <button
+              class="button is-primary"
+              name="sumbit"
+              type="submit"
+              id="submit"
+              tabindex="5"
+              onclick="return zbp.comment.post()"
+              cursorshover="true"
+            >发布评论</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 
 async function loaded() {
@@ -12,19 +14,19 @@ async function loaded() {
       '^/$': '/',
       '^/index.html$': '/',
       '^/search.html$': '/search',
-      '^/post/(\\d+).html$': '/post/:id'
-    }
-    const getController = (path) => {
-      let item = routers.find(item => item.path === path);
+      '^/post/(\\d+).html$': '/post/:id',
+    };
+    const getController = path => {
+      const item = routers.find(item => item.path === path);
       return item.controller;
-    }
+    };
     koa.app.use(async function(ctx, next) {
       await next();
       const pahts = Object.keys(routerMap);
       for (let i = 0; i < pahts.length; i++) {
-        let newPath = pahts[i];
-        let oldPath = routerMap[pahts[i]];
-        let reg = new RegExp(newPath);
+        const newPath = pahts[i];
+        const oldPath = routerMap[pahts[i]];
+        const reg = new RegExp(newPath);
         if (reg.test(ctx.path)) {
           const constructor = getController(oldPath);
           await constructor.apply(app, [ ctx, next ]);

@@ -1,3 +1,5 @@
+'use strict';
+
 // https://36kr.com/p/1260711182635138
 module.exports = function(poster, content, postTime) {
   return {
@@ -9,6 +11,6 @@ module.exports = function(poster, content, postTime) {
     summary: '十年一梦，《摩尔庄园》却卷土重来。',
     tags: '社交',
     contentHtml: content,
-    postTime: postTime
-  }
-}
+    postTime,
+  };
+};

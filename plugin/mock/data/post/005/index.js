@@ -1,3 +1,5 @@
+'use strict';
+
 // https://36kr.com/p/1260518518276999
 module.exports = function(poster, content, postTime) {
   return {
@@ -9,6 +11,6 @@ module.exports = function(poster, content, postTime) {
     summary: '收购游族网络，新浪私有化后的关键一战',
     tags: '游戏',
     contentHtml: content,
-    postTime: postTime
-  }
-}
+    postTime,
+  };
+};

@@ -1,3 +1,5 @@
+'use strict';
+
 // https://36kr.com/p/1260525791200135
 module.exports = function(poster, content, postTime) {
   return {
@@ -9,6 +11,6 @@ module.exports = function(poster, content, postTime) {
     summary: '制程并不是衡量芯片价值的唯一标准。',
     tags: '芯片',
     contentHtml: content,
-    postTime: postTime
-  }
-}
+    postTime,
+  };
+};
