@@ -13,26 +13,31 @@ class Head {
    * 添加JS脚本
    */
   pushScript(url) {
-    const html = `<script src="${url}"></script>`;
-    return this.push(html);
+    return this.push(url, 'script');
   }
   /**
    * 添加CSS
    */
   pushCSS(url) {
-    const html = `<link rel="stylesheet" href="${url}">`;
-    return this.push(html);
+    return this.push(url, 'css');
   }
   /**
    * 添加自定义HTML标签
    */
-  push(html, type) {
-    if (!type) return this._heads.length - 1;
+  push(url, type) {
+    let html = '';
     switch (type) {
-      case 'css': return this.pushCSS(html);
-      case 'script': return this.pushScript(html);
-      default: return 0;
+      case 'script':
+        html = `<script src="${url}"></script>`;
+        break;
+      case 'css':
+        html = `<link rel="stylesheet" href="${url}">`;
+        break;
+      default:
+        html = url;
     }
+    this._heads.push(html);
+    return this._heads.length;
   }
   /**
    * 将head节点插入html

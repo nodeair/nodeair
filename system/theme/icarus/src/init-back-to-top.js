@@ -8,6 +8,7 @@ function initBackToTop() {
   const $mainColumn = $('.column-main');
   const $leftSidebar = $('.column-left');
   const $rightSidebar = $('.column-right');
+  if (Object.keys($button).length === 0) return;
   let lastScrollTop = 0;
   const rightMargin = 20;
   const bottomMargin = 20;

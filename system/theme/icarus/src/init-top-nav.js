@@ -2,7 +2,6 @@
  * 初始化顶部导航高亮
  */
 function initTopNav() {
-  console.log('initTopNav');
   const cUrl = window.location.href;
   const els = $('.navbar-menu .navbar-item');
   $(els).each(function (index, el) {

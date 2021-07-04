@@ -49,7 +49,7 @@ class Db {
    */
   async existsModel(modelFactory) {
     if (!this.sequelize || !modelFactory) return false;
-    const params = modelFactory(this.app);
+    const params = modelFactory.call(this.app);
     const { name, structure } = params;
     const model = this.sequelize.define(name, structure);
     try {
@@ -67,7 +67,10 @@ class Db {
     const { config } = this.app;
     const { ROOT } = constant;
     const { type, options } = databaseConfig;
-    const dbPath = path.join(ROOT, options.storage);
+    let dbPath = '';
+    if (type === 'sqlite') {
+      dbPath = path.join(ROOT, options.storage);
+    }
     const { database, username, password, host, port } = options;
     switch (type) {
       case 'sqlite':

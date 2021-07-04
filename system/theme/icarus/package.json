@@ -27,7 +27,6 @@
     ]
   },
   "scripts": {
-    "dev": "rollup --config ./config/rollup.config.dev.js -w",
     "build": "rollup --config ./config/rollup.config.prod.js"
   },
   "devDependencies": {

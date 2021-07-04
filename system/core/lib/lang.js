@@ -8,19 +8,19 @@ class Lang {
     app.log.system('实例化Lang类');
     this.app = app;
     this._langText = {
-      'zh-cn': {},
-      'zh-tw': {},
-      'en-us': {},
+      'zh-cn': [],
+      'zh-tw': [],
+      'en-us': [],
     };
   }
   /**
    * 注册多语言文案
    */
   register(langObj = {}) {
-    Object.keys(langObj).forEach(key => {
-      const langSet = this._langText[key];
+    Object.keys(langObj).forEach(langKey => {
+      const langSet = this._langText[langKey];
       if (langSet) {
-        this._langText[key] = Object.assign(langSet, langObj[key]);
+        this._langText[langKey] = this._langText[langKey].concat(langObj[langKey]);
       }
     });
   }
@@ -34,7 +34,8 @@ class Lang {
     langCode = langCode ? langCode : config.lang;
     const langSet = this._langText[langCode];
     if (langSet) {
-      const _text = langSet[key];
+      const item = langSet.find(item => item.key === key);
+      const _text = item.value;
       return _text ? _text : unknownText;
     }
     return unknownText;
